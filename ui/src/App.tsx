@@ -1,6 +1,7 @@
 import { LayoutGroup, motion } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { api, LABELS, type Cell, type Plan, type State, type Verdict } from "./api";
+import { api, LABELS, type Cell, type Pane, type Plan, type State, type Verdict } from "./api";
+import { AppPanes } from "./components/AppPanes";
 import { ConfirmDialog } from "./components/ConfirmDialog";
 import { Counter } from "./components/Counter";
 import { ScrambleText } from "./components/ScrambleText";
@@ -42,6 +43,8 @@ export default function App() {
   const [filter, setFilter] = useState<Filter>("ALL");
   const [selected, setSelected] = useState("");
   const [lastMs, setLastMs] = useState<number | null>(null);
+  const [panes, setPanes] = useState<Pane[]>([]);
+  const [paneMode, setPaneMode] = useState<"live" | "preview" | "">("");
   const token = useRef(0);
 
   const push = useCallback((...lines: string[]) => setLog((old) => [...old, ...lines].slice(-60)), []);
@@ -66,6 +69,14 @@ export default function App() {
     if (!parsed.value || unchanged) {
       setCells([]);
       setPlan(null);
+      if (parsed.value) {
+        const mineLive = ++token.current;
+        api.render().then((result) => {
+          if (mineLive !== token.current) return;
+          setPanes(result.panes);
+          setPaneMode(result.mode);
+        }).catch(() => undefined);
+      }
       return;
     }
     const mine = ++token.current;
@@ -82,6 +93,10 @@ export default function App() {
         if (mine !== token.current) return;
         setCells(full.cells);
         setPlan(full);
+        const preview = await api.render(parsed.value);
+        if (mine !== token.current) return;
+        setPanes(preview.panes);
+        setPaneMode(preview.mode);
         full.cells.forEach((cell) => push(`v${cell.version} ${LABELS[cell.state].toLowerCase()}`));
       } catch (error) {
         push(`error ${(error as Error).message}`);
@@ -114,6 +129,9 @@ export default function App() {
       push(...result.steps);
       push(`recheck ${result.cells.filter((c) => c.state === "green").length} safe`);
       await refresh();
+      const live = await api.render();
+      setPanes(live.panes);
+      setPaneMode(live.mode);
     } catch (error) {
       push(`error ${(error as Error).message}`);
     } finally {
@@ -248,6 +266,10 @@ export default function App() {
             className="mt-2 w-full resize-y border border-border-subtle bg-canvas/60 p-3 font-mono text-xs text-ink-primary"
           />
           {parsed.error && <p className="mt-1 font-mono text-[11px] text-status-red">{parsed.error}</p>}
+        </div>
+
+        <div className="mt-5">
+          <AppPanes panes={panes} mode={paneMode} />
         </div>
 
         <div className="relative mt-5">

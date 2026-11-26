@@ -21,6 +21,12 @@ export type Read = {
   observed_values: unknown[];
 };
 
+export type Pane = {
+  version: string;
+  ok: boolean;
+  output: string;
+};
+
 export type Plan = {
   cells: Cell[];
   limit?: string;
@@ -53,5 +59,6 @@ export const api = {
   check: (value: unknown, replay: boolean) => call<{ cells: Cell[] }>("POST", "/api/check", { value, replay }),
   plan: (value: unknown) => call<Plan>("POST", "/api/plan", { value }),
   apply: (value: unknown) => call<{ steps: string[]; cells: Cell[] }>("POST", "/api/apply", { value }),
+  render: (value?: unknown) => call<{ mode: "live" | "preview"; panes: Pane[] }>("POST", "/api/render", value === undefined ? {} : { value }),
   rollback: () => call<{ steps: string[] }>("POST", "/api/rollback", {}),
 };

@@ -77,3 +77,16 @@ def test_bad_value_is_rejected(base):
 
 def test_unknown_route_and_missing_ui(base):
     assert call(base, "GET", "/api/nope")[0] == 404
+
+
+def test_panes_preview_shows_old_versions_crashing(base):
+    status, body = call(base, "POST", "/api/render", {"value": NEW})
+    assert status == 200 and body["mode"] == "preview"
+    assert [p["ok"] for p in body["panes"]] == [False, False, True]
+    assert "title" in body["panes"][0]["output"]
+    assert body["panes"][2]["output"].startswith("[BANNER]")
+
+
+def test_panes_live_renders_every_version(base):
+    status, body = call(base, "POST", "/api/render", {})
+    assert body["mode"] == "live" and all(p["ok"] for p in body["panes"])
