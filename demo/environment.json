@@ -1,0 +1,34 @@
+{
+  "id": 1,
+  "api_key": "offline-test",
+  "name": "flagpact-test",
+  "updated_at": "2026-11-26T00:00:00+00:00",
+  "project": {
+    "id": 1,
+    "name": "flagpact-test",
+    "hide_disabled_flags": false,
+    "organisation": {
+      "id": 1,
+      "name": "flagpact-test",
+      "feature_analytics": false,
+      "persist_trait_data": true,
+      "stop_serving_flags": false
+    },
+    "segments": []
+  },
+  "segment_overrides": [],
+  "feature_states": [
+    {
+      "django_id": 1,
+      "featurestate_uuid": "00000000-0000-0000-0000-000000000001",
+      "enabled": true,
+      "feature_state_value": "{\"title\": \"Sale on now\", \"heading\": \"Sale on now\", \"cta\": {\"text\": \"Shop\"}}",
+      "multivariate_feature_state_values": [],
+      "feature": {
+        "id": 1,
+        "name": "home_banner",
+        "type": "STANDARD"
+      }
+    }
+  ]
+}

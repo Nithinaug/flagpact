@@ -1,0 +1,77 @@
+@import "./styles/tokens.css";
+@import "tailwindcss";
+
+@theme inline {
+  --ease-theme: var(--ease-theme);
+  /* Surfaces -> generates bg-canvas, bg-surface, bg-subtle */
+  --color-canvas: var(--bg-canvas);
+  --color-surface: var(--bg-surface);
+  --color-subtle: var(--bg-subtle);
+
+  /* Borders -> generates border-border-subtle, border-border-strong, divide-border-subtle */
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+
+  /* Ink -> generates text-ink-primary, text-ink-muted */
+  --color-ink-primary: var(--ink-primary);
+  --color-ink-muted: var(--ink-muted);
+
+  /* Accents -> generates bg-accent, text-accent, text-accent-ink, bg-accent-alt */
+  --color-accent: var(--accent);
+  --color-accent-alt: var(--accent-alt);
+  --color-accent-ink: var(--accent-ink);
+
+  /* Typography -> generates font-display, font-ui, font-mono */
+  --font-display: var(--font-display);
+  --font-ui: var(--font-ui);
+  --font-mono: var(--font-mono);
+
+  /* Geometry & Depth -> generates rounded-outer, rounded-inner, shadow-surface */
+  --radius-outer: var(--radius-outer);
+  --radius-inner: var(--radius-inner);
+  --shadow-surface: var(--surface-shadow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root, [data-theme] { --duration-theme: 0ms; }
+}
+
+@import "@fontsource-variable/space-grotesk";
+@import "@fontsource/space-mono/400.css";
+
+[data-theme="instrument"] {
+  --font-display: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+  --font-ui: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+  --font-mono: 'Space Grotesk Variable', 'Space Grotesk', sans-serif;
+  --status-red: oklch(0.68 0.2 25);
+  --status-amber: oklch(0.78 0.15 80);
+  --status-green: oklch(0.72 0.19 155);
+  --status-idle: oklch(0.45 0.01 260);
+  --grid-dot: oklch(1 0 0 / 0.07);
+}
+
+@theme inline {
+  --color-status-red: var(--status-red);
+  --color-status-amber: var(--status-amber);
+  --color-status-green: var(--status-green);
+  --color-status-idle: var(--status-idle);
+}
+
+html, body, #root { height: 100%; }
+body { margin: 0; font-variant-numeric: tabular-nums; background: var(--bg-canvas); color: var(--ink-primary); font-family: var(--font-ui); }
+
+.panel { position: relative; border: 1px solid var(--border-subtle); background: color-mix(in oklch, var(--bg-surface) 70%, transparent); }
+.panel::before, .panel::after { content: ""; position: absolute; width: 9px; height: 9px; border: 1px solid var(--ink-muted); pointer-events: none; }
+.panel::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+.panel::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+
+.kicker { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: none; color: var(--ink-muted); }
+.chip { font-family: var(--font-mono); font-size: 0.75rem; border: 1px solid var(--border-strong); padding: 0.125rem 0.5rem; color: var(--ink-primary); background: var(--bg-subtle); }
+.btn { font-family: var(--font-mono); font-size: 0.75rem; border: 1px solid var(--border-strong); padding: 0.5rem 0.875rem; background: transparent; color: var(--ink-primary); cursor: pointer; transition: background var(--duration-theme) var(--ease-theme), border-color var(--duration-theme) var(--ease-theme); }
+.btn:hover:not(:disabled) { background: var(--bg-subtle); border-color: var(--ink-muted); }
+.btn:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn-primary:hover:not(:disabled) { background: color-mix(in oklch, var(--accent) 85%, white); border-color: var(--accent); }
+
+textarea, pre, [role="log"] { font-family: "Space Mono", monospace; font-variant-numeric: normal; }

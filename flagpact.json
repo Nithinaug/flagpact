@@ -1,0 +1,10 @@
+{
+  "flag": "home_banner",
+  "trait": "app_version",
+  "contracts": "contracts",
+  "versions": [
+    {"version": "1.0.0", "directory": "demo/v1"},
+    {"version": "2.0.0", "directory": "demo/v2"},
+    {"version": "3.0.0", "directory": "demo/v3"}
+  ]
+}

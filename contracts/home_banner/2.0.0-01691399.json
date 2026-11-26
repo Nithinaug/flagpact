@@ -1,0 +1,21 @@
+{
+  "flag": "home_banner",
+  "app_version": "2.0.0",
+  "recorded_from": "demo/v2/test_banner.py",
+  "reads": [
+    {
+      "path": "subtitle",
+      "has_default": true,
+      "type": "missing",
+      "observed_values": []
+    },
+    {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+        "Sale on now"
+      ]
+    }
+  ]
+}
