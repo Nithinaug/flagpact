@@ -7,10 +7,18 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 from .admin import AdminClient, AdminError
 from .fix import PlanError
+from .importer import ScanError, scan_source
 from .service import Service
 
 DIST = pathlib.Path(__file__).resolve().parents[2] / "ui" / "dist"
 MAX_BODY = 64 * 1024
+
+
+def source_of(body):
+    source = body["source"]
+    if not isinstance(source, str):
+        raise ValueError("source must be a string")
+    return source
 
 
 def make_handler(service: Service):
@@ -18,6 +26,10 @@ def make_handler(service: Service):
         ("POST", "/api/check"): lambda body: service.check(body["value"], body.get("replay", True)),
         ("POST", "/api/plan"): lambda body: service.plan(body["value"], bool(body.get("include_missing"))),
         ("POST", "/api/apply"): lambda body: service.apply(body["value"], bool(body.get("include_missing"))),
+        ("POST", "/api/stages"): lambda body: service.stages(body["value"], bool(body.get("include_missing"))),
+        ("POST", "/api/stage-next"): lambda body: service.stage_next(body["value"], bool(body.get("include_missing"))),
+        ("POST", "/api/stage-back"): lambda body: service.stage_back(body["value"], bool(body.get("include_missing"))),
+        ("POST", "/api/import"): lambda body: scan_source(source_of(body), github_only=True),
         ("POST", "/api/render"): lambda body: service.panes(body.get("value")),
         ("POST", "/api/rehearse"): lambda body: service.rehearse(body["value"], bool(body.get("include_missing"))),
         ("POST", "/api/publish"): lambda body: service.publish(body["value"]),
@@ -41,10 +53,17 @@ def make_handler(service: Service):
             self.end_headers()
             self.wfile.write(data)
 
+        def local_json_request(self):
+            host = (self.headers.get("Host") or "").rsplit(":", 1)[0].strip("[]")
+            kind = (self.headers.get("Content-Type") or "").split(";")[0].strip().lower()
+            return host in ("127.0.0.1", "localhost") and kind == "application/json"
+
         def handle_api(self, method):
             route = routes.get((method, self.path))
             if route is None:
                 return self.send_json(404, {"error": "not found"})
+            if method == "POST" and not self.local_json_request():
+                return self.send_json(403, {"error": "requests must be JSON sent from this machine"})
             length = int(self.headers.get("Content-Length") or 0)
             if length > MAX_BODY:
                 return self.send_json(413, {"error": "body too large"})
@@ -55,7 +74,7 @@ def make_handler(service: Service):
                 return self.send_json(200, route(body))
             except (KeyError, ValueError):
                 return self.send_json(400, {"error": "bad request"})
-            except (AdminError, PlanError) as error:
+            except (AdminError, PlanError, ScanError) as error:
                 return self.send_json(409, {"error": str(error)})
 
         def do_POST(self):

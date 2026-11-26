@@ -5,6 +5,7 @@ import sys
 from typing import Any
 
 from .admin import AdminError, ReadOnlyClient
+from .importer import ScanError, scan_source
 from .service import MISSING, Service
 
 RESULTS = {"red": "breaks", "amber": "not_checked", "green": "safe", "idle": "not_checked"}
@@ -75,6 +76,51 @@ def print_report(report: dict[str, Any]) -> None:
         print(f"No automatic fix: {report['error']}")
 
 
+def print_import(result: dict[str, Any]) -> None:
+    where = "GitHub repository" if result["kind"] == "github" else "folder"
+    print(f"Scanned {result['files_scanned']} files in {where} {result['source']}")
+    if not result["flags"]:
+        print("No Flagsmith value reads found")
+    for flag in result["flags"]:
+        print(f"Flag {flag['flag']}: read at {len(flag['sites'])} place(s)")
+        for read in flag["reads"]:
+            parts = []
+            if read["required_in"]:
+                parts.append("required in " + ", ".join(read["required_in"]))
+            if read["default_in"]:
+                parts.append("default in " + ", ".join(read["default_in"]))
+            print(f"  {read['path']:<20}{'; '.join(parts)}  ({read['places'][0]})")
+    for item in result["versions"]:
+        mark = " (from a package file)" if item["guessed"] else ""
+        print(f"App version {item['version']} in {item['directory']}{mark}")
+    for line in result["needs_review"]:
+        print(f"Review: {line}")
+    for line in result["notes"]:
+        print(f"Note: {line}")
+
+
+def run_import(args: argparse.Namespace) -> int:
+    try:
+        result = scan_source(args.source)
+        if args.out and result["draft"] is not None:
+            if os.path.exists(args.out):
+                raise ScanError(f"{args.out} already exists, choose another file")
+            with open(args.out, "x") as handle:
+                handle.write(json.dumps(result["draft"], indent=2) + "\n")
+    except (ScanError, OSError) as error:
+        print(f"flagpact: {error}", file=sys.stderr)
+        return 2
+    if args.json:
+        print(json.dumps(result, indent=2))
+    else:
+        print_import(result)
+        if result["draft"] is not None:
+            print(f"Draft written to {args.out}" if args.out else "Draft flagpact.json:")
+            if not args.out:
+                print(json.dumps(result["draft"], indent=2))
+    return 0 if result["draft"] is not None else 1
+
+
 def main(argv: list[str] | None = None, admin: Any = None) -> int:
     parser = argparse.ArgumentParser(prog="flagpact")
     commands = parser.add_subparsers(dest="command", required=True)
@@ -83,7 +129,13 @@ def main(argv: list[str] | None = None, admin: Any = None) -> int:
     check.add_argument("--config", default="flagpact.json")
     check.add_argument("--env-file", help="file with FLAGSMITH_API_URL and FLAGSMITH_ENV_SERVER_KEY")
     check.add_argument("--json", action="store_true", help="print a JSON report")
+    imp = commands.add_parser("import", help="scan a local folder or a public GitHub repository and draft a flagpact.json")
+    imp.add_argument("source", help="a local folder, or a public https://github.com/owner/repo URL")
+    imp.add_argument("--out", help="write the draft flagpact.json to this new file")
+    imp.add_argument("--json", action="store_true", help="print the full scan as JSON")
     args = parser.parse_args(argv)
+    if args.command == "import":
+        return run_import(args)
 
     try:
         if args.env_file:

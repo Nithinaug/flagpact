@@ -13,11 +13,11 @@ import semver
 
 from .admin import AdminClient, AdminError
 from .contracts import load_contracts
-from .fix import Applied, Plan, PlanError, apply_plan, plan_fix, publish, rollback
+from .fix import Applied, Plan, PlanError, apply_plan, move_boundary, plan_fix, publish, rollback
 from .matrix import AppVersion, Cell, build_matrix
 from .rehearsal import Clone
 from .replay import render
-from .resolver import patch_default, resolve, with_fix
+from .resolver import patch_default, resolve, with_fix, without_fixes
 from .risks import notices as flag_notices
 from .risks import partial
 from .verdict import AMBER, GREEN, RED
@@ -122,9 +122,19 @@ class Service:
             raw = override["feature_state_value"]
             old = raw if isinstance(raw, str) else json.dumps(raw)
             published = json.loads(default["feature_state_value"]) != json.loads(old)
-            self.applied = Applied(self.flag, old, default["id"], fsegs[0]["id"], segment["id"], True, published, ["recovered"])
+            boundary = self._boundary(in_document)
+            self.applied = Applied(self.flag, old, default["id"], fsegs[0]["id"], segment["id"], True, published, ["recovered"], boundary)
         except (AdminError, KeyError, IndexError, ValueError, StopIteration):
             return
+
+    @staticmethod
+    def _boundary(segment: dict[str, Any]) -> str:
+        for rule in segment.get("rules", []):
+            for inner in rule.get("rules", []):
+                for condition in inner.get("conditions", []):
+                    if condition.get("property_") == "app_version" and condition.get("operator") == "LESS_THAN":
+                        return str(condition.get("value", "")).split(":")[0]
+        return ""
 
     def state(self) -> dict[str, Any]:
         self._recover()
@@ -207,6 +217,88 @@ class Service:
         steps = rollback(self.admin, self.applied)
         self.applied = None
         return {"steps": steps}
+
+    def _stage_context(self, value: dict[str, Any], include_missing: bool, want: str = "all") -> tuple[Plan, dict[int, dict[str, Any]], int, int]:
+        self._recover()
+        stripped = without_fixes(self.admin.document(), self.flag)
+        old = json.loads(self.applied.previous_default) if self.applied is not None else self._default(stripped)
+        before = build_matrix(stripped, self.flag, value, self.versions, self.contracts)
+        plan = plan_fix(self.flag, old, value, before, include_missing, staged=True)
+        names = plan.boundaries()
+        current = -1
+        if self.applied is not None and self.applied.boundary in names:
+            current = names.index(self.applied.boundary)
+        wanted = {"all": set(range(len(names))), "next": {current + 1}, "back": {current - 1}}[want]
+        stages: dict[int, dict[str, Any]] = {}
+        for index, boundary in enumerate(names):
+            if index not in wanted:
+                continue
+            fixed = with_fix(stripped, self.flag, plan.segment_name, boundary, old, value, include_missing)
+            cells = build_matrix(fixed, self.flag, value, self.versions, self.contracts)
+            on_new = [v.version for v in self.versions if semver.Version.parse(v.version) >= semver.Version.parse(boundary)]
+            kept = [v.version for v in self.versions if v.version not in on_new]
+            share = sum(self._share(v) for v in on_new) + (0 if include_missing else self._share(MISSING))
+            blocked = [c.version for c in cells if c.state == RED]
+            stages[index] = {
+                "index": index,
+                "boundary": boundary,
+                "gets_change": on_new,
+                "kept": kept,
+                "share_new": share,
+                "cells": self._with_missing(cells, fixed, include_missing),
+                "ok": not blocked,
+                "blocked": blocked,
+                "holds_missing": bool(include_missing and self.missing),
+            }
+        return plan, stages, current, len(names)
+
+    def stages(self, value: dict[str, Any], include_missing: bool = False) -> dict[str, Any]:
+        try:
+            plan, stages, current, _ = self._stage_context(value, include_missing)
+        except PlanError as error:
+            return {"stages": [], "current": -1, "error": str(error)}
+        return {
+            "stages": [stages[i] for i in sorted(stages)],
+            "current": current,
+            "segment": plan.segment_name,
+            "held": plan.broken,
+            "published": self.applied is not None and self.applied.published,
+        }
+
+    def stage_next(self, value: dict[str, Any], include_missing: bool = False) -> dict[str, Any]:
+        self._recover()
+        if self.applied is not None and not self.applied.published:
+            raise AdminError("publish or undo the applied fix before staging a rollout")
+        plan, stages, current, count = self._stage_context(value, include_missing, "next")
+        if self.applied is not None and current == -1:
+            raise AdminError("the applied fix does not match this rollout, undo it first")
+        target = current + 1
+        if target >= count:
+            raise AdminError("every stage is already applied")
+        stage = stages[target]
+        if not stage["ok"]:
+            raise AdminError(f"stage {target + 1} would break {', '.join(stage['blocked'])}, so it was not applied")
+        if self.applied is None:
+            applied = apply_plan(self.admin, plan, stage["boundary"])
+            steps = list(applied.steps) + publish(self.admin, applied, value)
+            self.applied = applied
+        else:
+            steps = move_boundary(self.admin, self.applied, plan, stage["boundary"])
+        self._watch_cache = None
+        return {"steps": steps, "stage": target, "done": target == count - 1}
+
+    def stage_back(self, value: dict[str, Any], include_missing: bool = False) -> dict[str, Any]:
+        self._recover()
+        if self.applied is None:
+            raise AdminError("no stage is applied")
+        plan, stages, current, _ = self._stage_context(value, include_missing, "back")
+        if current <= 0:
+            result = self.rollback()
+            self._watch_cache = None
+            return {**result, "stage": -1}
+        steps = move_boundary(self.admin, self.applied, plan, stages[current - 1]["boundary"])
+        self._watch_cache = None
+        return {"steps": steps, "stage": current - 1}
 
     def _render_all(self, document: dict[str, Any]) -> list[dict[str, Any]]:
         with tempfile.TemporaryDirectory() as tmp:
@@ -326,6 +418,7 @@ class Service:
         ]
         plan = plan_fix(self.flag, previous, result["value"], cells, include_missing)
         applied = apply_plan(self.admin, plan)
+        applied.previous_default = json.dumps(previous)
         applied.published = True
         self.applied = applied
         self._watch_cache = None

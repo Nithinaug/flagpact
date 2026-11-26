@@ -26,6 +26,14 @@ def resolve(document: dict[str, Any], flag: str, version: str | None) -> dict[st
     return json.loads(raw) if isinstance(raw, str) else raw
 
 
+def without_fixes(document: dict[str, Any], flag: str) -> dict[str, Any]:
+    stripped = copy.deepcopy(document)
+    prefix = f"flagpact/{flag}/"
+    segments = stripped["project"]["segments"]
+    segments[:] = [s for s in segments if not s["name"].startswith(prefix)]
+    return stripped
+
+
 def with_fix(document: dict[str, Any], flag: str, name: str, limit: str, old_value: dict[str, Any],
              new_value: dict[str, Any], include_missing: bool) -> dict[str, Any]:
     patched = patch_default(document, flag, new_value)

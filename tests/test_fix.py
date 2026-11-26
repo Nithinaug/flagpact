@@ -3,7 +3,7 @@ import json
 import pytest
 
 from flagpact.admin import AdminClient
-from flagpact.fix import PlanError, apply_plan, plan_fix, publish, rollback
+from flagpact.fix import PlanError, apply_plan, move_boundary, plan_fix, publish, rollback
 from flagpact.matrix import Cell
 from flagpact.verdict import AMBER, GREEN, RED
 
@@ -21,6 +21,7 @@ class FakeFlagsmith:
         self.segments = []
         self.fsegs = []
         self.states = []
+        self.puts = []
         self.default = {"id": 100, "feature_segment": None, "feature_state_value": json.dumps(OLD)}
         self.next_id = 1
 
@@ -54,6 +55,9 @@ class FakeFlagsmith:
             return 201, body
         if method == "POST" and route.endswith("update-priorities/"):
             return 200, {}
+        if method == "PUT" and "/segments/" in route:
+            self.puts.append(body)
+            return 200, {"id": 1, "name": body["name"]}
         if method == "PATCH" and route.startswith("/environments/"):
             self.default["feature_state_value"] = body["feature_state_value"]
             return 200, {}
@@ -148,3 +152,42 @@ def test_remote_url_is_refused(monkeypatch):
     from flagpact.admin import AdminError
     with pytest.raises(AdminError):
         AdminClient.from_env()
+
+
+def test_staged_plan_allows_a_change_that_breaks_nothing():
+    plan = plan_fix("home_banner", OLD, NEW, cells(GREEN, GREEN, GREEN), staged=True)
+    assert plan.boundaries() == ["3.0.0", "2.0.0", "1.0.0"]
+    assert plan.limit == "1.0.0"
+
+
+def test_staged_plan_leaves_broken_versions_out_of_every_stage():
+    plan = plan_fix("home_banner", OLD, NEW, cells(RED, GREEN, GREEN), staged=True)
+    assert plan.boundaries() == ["3.0.0", "2.0.0"]
+    assert plan.broken == ["1.0.0"]
+
+
+def test_staged_plan_still_refuses_when_everything_breaks():
+    with pytest.raises(PlanError):
+        plan_fix("home_banner", OLD, NEW, cells(RED, RED), staged=True)
+
+
+def test_apply_uses_the_stage_boundary_for_the_rule():
+    fake = FakeFlagsmith()
+    plan = plan_fix("home_banner", OLD, NEW, cells(GREEN, GREEN, GREEN), staged=True)
+    applied = apply_plan(admin(fake), plan, "3.0.0")
+    assert applied.boundary == "3.0.0"
+    assert plan.segment_name == "flagpact/home_banner/1.0.0"
+
+
+def test_move_boundary_rewrites_only_the_segment_rule():
+    fake = FakeFlagsmith()
+    ad = admin(fake)
+    plan = plan_fix("home_banner", OLD, NEW, cells(GREEN, GREEN, GREEN), staged=True)
+    applied = apply_plan(ad, plan, "3.0.0")
+    before = len(fake.log)
+    steps = move_boundary(ad, applied, plan, "2.0.0")
+    writes = [c for c in fake.log[before:] if c[0] != "GET"]
+    assert writes == [("PUT", f"/projects/1/segments/{applied.segment_id}/")]
+    condition = fake.puts[0]["rules"][0]["rules"][0]["conditions"][0]
+    assert condition["value"] == "2.0.0:semver"
+    assert applied.boundary == "2.0.0" and "2.0.0" in steps[0]
