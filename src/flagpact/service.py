@@ -1,7 +1,9 @@
+import hashlib
 import json
 import os
 import pathlib
 import tempfile
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict
@@ -34,6 +36,10 @@ class Service:
             for v in config["versions"]
         }
         self.missing = config.get("missing_trait")
+        self.outside_edit = config.get("outside_edit")
+        self._last_safe: dict[str, Any] | None = None
+        self._watch_cache: tuple[str, dict[str, Any]] | None = None
+        self._watch_lock = threading.Lock()
         self.applied: Applied | None = None
         self._planned: dict[str, Plan] = {}
         self.clone_factory = lambda: Clone.create(self.admin)
@@ -194,3 +200,51 @@ class Service:
         finally:
             clone.cleanup()
         return {"ok": all(r["ok"] for r in rows), "seconds": round(time.time() - started, 1), "rows": rows}
+
+    def watch(self) -> dict[str, Any]:
+        with self._watch_lock:
+            return self._watch()
+
+    def _watch(self) -> dict[str, Any]:
+        document = self.admin.document()
+        value = self._default(document)
+        key = hashlib.sha1(json.dumps(document, sort_keys=True).encode()).hexdigest()
+        if self._watch_cache is not None and self._watch_cache[0] == key:
+            return {**self._watch_cache[1], "checked_at": time.time()}
+        cells = build_matrix(document, self.flag, value, self.versions, self.contracts)
+        broken = [c.version for c in cells if c.state == RED]
+        ok = not broken
+        if ok:
+            self._last_safe = value
+        result = {
+            "ok": ok,
+            "value": value,
+            "broken": broken,
+            "cells": self._with_missing(cells, document, False),
+            "at_risk": self._risk(cells),
+            "restore": (not ok) and self._last_safe is not None and self._last_safe != value,
+            "previous": None if ok else self._last_safe,
+            "checked_at": time.time(),
+        }
+        self._watch_cache = (key, result)
+        return result
+
+    def _write_default(self, value: dict[str, Any]) -> None:
+        feature_id = self.admin.feature_id(self.flag)
+        state = self.admin.default_state(feature_id)
+        self.admin.set_default(state["id"], json.dumps(value))
+        self._watch_cache = None
+
+    def restore(self) -> dict[str, Any]:
+        document = self.admin.document()
+        if self._last_safe is None or self._last_safe == self._default(document):
+            raise AdminError("there is no earlier safe value to restore")
+        self._write_default(self._last_safe)
+        return {"value": self._last_safe}
+
+    def simulate_outside_edit(self) -> dict[str, Any]:
+        if not self.outside_edit:
+            raise AdminError("no outside edit is configured")
+        self.watch()
+        self._write_default(self.outside_edit)
+        return {"value": self.outside_edit}

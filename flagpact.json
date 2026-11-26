@@ -3,9 +3,37 @@
   "trait": "app_version",
   "contracts": "contracts",
   "versions": [
-    {"version": "1.0.0", "directory": "demo/v1", "share": 22, "users": 41200, "platforms": "iOS · Android"},
-    {"version": "2.0.0", "directory": "demo/v2", "share": 39, "users": 73000, "platforms": "iOS · Android"},
-    {"version": "3.0.0", "directory": "demo/v3", "share": 35, "users": 65500, "platforms": "iOS · Android"}
+    {
+      "version": "1.0.0",
+      "directory": "demo/v1",
+      "share": 22,
+      "users": 41200,
+      "platforms": "iOS \u00b7 Android"
+    },
+    {
+      "version": "2.0.0",
+      "directory": "demo/v2",
+      "share": 39,
+      "users": 73000,
+      "platforms": "iOS \u00b7 Android"
+    },
+    {
+      "version": "3.0.0",
+      "directory": "demo/v3",
+      "share": 35,
+      "users": 65500,
+      "platforms": "iOS \u00b7 Android"
+    }
   ],
-  "missing_trait": {"share": 4, "users": 7400}
+  "missing_trait": {
+    "share": 4,
+    "users": 7400
+  },
+  "outside_edit": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+      "label": "Shop the sale"
+    }
+  }
 }

@@ -21,7 +21,10 @@ def make_handler(service: Service):
         ("POST", "/api/render"): lambda body: service.panes(body.get("value")),
         ("POST", "/api/rehearse"): lambda body: service.rehearse(body["value"], bool(body.get("include_missing"))),
         ("POST", "/api/publish"): lambda body: service.publish(body["value"]),
+        ("POST", "/api/restore"): lambda body: service.restore(),
+        ("POST", "/api/outside-edit"): lambda body: service.simulate_outside_edit(),
         ("POST", "/api/rollback"): lambda body: service.rollback(),
+        ("GET", "/api/watch"): lambda body: service.watch(),
         ("GET", "/api/state"): lambda body: service.state(),
     }
 

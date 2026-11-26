@@ -178,3 +178,78 @@ def test_rehearsal_is_refused_while_a_fix_is_applied():
     except AdminError:
         raised = True
     assert raised
+
+
+class LiveStub:
+    dashboard_url = ""
+
+    def __init__(self):
+        self.doc = json.loads(json.dumps(DOCUMENT))
+
+    def document(self):
+        return self.doc
+
+    def state(self):
+        return next(s for s in self.doc["feature_states"] if s["feature"]["name"] == "home_banner")
+
+    def feature_id(self, flag):
+        return 1
+
+    def default_state(self, feature_id):
+        return {"id": 1}
+
+    def set_default(self, state_id, value):
+        self.state()["feature_state_value"] = value
+
+
+def live_service():
+    stub = LiveStub()
+    return Service(stub, str(ROOT / "flagpact.json")), stub
+
+
+def test_watch_is_quiet_while_the_live_value_is_safe():
+    service, _ = live_service()
+    result = service.watch()
+    assert result["ok"] is True and result["broken"] == [] and result["restore"] is False
+
+
+def test_watch_catches_an_outside_edit_and_offers_a_restore():
+    service, stub = live_service()
+    service.watch()
+    result = service.simulate_outside_edit()
+    assert result["value"] == NEW
+    caught = service.watch()
+    assert caught["ok"] is False and caught["broken"] == ["1.0.0", "2.0.0"]
+    assert caught["restore"] is True and caught["at_risk"] == 61
+    assert "title" in caught["previous"] and caught["previous"] != caught["value"]
+
+
+def test_restore_puts_the_last_safe_value_back():
+    service, stub = live_service()
+    service.watch()
+    service.simulate_outside_edit()
+    service.watch()
+    service.restore()
+    again = service.watch()
+    assert again["ok"] is True and again["restore"] is False
+    assert "title" in json.loads(stub.state()["feature_state_value"])
+
+
+def test_restore_without_an_earlier_safe_value_is_refused():
+    from flagpact.admin import AdminError
+    service, stub = live_service()
+    stub.state()["feature_state_value"] = json.dumps(NEW)
+    result = service.watch()
+    assert result["ok"] is False and result["restore"] is False
+    try:
+        service.restore()
+        raised = False
+    except AdminError:
+        raised = True
+    assert raised
+
+
+def test_watch_route_and_conflict_on_bad_restore(base):
+    status, body = call(base, "GET", "/api/watch")
+    assert status == 200 and body["ok"] is True
+    assert call(base, "POST", "/api/restore", {})[0] == 409
