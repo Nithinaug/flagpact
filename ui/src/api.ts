@@ -49,6 +49,7 @@ export type State = {
   published: boolean;
   dashboard: string;
   contracts: Record<string, Read[]>;
+  notices: string[];
 };
 
 export type Rehearsal = {
@@ -97,6 +98,7 @@ export const api = {
   rehearse: (value: unknown, includeMissing: boolean) =>
     call<Rehearsal>("POST", "/api/rehearse", { value, include_missing: includeMissing }),
   watch: () => call<Watch>("GET", "/api/watch"),
+  protect: () => call<{ steps: string[]; limit: string }>("POST", "/api/protect", {}),
   restore: () => call<{ value: Record<string, unknown> }>("POST", "/api/restore", {}),
   outsideEdit: () => call<{ value: Record<string, unknown> }>("POST", "/api/outside-edit", {}),
   publish: (value: unknown) => call<{ steps: string[] }>("POST", "/api/publish", { value }),

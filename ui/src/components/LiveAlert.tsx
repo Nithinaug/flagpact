@@ -2,9 +2,9 @@ import { motion } from "motion/react";
 import type { Watch } from "../api";
 import { WarnIcon } from "./icons";
 
-type Props = { watch: Watch; hasShares: boolean; busy: boolean; onRestore: () => void };
+type Props = { watch: Watch; hasShares: boolean; busy: boolean; onProtect: () => void; onRestore: () => void };
 
-export function LiveAlert({ watch, hasShares, busy, onRestore }: Props) {
+export function LiveAlert({ watch, hasShares, busy, onProtect, onRestore }: Props) {
   const names = watch.broken.join(" and ");
   return (
     <motion.section
@@ -30,10 +30,15 @@ export function LiveAlert({ watch, hasShares, busy, onRestore }: Props) {
           </p>
         </div>
       </div>
-      {watch.restore ? (
-        <button className="btn btn-primary" disabled={busy} onClick={onRestore}>
-          Restore previous value
-        </button>
+      {watch.previous ? (
+        <div className="flex flex-wrap gap-2">
+          <button className="btn btn-primary" disabled={busy} onClick={onProtect}>
+            {busy ? "Protecting" : "Protect older versions"}
+          </button>
+          <button className="btn" disabled={busy || !watch.restore} onClick={onRestore}>
+            Restore previous value
+          </button>
+        </div>
       ) : (
         <span className="text-sm text-ink-muted">No earlier safe value is known</span>
       )}

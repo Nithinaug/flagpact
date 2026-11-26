@@ -26,6 +26,7 @@ export function plainReason(reason: string): string {
   if (changed) return `"${changed[1]}" is now ${plainType(changed[2])}, this version expects ${plainType(changed[3])}`;
   if (reason === "replay failed") return "Its own tests fail with this value";
   if (reason === "replay passed") return "Its own tests pass with this value";
+  if (reason.startsWith("partly checked")) return "Partly checked";
   if (reason.includes("replay not run")) return "Not tested yet";
   if (reason.startsWith("no contract recorded")) return "No recorded behaviour for this version";
   if (reason === "waiting for a pending change") return "Waiting for a change";
@@ -56,6 +57,7 @@ export function shortReason(reason: string): string {
   if (changed) return `${changed[1]} changed type`;
   if (reason === "replay failed") return "Tests fail";
   if (reason === "replay passed") return "Tests pass";
+  if (reason.startsWith("partly checked")) return "Partly checked";
   if (reason.includes("replay not run")) return "Not tested yet";
   if (reason.startsWith("no contract recorded")) return "No contract";
   if (reason === "waiting for a pending change") return "Waiting";

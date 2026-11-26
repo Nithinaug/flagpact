@@ -5,6 +5,7 @@ import { ChangeEditor } from "./components/ChangeEditor";
 import { ConfirmDialog } from "./components/ConfirmDialog";
 import { FixCard } from "./components/FixCard";
 import { LiveAlert } from "./components/LiveAlert";
+import { Notices } from "./components/Notices";
 import { ImpactTable, type Filter } from "./components/ImpactTable";
 import { Stepper, type StepState } from "./components/Stepper";
 import { SummaryCard } from "./components/SummaryCard";
@@ -272,6 +273,27 @@ export default function App() {
     }
   };
 
+  const protectLive = async () => {
+    if (!watch) return;
+    setBusy(true);
+    try {
+      const result = await api.protect();
+      push("green", "Older versions are protected", `Versions below ${result.limit} keep the previous value`);
+      await resync();
+      const live = watch.value;
+      api.check(live, true).then((checked) => setCells(checked.cells)).catch(() => undefined);
+      api.render(live).then((preview) => {
+        setBefore(preview.before);
+        setAfter(preview.after);
+      }).catch(() => undefined);
+      setWatch(await api.watch());
+    } catch (error) {
+      push("red", "Something went wrong", (error as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const simulateEdit = async () => {
     try {
       await api.outsideEdit();
@@ -368,7 +390,7 @@ export default function App() {
         busy={busy}
         onUndo={undo}
         onSimulate={simulateEdit}
-        demo={new URLSearchParams(window.location.search).has("demo")}
+        demo={new URLSearchParams(window.location.search).has("demo") || window.location.pathname.replace(/\/$/, "") === "/demo"}
       />
       <main className="w-full px-6 py-6">
         <div className="flex flex-wrap items-center justify-between gap-4 pb-6">
@@ -377,8 +399,9 @@ export default function App() {
         </div>
         <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_420px]">
           <div className="min-w-0 space-y-6">
+            <Notices lines={state?.notices ?? []} />
             {liveBroken && !editing && watch ? (
-              <LiveAlert watch={watch} hasShares={hasShares} busy={busy} onRestore={restoreLive} />
+              <LiveAlert watch={watch} hasShares={hasShares} busy={busy} onProtect={protectLive} onRestore={restoreLive} />
             ) : (
             <SummaryCard
               cells={rows}
