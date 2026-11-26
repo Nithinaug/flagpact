@@ -112,3 +112,69 @@ def test_panes_without_a_value_are_live_only(base):
 
 def test_publish_before_apply_is_conflict(base):
     assert call(base, "POST", "/api/publish", {"value": NEW})[0] == 409
+
+
+class StubClone:
+    def __init__(self, document, broken=False):
+        self.document = document
+        self.broken = broken
+        self.cleaned = False
+        self.fixed = None
+
+    def apply(self, plan):
+        from flagpact.resolver import with_fix
+        old = json.loads(next(s for s in self.document["feature_states"] if s["feature"]["name"] == "home_banner")["feature_state_value"])
+        self.fixed = with_fix(self.document, "home_banner", plan.segment_name, plan.limit, old, plan.new_value, plan.include_missing)
+
+    def publish(self, value):
+        return None
+
+    def probe(self, flag, version):
+        if self.broken:
+            raise RuntimeError("probe failed")
+        from flagpact.resolver import resolve
+        return resolve(self.fixed, flag, version)
+
+    def cleanup(self):
+        self.cleaned = True
+
+
+def make_service(clone):
+    service = Service(StubAdmin(), str(ROOT / "flagpact.json"))
+    service.clone_factory = lambda: clone
+    return service
+
+
+def test_rehearsal_confirms_every_version_on_a_clone():
+    clone = StubClone(DOCUMENT)
+    result = make_service(clone).rehearse(NEW, True)
+    assert result["ok"] is True and clone.cleaned
+    assert [(r["version"], r["expects"], r["ok"]) for r in result["rows"]] == [
+        ("1.0.0", "old", True), ("2.0.0", "old", True), ("3.0.0", "new", True), ("none", "old", True),
+    ]
+
+
+def test_rehearsal_without_missing_protection_expects_the_new_value():
+    result = make_service(StubClone(DOCUMENT)).rehearse(NEW, False)
+    assert result["rows"][-1]["expects"] == "new" and result["ok"]
+
+
+def test_rehearsal_cleans_up_when_a_probe_fails():
+    clone = StubClone(DOCUMENT, broken=True)
+    try:
+        make_service(clone).rehearse(NEW, True)
+    except RuntimeError:
+        pass
+    assert clone.cleaned
+
+
+def test_rehearsal_is_refused_while_a_fix_is_applied():
+    from flagpact.admin import AdminError
+    service = make_service(StubClone(DOCUMENT))
+    service.applied = object()
+    try:
+        service.rehearse(NEW, True)
+        raised = False
+    except AdminError:
+        raised = True
+    assert raised

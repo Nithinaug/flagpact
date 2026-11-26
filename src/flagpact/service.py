@@ -2,14 +2,18 @@ import json
 import os
 import pathlib
 import tempfile
+import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict
 from typing import Any
+
+import semver
 
 from .admin import AdminClient, AdminError
 from .contracts import load_contracts
 from .fix import Applied, Plan, PlanError, apply_plan, plan_fix, publish, rollback
 from .matrix import AppVersion, Cell, build_matrix
+from .rehearsal import Clone
 from .replay import render
 from .resolver import patch_default, resolve, with_fix
 from .verdict import AMBER, GREEN, RED
@@ -32,6 +36,7 @@ class Service:
         self.missing = config.get("missing_trait")
         self.applied: Applied | None = None
         self._planned: dict[str, Plan] = {}
+        self.clone_factory = lambda: Clone.create(self.admin)
 
     def _default(self, document: dict[str, Any]) -> dict[str, Any]:
         for state in document["feature_states"]:
@@ -154,3 +159,38 @@ class Service:
         before = self._render_all(document)
         after = self._render_all(patch_default(document, self.flag, value)) if value is not None else None
         return {"before": before, "after": after}
+
+    def rehearse(self, value: dict[str, Any], include_missing: bool = False) -> dict[str, Any]:
+        if self.applied is not None:
+            raise AdminError("undo the fix before rehearsing on a clone")
+        key = json.dumps([value, include_missing], sort_keys=True)
+        plan = self._planned.get(key)
+        document = self.admin.document()
+        if plan is None:
+            cells = build_matrix(document, self.flag, value, self.versions, self.contracts)
+            plan = plan_fix(self.flag, self._default(document), value, cells, include_missing)
+        started = time.time()
+        clone = self.clone_factory()
+        rows: list[dict[str, Any]] = []
+        try:
+            clone.apply(plan)
+            clone.publish(value)
+            targets: list[str | None] = [v.version for v in self.versions]
+            if self.missing:
+                targets.append(None)
+            for version in targets:
+                got = clone.probe(self.flag, version)
+                if version is None:
+                    held = include_missing
+                else:
+                    held = semver.Version.parse(version) < semver.Version.parse(plan.limit)
+                expected = plan.old_value if held else value
+                rows.append({
+                    "version": version or MISSING,
+                    "expects": "old" if held else "new",
+                    "ok": got == expected,
+                    "fields": sorted(got),
+                })
+        finally:
+            clone.cleanup()
+        return {"ok": all(r["ok"] for r in rows), "seconds": round(time.time() - started, 1), "rows": rows}

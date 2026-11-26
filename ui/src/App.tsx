@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { api, MISSING, type Cell, type Pane, type Plan, type State } from "./api";
+import { api, MISSING, type Cell, type Pane, type Plan, type Rehearsal, type State } from "./api";
 import { ActivityCard, type Entry } from "./components/ActivityCard";
 import { ChangeEditor } from "./components/ChangeEditor";
 import { ConfirmDialog } from "./components/ConfirmDialog";
@@ -39,6 +39,8 @@ export default function App() {
   const [confirm, setConfirm] = useState<"apply" | "publish" | null>(null);
   const [busy, setBusy] = useState(false);
   const [checking, setChecking] = useState(false);
+  const [rehearsal, setRehearsal] = useState<Rehearsal | null>(null);
+  const [rehearsing, setRehearsing] = useState(false);
   const [filter, setFilter] = useState<Filter>("ALL");
   const [lastMs, setLastMs] = useState<number | null>(null);
   const [checkedAt, setCheckedAt] = useState("");
@@ -111,6 +113,10 @@ export default function App() {
   }, [refresh, push]);
 
   const parsed = useMemo(() => parse(draft), [draft]);
+
+  useEffect(() => {
+    setRehearsal(null);
+  }, [draft, includeMissing, applied]);
   const unchanged = state !== null && parsed.value !== undefined && pretty(parsed.value) === pretty(state.value);
   const hasChange = (parsed.value !== undefined && !unchanged) || applied;
 
@@ -197,6 +203,22 @@ export default function App() {
   }, [state, parsed.value, brokenVersions.join(",")]);
 
   const hasShares = state ? Object.values(state.meta).some((m) => m.share !== null) : false;
+
+  const rehearse = async () => {
+    if (!parsed.value) return;
+    setRehearsing(true);
+    push("idle", "Rehearsing on a clone of the environment");
+    try {
+      const result = await api.rehearse(parsed.value, includeMissing);
+      setRehearsal(result);
+      const good = result.rows.filter((r) => r.ok).length;
+      push(result.ok ? "green" : "red", result.ok ? "Rehearsal passed on a clone" : "Rehearsal found a problem", `${good} of ${result.rows.length} as expected · clone deleted · ${result.seconds} s`);
+    } catch (error) {
+      push("red", "Something went wrong", (error as Error).message);
+    } finally {
+      setRehearsing(false);
+    }
+  };
 
   const confirmApply = async () => {
     if (!parsed.value) return;
@@ -343,6 +365,9 @@ export default function App() {
               dashboard={state?.dashboard ?? ""}
               onApply={() => setConfirm("apply")}
               onPublish={() => setConfirm("publish")}
+              rehearsal={rehearsal}
+              rehearsing={rehearsing}
+              onRehearse={rehearse}
             />
             <ActivityCard entries={entries} />
           </aside>

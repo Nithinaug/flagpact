@@ -51,6 +51,12 @@ export type State = {
   contracts: Record<string, Read[]>;
 };
 
+export type Rehearsal = {
+  ok: boolean;
+  seconds: number;
+  rows: { version: string; expects: "old" | "new"; ok: boolean; fields: string[] }[];
+};
+
 export const MISSING = "none";
 
 export const LABELS: Record<Verdict, string> = {
@@ -77,6 +83,8 @@ export const api = {
   plan: (value: unknown, includeMissing: boolean) => call<Plan>("POST", "/api/plan", { value, include_missing: includeMissing }),
   apply: (value: unknown, includeMissing: boolean) =>
     call<{ steps: string[]; cells: Cell[] }>("POST", "/api/apply", { value, include_missing: includeMissing }),
+  rehearse: (value: unknown, includeMissing: boolean) =>
+    call<Rehearsal>("POST", "/api/rehearse", { value, include_missing: includeMissing }),
   publish: (value: unknown) => call<{ steps: string[] }>("POST", "/api/publish", { value }),
   render: (value?: unknown) =>
     call<{ before: Pane[]; after: Pane[] | null }>("POST", "/api/render", value === undefined ? {} : { value }),

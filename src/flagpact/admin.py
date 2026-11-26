@@ -35,8 +35,11 @@ def http_request(base: str, keys: dict[str, str]) -> Request:
 
 
 class AdminClient:
-    def __init__(self, request: Request, project_id: str, client_key: str, dashboard_url: str = "") -> None:
+    def __init__(self, request: Request, project_id: str, client_key: str, dashboard_url: str = "",
+                 base: str = "", keys: dict[str, str] | None = None) -> None:
         self._call = request
+        self._base = base
+        self._keys = keys or {}
         self.dashboard_url = dashboard_url
         self.project_id = project_id
         self.client_key = client_key
@@ -52,7 +55,7 @@ class AdminClient:
             "server": os.environ["FLAGSMITH_ENV_SERVER_KEY"],
         }
         dashboard = base.removesuffix("/api/v1") + f"/project/{os.environ['FLAGSMITH_PROJECT_ID']}/segments"
-        return cls(http_request(base, keys), os.environ["FLAGSMITH_PROJECT_ID"], keys["client"], dashboard)
+        return cls(http_request(base, keys), os.environ["FLAGSMITH_PROJECT_ID"], keys["client"], dashboard, base, keys)
 
     def _ok(self, method: str, path: str, body: Any = None, kind: str = "master", expect: tuple[int, ...] = (200, 201, 204)) -> Any:
         status, payload = self._call(method, path, body, kind)
@@ -102,3 +105,28 @@ class AdminClient:
     def prioritise(self, first_id: int, others: list[int]) -> None:
         order = [first_id] + [i for i in others if i != first_id]
         self._ok("POST", "/features/feature-segments/update-priorities/", [{"id": i, "priority": n} for n, i in enumerate(order)])
+
+    def scoped(self, client_key: str, server_key: str) -> "AdminClient":
+        if not self._base:
+            raise AdminError("this client cannot be scoped to another environment")
+        keys = {**self._keys, "client": client_key, "server": server_key}
+        return AdminClient(http_request(self._base, keys), self.project_id, client_key, self.dashboard_url, self._base, keys)
+
+    def clone_environment(self, name: str) -> str:
+        payload = self._ok("POST", f"/environments/{self.client_key}/clone/", {"name": name})
+        return payload["api_key"]
+
+    def create_server_key(self, environment_key: str, name: str) -> str:
+        return self._ok("POST", f"/environments/{environment_key}/api-keys/", {"name": name})["key"]
+
+    def delete_environment(self, environment_key: str) -> None:
+        self._ok("DELETE", f"/environments/{environment_key}/")
+
+    def delete_segment(self, segment_id: int) -> None:
+        self._ok("DELETE", f"/projects/{self.project_id}/segments/{segment_id}/")
+
+    def probe(self, flag: str, version: str | None) -> dict[str, Any]:
+        traits = [] if version is None else [{"trait_key": "app_version", "trait_value": version, "transient": True}]
+        payload = self._ok("POST", "/identities/", {"identifier": "flagpact-probe", "transient": True, "traits": traits}, kind="client")
+        state = next(f for f in payload["flags"] if f["feature"]["name"] == flag)
+        return json.loads(state["feature_state_value"])
