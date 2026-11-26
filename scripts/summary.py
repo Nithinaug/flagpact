@@ -1,0 +1,29 @@
+import json
+import sys
+
+WORDS = {"breaks": "Breaks", "not_checked": "Not checked", "safe": "Safe"}
+
+
+def render(report):
+    if report.get("status") == "error":
+        return "### flagpact check\n\nThe check could not run: %s\n" % report.get("error", "unknown error")
+    versions = [v for v in report["versions"] if v["version"] != "none"]
+    lines = ["### flagpact check: %s" % report["flag"], ""]
+    if report["breaks"]:
+        lines.append("%d of %d app versions would break." % (report["breaks"], len(versions)))
+    else:
+        lines.append("No app version would break.")
+    lines += ["", "| App version | Result | Reason |", "| --- | --- | --- |"]
+    for item in report["versions"]:
+        name = "no app_version" if item["version"] == "none" else item["version"]
+        lines.append("| %s | %s | %s |" % (name, WORDS[item["result"]], item["reason"]))
+    for note in report.get("notices", []):
+        lines += ["", "Note: %s" % note]
+    if report.get("fix"):
+        lines += ["", "Suggested fix: keep versions below %s on the live value, then publish." % report["fix"]["keep_below"]]
+    return "\n".join(lines) + "\n"
+
+
+if __name__ == "__main__":
+    with open(sys.argv[1]) as handle:
+        sys.stdout.write(render(json.load(handle)))

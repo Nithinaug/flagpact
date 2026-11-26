@@ -1,0 +1,58 @@
+name: flagpact check
+description: Check a pending Flagsmith config value against every app version and fail when one would break
+branding:
+  icon: shield
+  color: green
+
+inputs:
+  value:
+    description: The pending value, as a JSON file path or inline JSON
+    required: true
+  config:
+    description: Path to flagpact.json
+    required: false
+    default: flagpact.json
+  api-url:
+    description: Flagsmith API URL, for example http://localhost:8000/api/v1/
+    required: true
+  server-key:
+    description: Server-side environment key. It is read-only here, no management key is needed.
+    required: true
+  python-version:
+    description: Python version to run flagpact with
+    required: false
+    default: "3.12"
+
+outputs:
+  report-path:
+    description: Path to the JSON report
+    value: ${{ steps.check.outputs.report-path }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install flagpact
+      shell: bash
+      run: python -m pip install --quiet "${{ github.action_path }}"
+
+    - name: Run the check
+      id: check
+      shell: bash
+      env:
+        FLAGSMITH_API_URL: ${{ inputs.api-url }}
+        FLAGSMITH_ENV_SERVER_KEY: ${{ inputs.server-key }}
+        FLAGPACT_VALUE: ${{ inputs.value }}
+        FLAGPACT_CONFIG: ${{ inputs.config }}
+      run: |
+        report="${RUNNER_TEMP}/flagpact-report.json"
+        set +e
+        flagpact check --value "$FLAGPACT_VALUE" --config "$FLAGPACT_CONFIG" --json > "$report"
+        code=$?
+        set -e
+        echo "report-path=${report}" >> "$GITHUB_OUTPUT"
+        python "${{ github.action_path }}/scripts/summary.py" "$report" >> "$GITHUB_STEP_SUMMARY"
+        exit "$code"
