@@ -65,9 +65,9 @@ body { margin: 0; font-variant-numeric: tabular-nums; background: var(--bg-canva
 .panel::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
 .panel::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
 
-.kicker { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: none; color: var(--ink-muted); }
-.chip { font-family: var(--font-mono); font-size: 0.75rem; border: 1px solid var(--border-strong); padding: 0.125rem 0.5rem; color: var(--ink-primary); background: var(--bg-subtle); }
-.btn { font-family: var(--font-mono); font-size: 0.75rem; border: 1px solid var(--border-strong); padding: 0.5rem 0.875rem; background: transparent; color: var(--ink-primary); cursor: pointer; transition: background var(--duration-theme) var(--ease-theme), border-color var(--duration-theme) var(--ease-theme); }
+.kicker { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em; text-transform: none; color: var(--ink-muted); }
+.chip { font-family: var(--font-mono); font-size: 0.8125rem; border: 1px solid var(--border-strong); padding: 0.125rem 0.5rem; color: var(--ink-primary); background: var(--bg-subtle); }
+.btn { font-family: var(--font-ui); font-size: 0.8125rem; border: 1px solid var(--border-strong); padding: 0.5rem 0.875rem; background: transparent; color: var(--ink-primary); cursor: pointer; transition: background var(--duration-theme) var(--ease-theme), border-color var(--duration-theme) var(--ease-theme); }
 .btn:hover:not(:disabled) { background: var(--bg-subtle); border-color: var(--ink-muted); }
 .btn:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }

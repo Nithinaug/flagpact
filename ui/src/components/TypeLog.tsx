@@ -8,7 +8,7 @@ export function TypeLog({ lines }: { lines: string[] }) {
   }, [lines.length]);
 
   return (
-    <div role="log" aria-live="polite" className="h-36 overflow-y-auto border-t border-border-subtle pt-3 font-mono text-[11px] leading-relaxed text-ink-muted">
+    <div role="log" aria-live="polite" className="h-40 overflow-y-auto text-xs leading-relaxed text-ink-muted">
       {lines.map((line, i) => (
         <motion.div
           key={`${i}-${line}`}
@@ -16,7 +16,7 @@ export function TypeLog({ lines }: { lines: string[] }) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         >
-          &gt; {line}
+          {line}
         </motion.div>
       ))}
       <div ref={end} />

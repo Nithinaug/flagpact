@@ -1,10 +1,10 @@
 export type Verdict = "red" | "amber" | "green" | "idle";
 
 export const LABELS: Record<Verdict, string> = {
-  red: "BREAKS",
-  amber: "UNVERIFIED",
-  green: "SAFE",
-  idle: "WAITING",
+  red: "Breaks",
+  amber: "Not checked",
+  green: "Safe",
+  idle: "Waiting",
 };
 
 export type Cell = {

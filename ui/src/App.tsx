@@ -9,11 +9,18 @@ import { SignalLine } from "./components/SignalLine";
 import { StatusMark } from "./components/StatusMark";
 import { SurfaceBackdrop } from "./components/SurfaceBackdrop";
 import { TypeLog } from "./components/TypeLog";
+import { plainReason, plainStep, plainType } from "./plain";
 
-const ROW_HEIGHT = 56;
 type Filter = "ALL" | "red" | "amber" | "green";
+
 const FILTERS: Filter[] = ["ALL", "red", "amber", "green"];
+const ROW_HEIGHT = 64;
 const BREAKING = { heading: "Sale on now", cta: { text: "Shop" } };
+const PHASES = [
+  { key: "CHECK", label: "Check your change" },
+  { key: "FIX", label: "Apply the fix" },
+  { key: "ROLLBACK", label: "Undo if needed" },
+];
 
 function pretty(value: unknown): string {
   return JSON.stringify(value, null, 2);
@@ -22,10 +29,10 @@ function pretty(value: unknown): string {
 function parse(text: string): { value?: Record<string, unknown>; error?: string } {
   try {
     const value = JSON.parse(text);
-    if (value === null || typeof value !== "object" || Array.isArray(value)) return { error: "Value must be a JSON object" };
+    if (value === null || typeof value !== "object" || Array.isArray(value)) return { error: "The value must be a JSON object" };
     return { value };
   } catch {
-    return { error: "Not valid JSON yet" };
+    return { error: "This is not valid JSON yet" };
   }
 }
 
@@ -37,7 +44,7 @@ export default function App() {
   const [plan, setPlan] = useState<Plan | null>(null);
   const [applied, setApplied] = useState(false);
   const [run, setRun] = useState(0);
-  const [log, setLog] = useState<string[]>(["ready"]);
+  const [log, setLog] = useState<string[]>(["Ready"]);
   const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState(false);
   const [filter, setFilter] = useState<Filter>("ALL");
@@ -57,7 +64,17 @@ export default function App() {
 
   useEffect(() => {
     refresh()
-      .then((next) => setDraft(pretty(next.value)))
+      .then((next) => {
+        setDraft(pretty(next.value));
+        setApplied(next.applied);
+        if (next.applied) {
+          api.render().then((result) => {
+            setPanes(result.panes);
+            setPaneMode(result.mode);
+          });
+          api.check(next.value, true).then((result) => setCells(result.cells));
+        }
+      })
       .catch((error: Error) => setLoadError(error.message));
   }, [refresh]);
 
@@ -71,11 +88,14 @@ export default function App() {
       setPlan(null);
       if (parsed.value) {
         const mineLive = ++token.current;
-        api.render().then((result) => {
-          if (mineLive !== token.current) return;
-          setPanes(result.panes);
-          setPaneMode(result.mode);
-        }).catch(() => undefined);
+        api
+          .render()
+          .then((result) => {
+            if (mineLive !== token.current) return;
+            setPanes(result.panes);
+            setPaneMode(result.mode);
+          })
+          .catch(() => undefined);
       }
       return;
     }
@@ -83,7 +103,7 @@ export default function App() {
     const timer = window.setTimeout(async () => {
       try {
         setRun((n) => n + 1);
-        push(`check ${state.versions.length} versions`);
+        push(`Checking ${state.versions.length} app versions`);
         const quick = await api.check(parsed.value, false);
         if (mine !== token.current) return;
         setCells(quick.cells);
@@ -97,9 +117,9 @@ export default function App() {
         if (mine !== token.current) return;
         setPanes(preview.panes);
         setPaneMode(preview.mode);
-        full.cells.forEach((cell) => push(`v${cell.version} ${LABELS[cell.state].toLowerCase()}`));
+        full.cells.forEach((cell) => push(`${cell.version}: ${LABELS[cell.state].toLowerCase()}`));
       } catch (error) {
-        push(`error ${(error as Error).message}`);
+        push(`Something went wrong: ${(error as Error).message}`);
       }
     }, 400);
     return () => window.clearTimeout(timer);
@@ -115,8 +135,8 @@ export default function App() {
   const visible = rows.filter((row) => filter === "ALL" || row.state === filter);
   const active = rows.find((row) => row.version === selected) ?? rows[0];
   const reads = active && state ? state.contracts[active.version] ?? [] : [];
-
   const count = (verdict: Verdict) => rows.filter((row) => row.state === verdict).length;
+  const broken = rows.filter((row) => row.state === "red").map((row) => row.version);
 
   const confirmApply = async () => {
     if (!parsed.value) return;
@@ -126,14 +146,14 @@ export default function App() {
       setCells(result.cells);
       setApplied(true);
       setRun((n) => n + 1);
-      push(...result.steps);
-      push(`recheck ${result.cells.filter((c) => c.state === "green").length} safe`);
+      push(...result.steps.map(plainStep));
+      push(`Re-checked: ${result.cells.filter((c) => c.state === "green").length} versions are safe`);
       await refresh();
       const live = await api.render();
       setPanes(live.panes);
       setPaneMode(live.mode);
     } catch (error) {
-      push(`error ${(error as Error).message}`);
+      push(`Something went wrong: ${(error as Error).message}`);
     } finally {
       setBusy(false);
       setConfirming(false);
@@ -144,14 +164,14 @@ export default function App() {
     setBusy(true);
     try {
       const result = await api.rollback();
-      push(...result.steps);
+      push(...result.steps.map(plainStep));
       const next = await refresh();
       setDraft(pretty(next.value));
       setApplied(false);
       setCells([]);
       setPlan(null);
     } catch (error) {
-      push(`error ${(error as Error).message}`);
+      push(`Something went wrong: ${(error as Error).message}`);
     } finally {
       setBusy(false);
     }
@@ -161,98 +181,85 @@ export default function App() {
 
   if (loadError) {
     return (
-      <main className="grid h-full place-items-center p-6">
+      <main className="grid min-h-screen place-items-center p-6">
         <SurfaceBackdrop />
-        <p className="font-mono text-sm text-status-red">Cannot reach the flagpact server: {loadError}</p>
+        <p className="text-sm text-status-red">Cannot reach the flagpact server: {loadError}</p>
       </main>
     );
   }
 
+  const summary = plan?.limit
+    ? [
+        `Versions below ${plan.limit} keep the old value.`,
+        "Everyone else gets your new value.",
+        `Why: ${broken.join(" and ")} can't read the new value.`,
+      ]
+    : [];
+
   return (
-    <main className="mx-auto grid min-h-full max-w-[1280px] gap-3 p-3 lg:grid-cols-[220px_minmax(0,1fr)_300px]">
+    <main className="grid min-h-screen w-full gap-4 p-4 lg:grid-cols-[260px_minmax(0,1fr)] xl:grid-cols-[280px_minmax(0,1fr)_360px] xl:p-6">
       <SurfaceBackdrop />
 
-      <header className="kicker flex items-center justify-between border-b border-border-subtle px-1 pb-2 lg:col-span-3">
-        <span className="flex gap-5">
-          <span className="text-ink-primary">FLAGPACT</span>
-          <span>ENV: LOCAL</span>
-          <span>VERSIONS: {state?.versions.length ?? 0}</span>
-          <span>CONTRACTS: {state ? Object.keys(state.contracts).length : 0}</span>
-        </span>
-        <span className="flex items-center gap-1.5">
-          <i className={`inline-block size-1.5 rounded-full ${applied ? "bg-status-red" : "bg-status-green"}`} />
-          {applied ? "LIVE_FIX_ACTIVE" : "NO_PENDING_FIX"}
+      <header className="flex flex-wrap items-center justify-between gap-2 border-b border-border-subtle pb-3 lg:col-span-2 xl:col-span-3">
+        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+          <span className="font-display text-xl font-medium">flagpact</span>
+        </div>
+        <span className="flex items-center gap-2 text-sm text-ink-muted">
+          <i className={`inline-block size-2 rounded-full ${applied ? "bg-status-amber" : "bg-status-green"}`} />
+          {applied ? "A fix is live" : "Nothing published yet"}
         </span>
       </header>
 
-      <aside className="panel flex flex-col gap-5 p-4">
-        <div className="flex items-center justify-between">
-          <span className="kicker">FLAGPACT_NAV</span>
-          <span className="kicker flex items-center gap-1.5">
-            LINK.OK <i className="inline-block size-1.5 rounded-full bg-status-green" />
-          </span>
+      <aside className="panel flex flex-col gap-6 p-5">
+        <div className="flex items-center gap-2 text-sm text-ink-muted">
+          <i className="inline-block size-2 rounded-full bg-status-green" />
+          Connected to Flagsmith
         </div>
         <div>
-          <div className="kicker">ACTIVE_FLAG</div>
+          <div className="kicker">Config being checked</div>
           <h1 className="mt-1 font-display text-2xl font-medium">
             <ScrambleText text={state?.flag ?? "loading"} />
           </h1>
         </div>
         <dl className="grid grid-cols-2 gap-3">
           <div>
-            <dt className="kicker">VERSIONS</dt>
-            <dd className="font-mono text-lg tabular-nums">{state?.versions.length ?? 0}</dd>
+            <dt className="kicker">App versions</dt>
+            <dd className="text-xl tabular-nums">{state?.versions.length ?? 0}</dd>
           </div>
           <div>
-            <dt className="kicker">MODE</dt>
-            <dd className="font-mono text-lg">{applied ? "LIVE" : "DRAFT"}</dd>
+            <dt className="kicker">Status</dt>
+            <dd className="text-xl">{applied ? "Fix live" : "Editing"}</dd>
           </div>
         </dl>
         <div>
-          <div className="kicker mb-2">OPERATIONS</div>
-          <ul className="space-y-1 font-mono text-xs">
-            {["CHECK", "FIX", "ROLLBACK"].map((name) => (
-              <li key={name} className={phase === name ? "text-ink-primary" : "text-ink-muted/50"}>
-                [ {name} ]
+          <div className="kicker mb-2">Steps</div>
+          <ol className="space-y-1.5 text-sm">
+            {PHASES.map((item, index) => (
+              <li key={item.key} className={phase === item.key ? "text-ink-primary" : "text-ink-muted/60"}>
+                {index + 1}. {item.label}
               </li>
             ))}
-          </ul>
+          </ol>
         </div>
         <div>
-          <div className="kicker mb-2">CURRENT_DEFAULT</div>
-          <pre className="overflow-x-auto font-mono text-[11px] leading-relaxed text-ink-muted">{state ? pretty(state.value) : ""}</pre>
+          <div className="kicker mb-2">Value in Flagsmith now</div>
+          <pre className="overflow-x-auto text-xs leading-relaxed text-ink-muted">{state ? pretty(state.value) : ""}</pre>
         </div>
       </aside>
 
-      <section className="panel flex flex-col p-5">
-        <h2 className="font-display text-4xl font-medium">Version matrix</h2>
-        <p className="kicker mt-1">
-          <span className="text-status-red"><Counter value={count("red")} /> {LABELS.red}</span>
-          {"  "}
-          <span className="text-status-amber"><Counter value={count("amber")} /> {LABELS.amber}</span>
-          {"  "}
-          <span className="text-status-green"><Counter value={count("green")} /> {LABELS.green}</span>
+      <section className="panel flex flex-col p-6">
+        <h2 className="font-display text-4xl font-medium">App version check</h2>
+        <p className="mt-3 flex flex-wrap gap-x-5 text-sm">
+          <span className="text-status-red"><Counter value={count("red")} /> would break</span>
+          <span className="text-status-amber"><Counter value={count("amber")} /> not checked</span>
+          <span className="text-status-green"><Counter value={count("green")} /> safe</span>
         </p>
 
-        <div className="mt-4 flex flex-wrap items-center gap-2" role="group" aria-label="Filter by verdict">
-          <span className="kicker mr-2">STATE</span>
-          {FILTERS.map((name) => (
-            <button
-              key={name}
-              aria-pressed={filter === name}
-              className={`btn ${filter === name ? "bg-subtle" : ""}`}
-              onClick={() => setFilter(name)}
-            >
-              {name === "ALL" ? "ALL" : LABELS[name]}
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-4">
-          <div className="flex items-center justify-between">
-            <label htmlFor="pending" className="kicker">&gt; edit --value</label>
+        <div className="mt-5">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <label htmlFor="pending" className="text-sm font-medium">New value to publish</label>
             <span className="flex gap-2">
-              <button className="btn" disabled={applied || !state} onClick={() => setDraft(pretty(BREAKING))}>Remove title</button>
+              <button className="btn" disabled={applied || !state} onClick={() => setDraft(pretty(BREAKING))}>Try a breaking change</button>
               <button className="btn" disabled={applied || !state} onClick={() => state && setDraft(pretty(state.value))}>Reset</button>
             </span>
           </div>
@@ -262,21 +269,32 @@ export default function App() {
             value={draft}
             disabled={applied}
             onChange={(event) => setDraft(event.target.value)}
-            rows={7}
-            className="mt-2 w-full resize-y border border-border-subtle bg-canvas/60 p-3 font-mono text-xs text-ink-primary"
+            rows={6}
+            className="mt-2 w-full resize-y border border-border-subtle bg-canvas/60 p-3 text-sm text-ink-primary"
           />
-          {parsed.error && <p className="mt-1 font-mono text-[11px] text-status-red">{parsed.error}</p>}
+          {parsed.error && <p className="mt-1 text-xs text-status-red">{parsed.error}</p>}
         </div>
 
-        <div className="mt-5">
+        <div className="mt-6">
           <AppPanes panes={panes} mode={paneMode} />
         </div>
 
-        <div className="relative mt-5">
-          <div className="kicker grid grid-cols-[72px_minmax(0,1fr)_96px] gap-3 pl-8 pb-2">
-            <span>VER</span>
-            <span>RECEIVES</span>
-            <span>STATUS</span>
+        <div className="mt-6">
+          <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+            <h3 className="text-sm font-medium">Result for each app version</h3>
+            <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by result">
+              <span className="kicker">Show</span>
+              {FILTERS.map((name) => (
+                <button key={name} aria-pressed={filter === name} className={`btn ${filter === name ? "bg-subtle" : ""}`} onClick={() => setFilter(name)}>
+                  {name === "ALL" ? "All" : LABELS[name]}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="kicker grid grid-cols-[96px_minmax(0,1fr)_120px] gap-3 pb-2 pl-8">
+            <span>App version</span>
+            <span>Gets this value</span>
+            <span>Result</span>
           </div>
           <div className="relative">
             <SignalLine rows={visible.length} rowHeight={ROW_HEIGHT} run={run} />
@@ -286,78 +304,89 @@ export default function App() {
                   <motion.li
                     layout
                     key={row.version}
-                    initial={{ opacity: 0, x: -8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30, delay: index * 0.04 }}
                     tabIndex={0}
                     onClick={() => setSelected(row.version)}
                     onKeyDown={(event) => event.key === "Enter" && setSelected(row.version)}
-                    className="grid cursor-pointer grid-cols-[72px_minmax(0,1fr)_96px] items-center gap-3 border-t border-border-subtle pl-8 hover:bg-subtle/40"
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30, delay: index * 0.04 }}
+                    className="grid cursor-pointer grid-cols-[96px_minmax(0,1fr)_120px] items-center gap-3 border-t border-border-subtle pl-8 hover:bg-subtle/40"
                     style={{ height: ROW_HEIGHT, boxShadow: active?.version === row.version ? "inset 2px 0 0 var(--accent)" : undefined }}
                   >
                     <span className="chip w-fit">{row.version}</span>
                     <span className="min-w-0">
-                      <span className="block truncate font-mono text-xs text-ink-primary">
-                        {Object.keys(row.value).length ? `gets ${Object.keys(row.value).join(", ")}` : "no value yet"}
+                      <span className="block truncate text-sm text-ink-primary">
+                        {Object.keys(row.value).length ? `Reads: ${Object.keys(row.value).join(", ")}` : "No value yet"}
                       </span>
-                      <span className="block truncate text-[11px] text-ink-muted">{row.reason}</span>
+                      <span className="block truncate text-xs text-ink-muted">{plainReason(row.reason)}</span>
                     </span>
                     <StatusMark state={row.state} />
                   </motion.li>
                 ))}
               </ul>
             </LayoutGroup>
+            {visible.length === 0 && <p className="py-4 text-sm text-ink-muted">No app versions match this filter.</p>}
           </div>
-          {visible.length === 0 && <p className="kicker py-4">No versions match this filter.</p>}
-          <div className="kicker mt-3 flex justify-between border-t border-border-subtle pt-3">
-            <span>Builds without an app_version trait are not covered by the fix.</span>
-            <span>{lastMs === null ? "LAST_CHECK --" : `LAST_CHECK ${(lastMs / 1000).toFixed(1)}S`}</span>
+          <div className="mt-3 flex flex-wrap justify-between gap-2 border-t border-border-subtle pt-3 text-xs text-ink-muted">
+            <span>Older builds that don't send an app_version are not protected by the fix.</span>
+            <span>{lastMs === null ? "Not checked yet" : `Last check took ${(lastMs / 1000).toFixed(1)} s`}</span>
           </div>
         </div>
       </section>
 
-      <aside className="panel flex flex-col gap-4 p-4">
+      <aside className="panel flex flex-col gap-4 p-5 lg:col-span-2 xl:col-span-1">
         <div className="flex items-center justify-between">
-          <span className="kicker">FIX_PLAN</span>
-          {plan?.limit && <span className="chip">{plan.limit}</span>}
+          <h2 className="font-display text-xl font-medium">The fix</h2>
+          {plan?.limit && <span className="chip">Below {plan.limit}</span>}
         </div>
 
         {applied ? (
-          <p className="text-sm leading-relaxed text-ink-primary">The fix is live. Old versions keep the previous value. Roll back to restore the default.</p>
-        ) : plan?.diff ? (
-          <ul className="space-y-2 text-sm leading-relaxed text-ink-primary">
-            {plan.diff.map((line) => (
+          <p className="text-sm leading-relaxed">The fix is live. Older versions keep the previous value and everyone else has the new one. Undo to go back to how it was.</p>
+        ) : summary.length > 0 ? (
+          <ul className="space-y-2 text-sm leading-relaxed">
+            {summary.map((line) => (
               <li key={line}>{line}</li>
             ))}
           </ul>
         ) : plan?.error ? (
           <p className="text-sm leading-relaxed text-ink-muted">{plan.error}</p>
         ) : (
-          <p className="text-sm leading-relaxed text-ink-muted">Edit the value. flagpact replays each version's own tests against it, then proposes a fix.</p>
+          <p className="text-sm leading-relaxed text-ink-muted">Edit the value, or try the breaking change. flagpact will suggest a fix if any version would break.</p>
+        )}
+
+        {plan?.diff && !applied && (
+          <details className="text-xs text-ink-muted">
+            <summary className="cursor-pointer">Technical details</summary>
+            <ul className="mt-2 space-y-1">
+              {plan.diff.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+          </details>
         )}
 
         {applied ? (
-          <button className="btn" disabled={busy} onClick={undo}>Roll back</button>
+          <button className="btn" disabled={busy} onClick={undo}>Undo the fix</button>
         ) : (
-          <button className="btn btn-primary" disabled={!plan?.diff || busy} onClick={() => setConfirming(true)}>Apply fix</button>
+          <button className="btn btn-primary" disabled={!plan?.diff || busy} onClick={() => setConfirming(true)}>Apply the fix</button>
         )}
 
         {active && (
-          <div className="border-t border-border-subtle pt-3">
+          <div className="border-t border-border-subtle pt-4">
             <div className="flex items-center justify-between">
-              <span className="kicker">VERSION_DETAIL</span>
+              <h3 className="text-sm font-medium">Selected app version</h3>
               <span className="chip">{active.version}</span>
             </div>
-            <p className="mt-2 text-xs text-ink-muted">{active.reason}</p>
-            <div className="kicker mt-3 mb-1">CONTRACT_READS</div>
+            <p className="mt-2 text-sm text-ink-muted">{plainReason(active.reason)}</p>
+            <div className="kicker mb-1 mt-3">What this version reads</div>
             {reads.length === 0 ? (
-              <p className="font-mono text-[11px] text-ink-muted">no contract recorded</p>
+              <p className="text-xs text-ink-muted">No recorded behaviour</p>
             ) : (
-              <ul className="space-y-1 font-mono text-[11px]">
+              <ul className="space-y-1 text-sm">
                 {reads.map((read) => (
                   <li key={read.path} className="flex justify-between gap-2">
-                    <span className="truncate text-ink-primary">{read.path}</span>
-                    <span className="shrink-0 text-ink-muted">{read.has_default ? "optional" : "required"} {read.type}</span>
+                    <span className="truncate">{read.path}</span>
+                    <span className="shrink-0 text-xs text-ink-muted">{read.has_default ? "optional" : "required"}, {plainType(read.type)}</span>
                   </li>
                 ))}
               </ul>
@@ -365,15 +394,17 @@ export default function App() {
           </div>
         )}
 
-        <div className="mt-auto">
+        <div className="mt-auto border-t border-border-subtle pt-4">
+          <h3 className="mb-2 text-sm font-medium">Activity</h3>
           <TypeLog lines={log} />
         </div>
       </aside>
 
       <ConfirmDialog
         open={confirming}
-        title="Write this fix to Flagsmith"
-        lines={plan?.diff ?? []}
+        title="Publish this change safely?"
+        lines={summary}
+        details={plan?.diff ?? []}
         busy={busy}
         onConfirm={confirmApply}
         onCancel={() => setConfirming(false)}

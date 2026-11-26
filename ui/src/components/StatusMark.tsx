@@ -10,14 +10,14 @@ const COLORS: Record<Verdict, string> = {
 
 export function StatusMark({ state }: { state: Verdict }) {
   return (
-    <span className="inline-flex items-center gap-2 font-mono text-xs">
+    <span className="inline-flex items-center gap-2 text-sm">
       <motion.i
         className="inline-block size-1.5 rounded-full"
         animate={{ backgroundColor: COLORS[state], scale: [1, 1.9, 1] }}
         transition={{ type: "spring", stiffness: 300, damping: 18 }}
         key={state}
       />
-      <span className="relative inline-block min-w-20 overflow-hidden">
+      <span className="relative inline-block min-w-24 overflow-hidden">
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
             key={state}
