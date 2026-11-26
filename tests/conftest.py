@@ -31,3 +31,11 @@ def make_document(value: dict, flag: str = "home_banner") -> dict:
             "feature": {"id": 1, "name": flag, "type": "STANDARD"},
         }],
     }
+
+
+import pytest
+
+
+@pytest.fixture(autouse=True)
+def isolated_state_file(tmp_path, monkeypatch):
+    monkeypatch.setenv("FLAGPACT_STATE_FILE", str(tmp_path / "isolated-state.json"))

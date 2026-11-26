@@ -18,6 +18,8 @@ from .matrix import AppVersion, Cell, build_matrix
 from .rehearsal import Clone
 from .replay import render
 from .resolver import patch_default, resolve, with_fix
+from .risks import notices as flag_notices
+from .risks import partial
 from .verdict import AMBER, GREEN, RED
 
 MISSING = "none"
@@ -37,12 +39,35 @@ class Service:
         }
         self.missing = config.get("missing_trait")
         self.outside_edit = config.get("outside_edit")
-        self._last_safe: dict[str, Any] | None = None
+        self._state_file = pathlib.Path(os.environ.get("FLAGPACT_STATE_FILE") or root / ".flagpact-state.json")
+        self._last_safe: dict[str, Any] | None = self._load_last_safe()
         self._watch_cache: tuple[str, dict[str, Any]] | None = None
         self._watch_lock = threading.Lock()
         self.applied: Applied | None = None
         self._planned: dict[str, Plan] = {}
         self.clone_factory = lambda: Clone.create(self.admin)
+
+    def _load_last_safe(self) -> dict[str, Any] | None:
+        try:
+            data = json.loads(self._state_file.read_text())
+        except (OSError, ValueError):
+            return None
+        value = data.get(self.flag) if isinstance(data, dict) else None
+        return value if isinstance(value, dict) else None
+
+    def _remember_safe(self, value: dict[str, Any]) -> None:
+        self._last_safe = value
+        try:
+            data = json.loads(self._state_file.read_text())
+            if not isinstance(data, dict):
+                data = {}
+        except (OSError, ValueError):
+            data = {}
+        data[self.flag] = value
+        try:
+            self._state_file.write_text(json.dumps(data, indent=2) + "\n")
+        except OSError:
+            return
 
     def _default(self, document: dict[str, Any]) -> dict[str, Any]:
         for state in document["feature_states"]:
@@ -63,6 +88,11 @@ class Service:
 
     def _with_missing(self, cells: list[Cell], document: dict[str, Any], protected: bool) -> list[dict[str, Any]]:
         rows = [asdict(c) for c in cells]
+        if partial(document, self.flag):
+            for row in rows:
+                if row["state"] == GREEN:
+                    row["state"] = AMBER
+                    row["reason"] = "partly checked: this flag has a split or variations"
         if self.missing:
             rows.append(asdict(self._missing_cell(document, protected)))
         return rows
@@ -70,7 +100,34 @@ class Service:
     def _risk(self, cells: list[Cell]) -> float:
         return sum(self._share(c.version) for c in cells if c.state == RED)
 
+    def _recover(self) -> None:
+        if self.applied is not None or not hasattr(self.admin, "feature_segments"):
+            return
+        try:
+            prefix = f"flagpact/{self.flag}/"
+            payload = self.admin._ok("GET", f"/projects/{self.admin.project_id}/segments/?q={prefix}")
+            found = [s for s in self.admin._items(payload) if s["name"].startswith(prefix)]
+            if not found:
+                return
+            segment = found[0]
+            env_id = self.admin.environment_id()
+            feature_id = self.admin.feature_id(self.flag)
+            fsegs = [f for f in self.admin.feature_segments(env_id, feature_id) if f["segment"] == segment["id"]]
+            if not fsegs:
+                return
+            default = self.admin.default_state(feature_id)
+            document = self.admin.document()
+            in_document = next(s for s in document["project"]["segments"] if s["name"] == segment["name"])
+            override = next(f for f in in_document["feature_states"] if f["feature"]["name"] == self.flag)
+            raw = override["feature_state_value"]
+            old = raw if isinstance(raw, str) else json.dumps(raw)
+            published = json.loads(default["feature_state_value"]) != json.loads(old)
+            self.applied = Applied(self.flag, old, default["id"], fsegs[0]["id"], segment["id"], True, published, ["recovered"])
+        except (AdminError, KeyError, IndexError, ValueError, StopIteration):
+            return
+
     def state(self) -> dict[str, Any]:
+        self._recover()
         document = self.admin.document()
         latest = max(self.meta, key=lambda v: tuple(int(p) for p in v.split(".")))
         return {
@@ -84,6 +141,7 @@ class Service:
             "published": self.applied is not None and self.applied.published,
             "dashboard": getattr(self.admin, "dashboard_url", ""),
             "contracts": {c["app_version"]: c["reads"] for c in load_contracts(self.contracts, self.flag)},
+            "notices": flag_notices(document, self.flag),
         }
 
     def check(self, value: dict[str, Any], replay: bool = True) -> dict[str, Any]:
@@ -99,6 +157,7 @@ class Service:
         result: dict[str, Any] = {
             "cells": self._with_missing(before, patched, False),
             "at_risk": self._risk(before),
+            "notices": flag_notices(document, self.flag),
         }
         current = self._default(document)
         try:
@@ -142,6 +201,7 @@ class Service:
         return {"steps": steps}
 
     def rollback(self) -> dict[str, Any]:
+        self._recover()
         if self.applied is None:
             raise AdminError("nothing to roll back")
         steps = rollback(self.admin, self.applied)
@@ -214,8 +274,8 @@ class Service:
         cells = build_matrix(document, self.flag, value, self.versions, self.contracts)
         broken = [c.version for c in cells if c.state == RED]
         ok = not broken
-        if ok:
-            self._last_safe = value
+        if ok and value != self._last_safe:
+            self._remember_safe(value)
         result = {
             "ok": ok,
             "value": value,
@@ -245,6 +305,28 @@ class Service:
     def simulate_outside_edit(self) -> dict[str, Any]:
         if not self.outside_edit:
             raise AdminError("no outside edit is configured")
-        self.watch()
+        if self._last_safe is None:
+            self.watch()
         self._write_default(self.outside_edit)
         return {"value": self.outside_edit}
+
+    def protect(self, include_missing: bool = True) -> dict[str, Any]:
+        if self.applied is not None:
+            raise AdminError("a fix is already applied")
+        result = self.watch()
+        if result["ok"]:
+            raise AdminError("the live value is safe, there is nothing to protect")
+        previous = result["previous"]
+        if previous is None:
+            raise AdminError("there is no earlier safe value to keep older versions on")
+        cells = [
+            Cell(c["version"], c["state"], c["reason"], c["value"])
+            for c in result["cells"]
+            if c["version"] != MISSING
+        ]
+        plan = plan_fix(self.flag, previous, result["value"], cells, include_missing)
+        applied = apply_plan(self.admin, plan)
+        applied.published = True
+        self.applied = applied
+        self._watch_cache = None
+        return {"steps": applied.steps, "limit": plan.limit}

@@ -202,9 +202,9 @@ class LiveStub:
         self.state()["feature_state_value"] = value
 
 
-def live_service():
+def live_service(config=None):
     stub = LiveStub()
-    return Service(stub, str(ROOT / "flagpact.json")), stub
+    return Service(stub, config or str(ROOT / "flagpact.json")), stub
 
 
 def test_watch_is_quiet_while_the_live_value_is_safe():
@@ -253,3 +253,109 @@ def test_watch_route_and_conflict_on_bad_restore(base):
     status, body = call(base, "GET", "/api/watch")
     assert status == 200 and body["ok"] is True
     assert call(base, "POST", "/api/restore", {})[0] == 409
+
+
+def test_protect_keeps_older_versions_on_the_previous_value(monkeypatch):
+    from flagpact import service as service_module
+    from flagpact.fix import Applied
+    seen = {}
+
+    def fake_apply(admin, plan):
+        seen["plan"] = plan
+        return Applied("home_banner", "{}", 1, 2, 3, True, False, ["segment created"])
+
+    monkeypatch.setattr(service_module, "apply_plan", fake_apply)
+    service, stub = live_service()
+    service.watch()
+    service.simulate_outside_edit()
+    result = service.protect()
+    plan = seen["plan"]
+    assert plan.limit == "3.0.0" and plan.include_missing is True
+    assert "title" in plan.old_value and plan.new_value == NEW
+    assert service.applied.published is True and result["limit"] == "3.0.0"
+
+
+def test_protect_is_refused_when_the_live_value_is_safe():
+    from flagpact.admin import AdminError
+    service, _ = live_service()
+    try:
+        service.protect()
+        raised = False
+    except AdminError:
+        raised = True
+    assert raised
+
+
+def test_protect_is_refused_without_an_earlier_safe_value():
+    from flagpact.admin import AdminError
+    service, stub = live_service()
+    stub.state()["feature_state_value"] = json.dumps(NEW)
+    try:
+        service.protect()
+        raised = False
+    except AdminError:
+        raised = True
+    assert raised
+
+
+class RecoverStub(LiveStub):
+    project_id = "1"
+
+    def __init__(self, published):
+        super().__init__()
+        self.published = published
+        self.doc["project"]["segments"].append({
+            "id": 7,
+            "name": "flagpact/home_banner/3.0.0",
+            "rules": [],
+            "feature_states": [{
+                "feature": {"id": 1, "name": "home_banner", "type": "STANDARD"},
+                "feature_state_value": json.dumps({"title": "Sale on now"}),
+            }],
+        })
+
+    def _ok(self, method, path, body=None, kind="master"):
+        return {"results": [{"id": 7, "name": "flagpact/home_banner/3.0.0"}]}
+
+    def _items(self, payload):
+        return payload["results"]
+
+    def environment_id(self):
+        return 1
+
+    def feature_segments(self, env_id, feature_id):
+        return [{"id": 8, "segment": 7}]
+
+    def default_state(self, feature_id):
+        value = json.dumps(NEW if self.published else {"title": "Sale on now"})
+        return {"id": 1, "feature_state_value": value}
+
+
+def test_an_existing_flagpact_rule_is_taken_over_after_a_restart():
+    service = Service(RecoverStub(published=True), str(ROOT / "flagpact.json"))
+    state = service.state()
+    assert state["applied"] is True and state["published"] is True
+    assert service.applied.segment_id == 7 and service.applied.previous_default == json.dumps({"title": "Sale on now"})
+
+
+def test_a_rule_without_a_published_change_is_recovered_as_unpublished():
+    service = Service(RecoverStub(published=False), str(ROOT / "flagpact.json"))
+    state = service.state()
+    assert state["applied"] is True and state["published"] is False
+
+
+def test_the_last_safe_value_survives_a_restart(tmp_path, monkeypatch):
+    monkeypatch.delenv("FLAGPACT_STATE_FILE")
+    config = tmp_path / "flagpact.json"
+    source = json.loads((ROOT / "flagpact.json").read_text())
+    source["contracts"] = str(ROOT / "contracts")
+    for entry in source["versions"]:
+        entry["directory"] = str(ROOT / entry["directory"])
+    config.write_text(json.dumps(source))
+    first, stub = live_service(str(config))
+    assert first.watch()["ok"] is True
+    assert (tmp_path / ".flagpact-state.json").exists()
+    stub.state()["feature_state_value"] = json.dumps(NEW)
+    second = Service(stub, str(config))
+    result = second.watch()
+    assert result["ok"] is False and result["restore"] is True and "title" in result["previous"]

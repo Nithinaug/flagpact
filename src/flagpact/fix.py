@@ -79,8 +79,8 @@ def apply_plan(admin: AdminClient, plan: Plan) -> Applied:
     override_value = {"type": "unicode", "string_value": json.dumps(plan.old_value)}
     if existing:
         fseg = existing[0]
-        state = admin._ok("GET", f"/features/featurestates/?feature_segment={fseg['id']}")
-        state_id = admin._items(state)[0]["id"]
+        listing = admin._items(admin._ok("GET", f"/environments/{admin.client_key}/featurestates/?feature={feature_id}"))
+        state_id = next(x["id"] for x in listing if x.get("feature_segment") == fseg["id"])
         admin._ok("PATCH", f"/features/featurestates/{state_id}/", {"feature_state_value": override_value})
         steps.append("override updated")
     else:

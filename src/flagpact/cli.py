@@ -54,6 +54,7 @@ def build_report(flag: str, plan: dict[str, Any]) -> dict[str, Any]:
         "versions": versions,
         "fix": fix,
         "error": plan.get("error") if counts["breaks"] else None,
+        "notices": plan.get("notices", []),
     }
 
 
@@ -66,6 +67,8 @@ def print_report(report: dict[str, Any]) -> None:
     for item in report["versions"]:
         name = "no app_version" if item["version"] == MISSING else item["version"]
         print(f"  {name:<15}{WORDS[item['result']]:<13}{item['reason']}")
+    for line in report.get("notices", []):
+        print(f"Note: {line}")
     if report["fix"]:
         print(f"Suggested fix: keep versions below {report['fix']['keep_below']} on the live value, then publish.")
     elif report["error"]:
