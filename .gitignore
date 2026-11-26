@@ -4,6 +4,7 @@ __pycache__/
 .pytest_cache/
 .flagpact-keys.env
 node_modules/
-dist/
 ui/node_modules/
+dist/
 ui/dist/
+*.egg-info/

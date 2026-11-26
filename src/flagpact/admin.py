@@ -130,3 +130,25 @@ class AdminClient:
         payload = self._ok("POST", "/identities/", {"identifier": "flagpact-probe", "transient": True, "traits": traits}, kind="client")
         state = next(f for f in payload["flags"] if f["feature"]["name"] == flag)
         return json.loads(state["feature_state_value"])
+
+
+class ReadOnlyClient:
+    dashboard_url = ""
+
+    def __init__(self, base: str, server_key: str) -> None:
+        if not base.startswith(("http://127.0.0.1", "http://localhost", "https://")):
+            raise AdminError("unsupported Flagsmith URL")
+        self._call = http_request(base.rstrip("/"), {"server": server_key})
+
+    @classmethod
+    def from_env(cls) -> "ReadOnlyClient":
+        try:
+            return cls(os.environ["FLAGSMITH_API_URL"], os.environ["FLAGSMITH_ENV_SERVER_KEY"])
+        except KeyError as error:
+            raise AdminError(f"missing environment variable {error.args[0]}") from error
+
+    def document(self) -> dict[str, Any]:
+        status, payload = self._call("GET", "/environment-document/", None, "server")
+        if status != 200:
+            raise AdminError(f"Flagsmith returned {status} for the environment document")
+        return payload

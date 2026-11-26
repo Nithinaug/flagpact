@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flagpact"
+version = "0.1.0"
+description = "Check a Flagsmith config change against every app version before you publish it"
+requires-python = ">=3.10"
+dependencies = [
+  "flagsmith==6.7.0",
+  "flagsmith-flag-engine==11.1.2",
+  "semver==3.1.2",
+]
+
+[project.scripts]
+flagpact = "flagpact.cli:main"
+flagpact-server = "flagpact.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
