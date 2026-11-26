@@ -8,3 +8,5 @@ ui/node_modules/
 dist/
 ui/dist/
 *.egg-info/
+.flagpact-state.json
+stack/.env

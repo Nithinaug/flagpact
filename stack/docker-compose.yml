@@ -1,0 +1,52 @@
+name: flagpact
+
+services:
+  db:
+    image: postgres:15.5-alpine@sha256:934be6ae0a5bce0f607a5edc437e6bd606c074e595c28d4897845d6502823104
+    environment:
+      POSTGRES_DB: flagsmith
+      POSTGRES_USER: flagsmith
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?run stack/gen-env.sh first}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U flagsmith -d flagsmith"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  migrate:
+    image: &flagsmith_image docker.flagsmith.com/flagsmith/flagsmith@sha256:80585eef57595d63e60a1f700e994496c8de63bf44f381cb6d3b4f4036ddf792
+    command: migrate
+    environment: &flagsmith_env
+      DATABASE_URL: postgresql://flagsmith:${POSTGRES_PASSWORD}@db:5432/flagsmith
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?run stack/gen-env.sh first}
+      DJANGO_ALLOWED_HOSTS: "localhost,127.0.0.1"
+      FLAGSMITH_DOMAIN: "localhost:${FLAGSMITH_PORT:-8000}"
+      ENVIRONMENT: production
+      TASK_RUN_METHOD: SYNCHRONOUSLY
+      PREVENT_SIGNUP: ${PREVENT_SIGNUP:-false}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  flagsmith:
+    image: *flagsmith_image
+    command: serve
+    environment: *flagsmith_env
+    ports:
+      - "127.0.0.1:${FLAGSMITH_PORT:-8000}:8000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)\""]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+volumes:
+  pgdata:
