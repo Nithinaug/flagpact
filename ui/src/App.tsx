@@ -1,38 +1,26 @@
-import { LayoutGroup, motion } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { api, LABELS, type Cell, type Pane, type Plan, type State, type Verdict } from "./api";
-import { AppPanes } from "./components/AppPanes";
+import { api, MISSING, type Cell, type Pane, type Plan, type State } from "./api";
+import { ActivityCard, type Entry } from "./components/ActivityCard";
+import { ChangeEditor } from "./components/ChangeEditor";
 import { ConfirmDialog } from "./components/ConfirmDialog";
-import { Counter } from "./components/Counter";
-import { ScrambleText } from "./components/ScrambleText";
-import { SignalLine } from "./components/SignalLine";
-import { StatusMark } from "./components/StatusMark";
+import { FixCard } from "./components/FixCard";
+import { ImpactTable, type Filter } from "./components/ImpactTable";
+import { Stepper, type StepState } from "./components/Stepper";
+import { SummaryCard } from "./components/SummaryCard";
 import { SurfaceBackdrop } from "./components/SurfaceBackdrop";
-import { TypeLog } from "./components/TypeLog";
-import { plainReason, plainStep, plainType } from "./plain";
+import { TopBar } from "./components/TopBar";
+import { clock, pathPresent, pretty } from "./lib/diff";
+import { plainStep } from "./plain";
 
-type Filter = "ALL" | "red" | "amber" | "green";
-
-const FILTERS: Filter[] = ["ALL", "red", "amber", "green"];
-const ROW_HEIGHT = 64;
-const BREAKING = { heading: "Sale on now", cta: { text: "Shop" } };
-const PHASES = [
-  { key: "CHECK", label: "Check your change" },
-  { key: "FIX", label: "Apply the fix" },
-  { key: "ROLLBACK", label: "Undo if needed" },
-];
-
-function pretty(value: unknown): string {
-  return JSON.stringify(value, null, 2);
-}
+const BREAKING = { heading: "Sale on now", subheading: "Up to 40% off", cta: { label: "Shop the sale" } };
 
 function parse(text: string): { value?: Record<string, unknown>; error?: string } {
   try {
     const value = JSON.parse(text);
-    if (value === null || typeof value !== "object" || Array.isArray(value)) return { error: "The value must be a JSON object" };
+    if (value === null || typeof value !== "object" || Array.isArray(value)) return { error: "Must be a JSON object" };
     return { value };
   } catch {
-    return { error: "This is not valid JSON yet" };
+    return { error: "Not valid JSON yet" };
   }
 }
 
@@ -42,24 +30,66 @@ export default function App() {
   const [draft, setDraft] = useState("");
   const [cells, setCells] = useState<Cell[]>([]);
   const [plan, setPlan] = useState<Plan | null>(null);
+  const [before, setBefore] = useState<Pane[]>([]);
+  const [after, setAfter] = useState<Pane[] | null>(null);
   const [applied, setApplied] = useState(false);
-  const [run, setRun] = useState(0);
-  const [log, setLog] = useState<string[]>(["Ready"]);
-  const [confirming, setConfirming] = useState(false);
+  const [published, setPublished] = useState(false);
+  const [includeMissing, setIncludeMissing] = useState(true);
+  const [entries, setEntries] = useState<Entry[]>([]);
+  const [confirm, setConfirm] = useState<"apply" | "publish" | null>(null);
   const [busy, setBusy] = useState(false);
+  const [checking, setChecking] = useState(false);
   const [filter, setFilter] = useState<Filter>("ALL");
-  const [selected, setSelected] = useState("");
   const [lastMs, setLastMs] = useState<number | null>(null);
-  const [panes, setPanes] = useState<Pane[]>([]);
-  const [paneMode, setPaneMode] = useState<"live" | "preview" | "">("");
+  const [checkedAt, setCheckedAt] = useState("");
+  const [syncedAt, setSyncedAt] = useState(Date.now());
+  const [now, setNow] = useState(Date.now());
   const token = useRef(0);
+  const entryId = useRef(0);
+  const firstToggle = useRef(true);
+  const serverFlags = useRef({ applied: false, published: false });
 
-  const push = useCallback((...lines: string[]) => setLog((old) => [...old, ...lines].slice(-60)), []);
+  const push = useCallback((tone: Entry["tone"], title: string, sub = "") => {
+    setEntries((old) => [{ id: ++entryId.current, tone, title, sub, time: clock() }, ...old].slice(0, 20));
+  }, []);
 
   const refresh = useCallback(async () => {
     const next = await api.state();
     setState(next);
+    setSyncedAt(Date.now());
     return next;
+  }, []);
+
+  useEffect(() => {
+    serverFlags.current = { applied, published };
+  }, [applied, published]);
+
+  const resync = useCallback(async () => {
+    const next = await refresh();
+    setApplied(next.applied);
+    setPublished(next.published);
+    if (!next.applied) {
+      setDraft(pretty(next.value));
+      setCells([]);
+      setPlan(null);
+      setAfter(null);
+      api.render().then((result) => setBefore(result.before)).catch(() => undefined);
+    }
+  }, [refresh]);
+
+  useEffect(() => {
+    const onFocus = () => {
+      api.state().then((next) => {
+        if (next.applied !== serverFlags.current.applied || next.published !== serverFlags.current.published) void resync();
+      }).catch(() => undefined);
+    };
+    window.addEventListener("focus", onFocus);
+    return () => window.removeEventListener("focus", onFocus);
+  }, [resync]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(timer);
   }, []);
 
   useEffect(() => {
@@ -67,33 +97,35 @@ export default function App() {
       .then((next) => {
         setDraft(pretty(next.value));
         setApplied(next.applied);
+        setPublished(next.published);
+        push("idle", "Connected to Flagsmith", "Local environment");
         if (next.applied) {
-          api.render().then((result) => {
-            setPanes(result.panes);
-            setPaneMode(result.mode);
+          api.render(next.value).then((result) => {
+            setBefore(result.before);
+            setAfter(result.after);
           });
           api.check(next.value, true).then((result) => setCells(result.cells));
         }
       })
       .catch((error: Error) => setLoadError(error.message));
-  }, [refresh]);
+  }, [refresh, push]);
 
   const parsed = useMemo(() => parse(draft), [draft]);
   const unchanged = state !== null && parsed.value !== undefined && pretty(parsed.value) === pretty(state.value);
+  const hasChange = (parsed.value !== undefined && !unchanged) || applied;
 
   useEffect(() => {
     if (!state || applied) return;
     if (!parsed.value || unchanged) {
       setCells([]);
       setPlan(null);
+      setAfter(null);
       if (parsed.value) {
-        const mineLive = ++token.current;
+        const live = ++token.current;
         api
           .render()
           .then((result) => {
-            if (mineLive !== token.current) return;
-            setPanes(result.panes);
-            setPaneMode(result.mode);
+            if (live === token.current) setBefore(result.before);
           })
           .catch(() => undefined);
       }
@@ -102,61 +134,105 @@ export default function App() {
     const mine = ++token.current;
     const timer = window.setTimeout(async () => {
       try {
-        setRun((n) => n + 1);
-        push(`Checking ${state.versions.length} app versions`);
+        setChecking(true);
         const quick = await api.check(parsed.value, false);
         if (mine !== token.current) return;
         setCells(quick.cells);
         const started = performance.now();
-        const full = await api.plan(parsed.value);
-        setLastMs(Math.round(performance.now() - started));
+        const full = await api.plan(parsed.value, includeMissing);
         if (mine !== token.current) return;
+        setLastMs(Math.round(performance.now() - started));
+        setCheckedAt(clock());
         setCells(full.cells);
         setPlan(full);
         const preview = await api.render(parsed.value);
         if (mine !== token.current) return;
-        setPanes(preview.panes);
-        setPaneMode(preview.mode);
-        full.cells.forEach((cell) => push(`${cell.version}: ${LABELS[cell.state].toLowerCase()}`));
+        setBefore(preview.before);
+        setAfter(preview.after);
+        const real = full.cells.filter((c) => c.version !== MISSING);
+        const broken = real.filter((c) => c.state === "red").map((c) => c.version);
+        const safe = real.filter((c) => c.state === "green").map((c) => c.version);
+        push("idle", `Checked ${real.length} app versions`, "Against recorded contracts");
+        if (broken.length) {
+          push("red", `${broken.length} versions would break`, `${broken.join(", ")} · ${safe.join(", ")} safe`);
+        }
+        if (full.limit) push("amber", "Fix suggested", `Segment override for app_version < ${full.limit}`);
       } catch (error) {
-        push(`Something went wrong: ${(error as Error).message}`);
+        push("red", "Something went wrong", (error as Error).message);
+      } finally {
+        if (mine === token.current) setChecking(false);
       }
     }, 400);
     return () => window.clearTimeout(timer);
   }, [parsed.value, unchanged, state, applied, push]);
 
+  useEffect(() => {
+    if (firstToggle.current) {
+      firstToggle.current = false;
+      return;
+    }
+    if (!plan || applied || !parsed.value || unchanged) return;
+    api.plan(parsed.value, includeMissing).then(setPlan).catch(() => undefined);
+  }, [includeMissing]);
+
   const rows: Cell[] = useMemo(() => {
     if (!state) return [];
-    return state.versions.map(
-      (version) => cells.find((cell) => cell.version === version) ?? { version, state: "idle" as Verdict, reason: "waiting for a pending change", value: {} },
-    );
+    const idle = (version: string): Cell => ({ version, state: "idle", reason: "waiting for a pending change", value: {} });
+    const list = state.versions.map((version) => cells.find((c) => c.version === version) ?? idle(version));
+    if (state.missing) list.push(cells.find((c) => c.version === MISSING) ?? idle(MISSING));
+    return list;
   }, [state, cells]);
 
-  const visible = rows.filter((row) => filter === "ALL" || row.state === filter);
-  const active = rows.find((row) => row.version === selected) ?? rows[0];
-  const reads = active && state ? state.contracts[active.version] ?? [] : [];
-  const count = (verdict: Verdict) => rows.filter((row) => row.state === verdict).length;
-  const broken = rows.filter((row) => row.state === "red").map((row) => row.version);
+  const real = rows.filter((r) => r.version !== MISSING);
+  const brokenVersions = real.filter((r) => r.state === "red").map((r) => r.version);
+  const removed = useMemo(() => {
+    if (!state || !parsed.value) return [];
+    const paths = new Set<string>();
+    brokenVersions.forEach((version) => {
+      (state.contracts[version] ?? []).forEach((read) => {
+        if (!read.has_default && !pathPresent(parsed.value, read.path)) paths.add(read.path);
+      });
+    });
+    return [...paths];
+  }, [state, parsed.value, brokenVersions.join(",")]);
+
+  const hasShares = state ? Object.values(state.meta).some((m) => m.share !== null) : false;
 
   const confirmApply = async () => {
     if (!parsed.value) return;
     setBusy(true);
     try {
-      const result = await api.apply(parsed.value);
+      const result = await api.apply(parsed.value, includeMissing);
       setCells(result.cells);
       setApplied(true);
-      setRun((n) => n + 1);
-      push(...result.steps.map(plainStep));
-      push(`Re-checked: ${result.cells.filter((c) => c.state === "green").length} versions are safe`);
+      push("green", "Fix applied", result.steps.map(plainStep).join(", "));
       await refresh();
-      const live = await api.render();
-      setPanes(live.panes);
-      setPaneMode(live.mode);
+      const preview = await api.render(parsed.value);
+      setBefore(preview.before);
+      setAfter(preview.after);
     } catch (error) {
-      push(`Something went wrong: ${(error as Error).message}`);
+      push("red", "Something went wrong", (error as Error).message);
+      void resync().catch(() => undefined);
     } finally {
       setBusy(false);
-      setConfirming(false);
+      setConfirm(null);
+    }
+  };
+
+  const confirmPublish = async () => {
+    if (!parsed.value) return;
+    setBusy(true);
+    try {
+      const result = await api.publish(parsed.value);
+      setPublished(true);
+      push("green", "Change published", result.steps.map(plainStep).join(", "));
+      await refresh();
+    } catch (error) {
+      push("red", "Something went wrong", (error as Error).message);
+      void resync().catch(() => undefined);
+    } finally {
+      setBusy(false);
+      setConfirm(null);
     }
   };
 
@@ -164,20 +240,23 @@ export default function App() {
     setBusy(true);
     try {
       const result = await api.rollback();
-      push(...result.steps.map(plainStep));
+      push("amber", "Rolled back", result.steps.map(plainStep).join(", "));
       const next = await refresh();
       setDraft(pretty(next.value));
       setApplied(false);
+      setPublished(false);
       setCells([]);
       setPlan(null);
+      setAfter(null);
+      const live = await api.render();
+      setBefore(live.before);
     } catch (error) {
-      push(`Something went wrong: ${(error as Error).message}`);
+      push("red", "Something went wrong", (error as Error).message);
+      void resync().catch(() => undefined);
     } finally {
       setBusy(false);
     }
   };
-
-  const phase = applied ? "ROLLBACK" : plan?.diff ? "FIX" : "CHECK";
 
   if (loadError) {
     return (
@@ -188,227 +267,102 @@ export default function App() {
     );
   }
 
-  const summary = plan?.limit
-    ? [
-        `Versions below ${plan.limit} keep the old value.`,
-        "Everyone else gets your new value.",
-        `Why: ${broken.join(" and ")} can't read the new value.`,
-      ]
-    : [];
+  const planned = Boolean(plan?.limit);
+  const steps: { label: string; state: StepState }[] = [
+    { label: "Check change", state: hasChange && !checking ? "done" : "active" },
+    { label: "Apply fix", state: applied || published ? "done" : planned ? "active" : "todo" },
+    { label: "Publish", state: published ? "done" : applied ? "active" : "todo" },
+    { label: "Undo if needed", state: applied || published ? "todo" : "off" },
+  ];
 
   return (
-    <main className="grid min-h-screen w-full gap-4 p-4 lg:grid-cols-[260px_minmax(0,1fr)] xl:grid-cols-[280px_minmax(0,1fr)_360px] xl:p-6">
+    <div className="min-h-screen w-full">
       <SurfaceBackdrop />
-
-      <header className="flex flex-wrap items-center justify-between gap-2 border-b border-border-subtle pb-3 lg:col-span-2 xl:col-span-3">
-        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-          <span className="font-display text-xl font-medium">flagpact</span>
+      <TopBar
+        flag={state?.flag ?? "home_banner"}
+        syncedAgo={Math.max(0, Math.round((now - syncedAt) / 1000))}
+        canUndo={applied}
+        busy={busy}
+        onUndo={undo}
+      />
+      <main className="w-full px-6 py-6">
+        <div className="flex flex-wrap items-center justify-between gap-4 pb-6">
+          <h1 className="font-display text-4xl font-medium">App version check</h1>
+          <Stepper steps={steps} />
         </div>
-        <span className="flex items-center gap-2 text-sm text-ink-muted">
-          <i className={`inline-block size-2 rounded-full ${applied ? "bg-status-amber" : "bg-status-green"}`} />
-          {applied ? "A fix is live" : "Nothing published yet"}
-        </span>
-      </header>
-
-      <aside className="panel flex flex-col gap-6 p-5">
-        <div className="flex items-center gap-2 text-sm text-ink-muted">
-          <i className="inline-block size-2 rounded-full bg-status-green" />
-          Connected to Flagsmith
-        </div>
-        <div>
-          <div className="kicker">Config being checked</div>
-          <h1 className="mt-1 font-display text-2xl font-medium">
-            <ScrambleText text={state?.flag ?? "loading"} />
-          </h1>
-        </div>
-        <dl className="grid grid-cols-2 gap-3">
-          <div>
-            <dt className="kicker">App versions</dt>
-            <dd className="text-xl tabular-nums">{state?.versions.length ?? 0}</dd>
+        <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_420px]">
+          <div className="min-w-0 space-y-6">
+            <SummaryCard
+              cells={rows}
+              hasChange={hasChange}
+              checking={checking}
+              total={state?.versions.length ?? 0}
+              removed={removed}
+              brokenVersions={brokenVersions}
+              atRisk={hasShares && plan && !applied ? plan.at_risk : null}
+              done={published ? "published" : applied ? "applied" : null}
+            />
+            <ChangeEditor
+              live={state?.value ?? {}}
+              draft={draft}
+              parsed={parsed.value}
+              error={parsed.error}
+              locked={applied || !state}
+              onChange={setDraft}
+              onBreak={() => setDraft(pretty(BREAKING))}
+              onReset={() => state && setDraft(pretty(state.value))}
+            />
+            <ImpactTable
+              rows={rows}
+              meta={state?.meta ?? {}}
+              missing={state?.missing ?? null}
+              latest={state?.latest ?? ""}
+              contracts={state?.contracts ?? {}}
+              newValue={hasChange ? parsed.value : undefined}
+              before={before}
+              after={after}
+              filter={filter}
+              onFilter={setFilter}
+              includeMissing={includeMissing}
+              onToggleMissing={() => setIncludeMissing((v) => !v)}
+              locked={applied}
+              lastMs={lastMs}
+              checkedAt={checkedAt}
+            />
           </div>
-          <div>
-            <dt className="kicker">Status</dt>
-            <dd className="text-xl">{applied ? "Fix live" : "Editing"}</dd>
-          </div>
-        </dl>
-        <div>
-          <div className="kicker mb-2">Steps</div>
-          <ol className="space-y-1.5 text-sm">
-            {PHASES.map((item, index) => (
-              <li key={item.key} className={phase === item.key ? "text-ink-primary" : "text-ink-muted/60"}>
-                {index + 1}. {item.label}
-              </li>
-            ))}
-          </ol>
+          <aside className="min-w-0 space-y-6">
+            <FixCard
+              plan={plan}
+              meta={state?.meta ?? {}}
+              missing={state?.missing ?? null}
+              includeMissing={includeMissing}
+              onToggleMissing={() => setIncludeMissing((v) => !v)}
+              applied={applied}
+              published={published}
+              busy={busy}
+              dashboard={state?.dashboard ?? ""}
+              onApply={() => setConfirm("apply")}
+              onPublish={() => setConfirm("publish")}
+            />
+            <ActivityCard entries={entries} />
+          </aside>
         </div>
-        <div>
-          <div className="kicker mb-2">Value in Flagsmith now</div>
-          <pre className="overflow-x-auto text-xs leading-relaxed text-ink-muted">{state ? pretty(state.value) : ""}</pre>
-        </div>
-      </aside>
-
-      <section className="panel flex flex-col p-6">
-        <h2 className="font-display text-4xl font-medium">App version check</h2>
-        <p className="mt-3 flex flex-wrap gap-x-5 text-sm">
-          <span className="text-status-red"><Counter value={count("red")} /> would break</span>
-          <span className="text-status-amber"><Counter value={count("amber")} /> not checked</span>
-          <span className="text-status-green"><Counter value={count("green")} /> safe</span>
-        </p>
-
-        <div className="mt-5">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <label htmlFor="pending" className="text-sm font-medium">New value to publish</label>
-            <span className="flex gap-2">
-              <button className="btn" disabled={applied || !state} onClick={() => setDraft(pretty(BREAKING))}>Try a breaking change</button>
-              <button className="btn" disabled={applied || !state} onClick={() => state && setDraft(pretty(state.value))}>Reset</button>
-            </span>
-          </div>
-          <textarea
-            id="pending"
-            spellCheck={false}
-            value={draft}
-            disabled={applied}
-            onChange={(event) => setDraft(event.target.value)}
-            rows={6}
-            className="mt-2 w-full resize-y border border-border-subtle bg-canvas/60 p-3 text-sm text-ink-primary"
-          />
-          {parsed.error && <p className="mt-1 text-xs text-status-red">{parsed.error}</p>}
-        </div>
-
-        <div className="mt-6">
-          <AppPanes panes={panes} mode={paneMode} />
-        </div>
-
-        <div className="mt-6">
-          <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-            <h3 className="text-sm font-medium">Result for each app version</h3>
-            <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by result">
-              <span className="kicker">Show</span>
-              {FILTERS.map((name) => (
-                <button key={name} aria-pressed={filter === name} className={`btn ${filter === name ? "bg-subtle" : ""}`} onClick={() => setFilter(name)}>
-                  {name === "ALL" ? "All" : LABELS[name]}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="kicker grid grid-cols-[96px_minmax(0,1fr)_120px] gap-3 pb-2 pl-8">
-            <span>App version</span>
-            <span>Gets this value</span>
-            <span>Result</span>
-          </div>
-          <div className="relative">
-            <SignalLine rows={visible.length} rowHeight={ROW_HEIGHT} run={run} />
-            <LayoutGroup>
-              <ul>
-                {visible.map((row, index) => (
-                  <motion.li
-                    layout
-                    key={row.version}
-                    tabIndex={0}
-                    onClick={() => setSelected(row.version)}
-                    onKeyDown={(event) => event.key === "Enter" && setSelected(row.version)}
-                    initial={{ opacity: 0, x: -8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30, delay: index * 0.04 }}
-                    className="grid cursor-pointer grid-cols-[96px_minmax(0,1fr)_120px] items-center gap-3 border-t border-border-subtle pl-8 hover:bg-subtle/40"
-                    style={{ height: ROW_HEIGHT, boxShadow: active?.version === row.version ? "inset 2px 0 0 var(--accent)" : undefined }}
-                  >
-                    <span className="chip w-fit">{row.version}</span>
-                    <span className="min-w-0">
-                      <span className="block truncate text-sm text-ink-primary">
-                        {Object.keys(row.value).length ? `Reads: ${Object.keys(row.value).join(", ")}` : "No value yet"}
-                      </span>
-                      <span className="block truncate text-xs text-ink-muted">{plainReason(row.reason)}</span>
-                    </span>
-                    <StatusMark state={row.state} />
-                  </motion.li>
-                ))}
-              </ul>
-            </LayoutGroup>
-            {visible.length === 0 && <p className="py-4 text-sm text-ink-muted">No app versions match this filter.</p>}
-          </div>
-          <div className="mt-3 flex flex-wrap justify-between gap-2 border-t border-border-subtle pt-3 text-xs text-ink-muted">
-            <span>Older builds that don't send an app_version are not protected by the fix.</span>
-            <span>{lastMs === null ? "Not checked yet" : `Last check took ${(lastMs / 1000).toFixed(1)} s`}</span>
-          </div>
-        </div>
-      </section>
-
-      <aside className="panel flex flex-col gap-4 p-5 lg:col-span-2 xl:col-span-1">
-        <div className="flex items-center justify-between">
-          <h2 className="font-display text-xl font-medium">The fix</h2>
-          {plan?.limit && <span className="chip">Below {plan.limit}</span>}
-        </div>
-
-        {applied ? (
-          <p className="text-sm leading-relaxed">The fix is live. Older versions keep the previous value and everyone else has the new one. Undo to go back to how it was.</p>
-        ) : summary.length > 0 ? (
-          <ul className="space-y-2 text-sm leading-relaxed">
-            {summary.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
-        ) : plan?.error ? (
-          <p className="text-sm leading-relaxed text-ink-muted">{plan.error}</p>
-        ) : (
-          <p className="text-sm leading-relaxed text-ink-muted">Edit the value, or try the breaking change. flagpact will suggest a fix if any version would break.</p>
-        )}
-
-        {plan?.diff && !applied && (
-          <details className="text-xs text-ink-muted">
-            <summary className="cursor-pointer">Technical details</summary>
-            <ul className="mt-2 space-y-1">
-              {plan.diff.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
-          </details>
-        )}
-
-        {applied ? (
-          <button className="btn" disabled={busy} onClick={undo}>Undo the fix</button>
-        ) : (
-          <button className="btn btn-primary" disabled={!plan?.diff || busy} onClick={() => setConfirming(true)}>Apply the fix</button>
-        )}
-
-        {active && (
-          <div className="border-t border-border-subtle pt-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-medium">Selected app version</h3>
-              <span className="chip">{active.version}</span>
-            </div>
-            <p className="mt-2 text-sm text-ink-muted">{plainReason(active.reason)}</p>
-            <div className="kicker mb-1 mt-3">What this version reads</div>
-            {reads.length === 0 ? (
-              <p className="text-xs text-ink-muted">No recorded behaviour</p>
-            ) : (
-              <ul className="space-y-1 text-sm">
-                {reads.map((read) => (
-                  <li key={read.path} className="flex justify-between gap-2">
-                    <span className="truncate">{read.path}</span>
-                    <span className="shrink-0 text-xs text-ink-muted">{read.has_default ? "optional" : "required"}, {plainType(read.type)}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        )}
-
-        <div className="mt-auto border-t border-border-subtle pt-4">
-          <h3 className="mb-2 text-sm font-medium">Activity</h3>
-          <TypeLog lines={log} />
-        </div>
-      </aside>
-
+      </main>
       <ConfirmDialog
-        open={confirming}
-        title="Publish this change safely?"
-        lines={summary}
+        open={confirm !== null}
+        title={confirm === "publish" ? "Publish your change?" : "Apply the fix?"}
+        lines={
+          confirm === "publish"
+            ? ["Everyone on a newer version gets your change.", "Older versions keep the live value."]
+            : [`Versions below ${plan?.limit ?? ""} keep the live value.`, "Your change is not published yet."]
+        }
         details={plan?.diff ?? []}
         busy={busy}
-        onConfirm={confirmApply}
-        onCancel={() => setConfirming(false)}
+        confirmLabel={confirm === "publish" ? "Publish" : "Apply the fix"}
+        busyLabel="Working"
+        onConfirm={confirm === "publish" ? confirmPublish : confirmApply}
+        onCancel={() => setConfirm(null)}
       />
-    </main>
+    </div>
   );
 }

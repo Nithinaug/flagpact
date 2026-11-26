@@ -1,12 +1,5 @@
 export type Verdict = "red" | "amber" | "green" | "idle";
 
-export const LABELS: Record<Verdict, string> = {
-  red: "Breaks",
-  amber: "Not checked",
-  green: "Safe",
-  idle: "Waiting",
-};
-
 export type Cell = {
   version: string;
   state: Verdict;
@@ -27,20 +20,44 @@ export type Pane = {
   output: string;
 };
 
+export type Meta = {
+  share: number | null;
+  users: number | null;
+  platforms: string;
+};
+
 export type Plan = {
   cells: Cell[];
+  at_risk: number;
+  error?: string;
   limit?: string;
   diff?: string[];
   segment?: string;
-  error?: string;
+  include_missing?: boolean;
+  after?: Cell[];
+  protected?: number;
 };
 
 export type State = {
   flag: string;
   value: Record<string, unknown>;
   versions: string[];
+  meta: Record<string, Meta>;
+  missing: { share: number; users: number } | null;
+  latest: string;
   applied: boolean;
+  published: boolean;
+  dashboard: string;
   contracts: Record<string, Read[]>;
+};
+
+export const MISSING = "none";
+
+export const LABELS: Record<Verdict, string> = {
+  red: "Breaks",
+  amber: "Not checked",
+  green: "Safe",
+  idle: "Waiting",
 };
 
 async function call<T>(method: string, path: string, body?: unknown): Promise<T> {
@@ -57,8 +74,11 @@ async function call<T>(method: string, path: string, body?: unknown): Promise<T>
 export const api = {
   state: () => call<State>("GET", "/api/state"),
   check: (value: unknown, replay: boolean) => call<{ cells: Cell[] }>("POST", "/api/check", { value, replay }),
-  plan: (value: unknown) => call<Plan>("POST", "/api/plan", { value }),
-  apply: (value: unknown) => call<{ steps: string[]; cells: Cell[] }>("POST", "/api/apply", { value }),
-  render: (value?: unknown) => call<{ mode: "live" | "preview"; panes: Pane[] }>("POST", "/api/render", value === undefined ? {} : { value }),
+  plan: (value: unknown, includeMissing: boolean) => call<Plan>("POST", "/api/plan", { value, include_missing: includeMissing }),
+  apply: (value: unknown, includeMissing: boolean) =>
+    call<{ steps: string[]; cells: Cell[] }>("POST", "/api/apply", { value, include_missing: includeMissing }),
+  publish: (value: unknown) => call<{ steps: string[] }>("POST", "/api/publish", { value }),
+  render: (value?: unknown) =>
+    call<{ before: Pane[]; after: Pane[] | null }>("POST", "/api/render", value === undefined ? {} : { value }),
   rollback: () => call<{ steps: string[] }>("POST", "/api/rollback", {}),
 };

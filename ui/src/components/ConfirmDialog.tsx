@@ -7,11 +7,13 @@ type Props = {
   lines: string[];
   details: string[];
   busy: boolean;
+  confirmLabel: string;
+  busyLabel: string;
   onConfirm: () => void;
   onCancel: () => void;
 };
 
-export function ConfirmDialog({ open, title, lines, details, busy, onConfirm, onCancel }: Props) {
+export function ConfirmDialog({ open, title, lines, details, busy, confirmLabel, busyLabel, onConfirm, onCancel }: Props) {
   const confirm = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -68,13 +70,13 @@ export function ConfirmDialog({ open, title, lines, details, busy, onConfirm, on
                     transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}
                   />
                 </div>
-                <p className="kicker mt-2">Publishing, then re-checking every app version</p>
+                <p className="kicker mt-2">Writing to Flagsmith, then re-checking every app version</p>
               </div>
             )}
             <div className="flex justify-end gap-2">
               <button className="btn" disabled={busy} onClick={onCancel}>Cancel</button>
               <button ref={confirm} className="btn btn-primary" disabled={busy} onClick={onConfirm}>
-                {busy ? "Publishing" : "Publish the safe version"}
+                {busy ? busyLabel : confirmLabel}
               </button>
             </div>
           </motion.div>
