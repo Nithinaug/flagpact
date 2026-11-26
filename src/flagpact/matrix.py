@@ -1,6 +1,7 @@
 import json
 import os
 import tempfile
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from typing import Any
 
@@ -32,16 +33,19 @@ def build_matrix(document: dict[str, Any], flag: str, new_value: dict[str, Any],
         path = os.path.join(tmp, "patched.json")
         with open(path, "w") as handle:
             json.dump(patched, handle)
+        statics = []
         for app in versions:
             value = resolve(patched, flag, app.version)
             contracts = load_contracts(contracts_root, flag)
             contract = next((c for c in reversed(contracts) if c["app_version"] == app.version), None)
-            state, reason = static_check(contract, value)
-            if run_replay:
-                result = replay(app.directory, path, app.version)
-                if result.passed:
-                    state, reason = GREEN, "replay passed"
-                else:
-                    state, reason = RED, "replay failed"
+            statics.append((app, value, *static_check(contract, value)))
+        if run_replay:
+            with ThreadPoolExecutor(max_workers=len(versions) or 1) as pool:
+                results = list(pool.map(lambda item: replay(item[0].directory, path, item[0].version), statics))
+        else:
+            results = [None] * len(statics)
+        for (app, value, state, reason), result in zip(statics, results):
+            if result is not None:
+                state, reason = (GREEN, "replay passed") if result.passed else (RED, "replay failed")
             cells.append(Cell(app.version, state, reason, value))
     return cells
