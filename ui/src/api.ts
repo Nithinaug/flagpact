@@ -38,6 +38,53 @@ export type Plan = {
   protected?: number;
 };
 
+export type Stage = {
+  index: number;
+  boundary: string;
+  gets_change: string[];
+  kept: string[];
+  share_new: number;
+  cells: Cell[];
+  ok: boolean;
+  blocked: string[];
+  holds_missing: boolean;
+};
+
+export type Rollout = {
+  stages: Stage[];
+  current: number;
+  segment?: string;
+  held: string[];
+  published?: boolean;
+  error?: string;
+};
+
+export type ScanRead = {
+  path: string;
+  required: boolean;
+  required_in: string[];
+  default_in: string[];
+  places: string[];
+};
+
+export type ScanFlag = {
+  flag: string;
+  sites: { file: string; line: number; call: string }[];
+  reads: ScanRead[];
+  languages: string[];
+};
+
+export type ScanResult = {
+  kind: "local" | "github";
+  source: string;
+  files_scanned: number;
+  flags: ScanFlag[];
+  versions: { version: string; directory: string; file: string; line: number; guessed: boolean }[];
+  draft: Record<string, unknown> | null;
+  needs_review: string[];
+  notes: string[];
+};
+
 export type State = {
   flag: string;
   value: Record<string, unknown>;
@@ -97,6 +144,15 @@ export const api = {
     call<{ steps: string[]; cells: Cell[] }>("POST", "/api/apply", { value, include_missing: includeMissing }),
   rehearse: (value: unknown, includeMissing: boolean) =>
     call<Rehearsal>("POST", "/api/rehearse", { value, include_missing: includeMissing }),
+  stages: (value: unknown, includeMissing: boolean) =>
+    call<Partial<Rollout> & { stages: Stage[]; current: number }>("POST", "/api/stages", { value, include_missing: includeMissing }).then(
+      (r): Rollout => ({ ...r, held: r.held ?? [] }),
+    ),
+  stageNext: (value: unknown, includeMissing: boolean) =>
+    call<{ steps: string[]; stage: number; done: boolean }>("POST", "/api/stage-next", { value, include_missing: includeMissing }),
+  stageBack: (value: unknown, includeMissing: boolean) =>
+    call<{ steps: string[]; stage: number }>("POST", "/api/stage-back", { value, include_missing: includeMissing }),
+  importScan: (source: string) => call<ScanResult>("POST", "/api/import", { source }),
   watch: () => call<Watch>("GET", "/api/watch"),
   protect: () => call<{ steps: string[]; limit: string }>("POST", "/api/protect", {}),
   restore: () => call<{ value: Record<string, unknown> }>("POST", "/api/restore", {}),

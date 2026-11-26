@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { api, MISSING, type Cell, type Pane, type Plan, type Rehearsal, type State, type Watch } from "./api";
+import { api, MISSING, type Cell, type Pane, type Plan, type Rehearsal, type Rollout, type State, type Watch } from "./api";
 import { ActivityCard, type Entry } from "./components/ActivityCard";
 import { ChangeEditor } from "./components/ChangeEditor";
 import { ConfirmDialog } from "./components/ConfirmDialog";
 import { FixCard } from "./components/FixCard";
 import { LiveAlert } from "./components/LiveAlert";
 import { Notices } from "./components/Notices";
+import { RolloutCard } from "./components/RolloutCard";
 import { ImpactTable, type Filter } from "./components/ImpactTable";
 import { Stepper, type StepState } from "./components/Stepper";
 import { SummaryCard } from "./components/SummaryCard";
@@ -26,7 +27,7 @@ function parse(text: string): { value?: Record<string, unknown>; error?: string 
   }
 }
 
-export default function App() {
+export default function App({ onHome }: { onHome?: () => void }) {
   const [state, setState] = useState<State | null>(null);
   const [loadError, setLoadError] = useState("");
   const [draft, setDraft] = useState("");
@@ -38,7 +39,10 @@ export default function App() {
   const [published, setPublished] = useState(false);
   const [includeMissing, setIncludeMissing] = useState(true);
   const [entries, setEntries] = useState<Entry[]>([]);
-  const [confirm, setConfirm] = useState<"apply" | "publish" | null>(null);
+  const [confirm, setConfirm] = useState<"apply" | "publish" | "stage" | null>(null);
+  const [rollout, setRollout] = useState<Rollout | null>(null);
+  const [rolloutLoading, setRolloutLoading] = useState(false);
+  const rolloutToken = useRef(0);
   const [busy, setBusy] = useState(false);
   const [checking, setChecking] = useState(false);
   const [rehearsal, setRehearsal] = useState<Rehearsal | null>(null);
@@ -219,6 +223,26 @@ export default function App() {
     api.plan(parsed.value, includeMissing).then(setPlan).catch(() => undefined);
   }, [includeMissing]);
 
+  useEffect(() => {
+    if (!state || !parsed.value || !(editing || applied) || checking) {
+      if ((!editing && !applied) || (checking && !applied)) setRollout(null);
+      return;
+    }
+    const mine = ++rolloutToken.current;
+    setRolloutLoading(true);
+    api
+      .stages(parsed.value, includeMissing)
+      .then((result) => {
+        if (mine === rolloutToken.current) setRollout(result);
+      })
+      .catch(() => {
+        if (mine === rolloutToken.current) setRollout(null);
+      })
+      .finally(() => {
+        if (mine === rolloutToken.current) setRolloutLoading(false);
+      });
+  }, [parsed.value, includeMissing, applied, published, editing, checking, state]);
+
   const rows: Cell[] = useMemo(() => {
     if (!state) return [];
     const idle = (version: string): Cell => ({ version, state: "idle", reason: "waiting for a pending change", value: {} });
@@ -297,7 +321,7 @@ export default function App() {
   const simulateEdit = async () => {
     try {
       await api.outsideEdit();
-      push("amber", "Edited home_banner directly in Flagsmith", "Demo of an edit made in the dashboard");
+      push("amber", "Edited the config directly in Flagsmith", "Demo of an edit made in the dashboard");
       setWatch(await api.watch());
     } catch (error) {
       push("red", "Something went wrong", (error as Error).message);
@@ -342,6 +366,48 @@ export default function App() {
     }
   };
 
+  const refreshAfterStage = async (value: Record<string, unknown>) => {
+    await resync();
+    api.check(value, true).then((result) => setCells(result.cells)).catch(() => undefined);
+    api.render(value).then((preview) => {
+      setBefore(preview.before);
+      setAfter(preview.after);
+    }).catch(() => undefined);
+  };
+
+  const confirmStage = async () => {
+    if (!parsed.value) return;
+    setBusy(true);
+    try {
+      const result = await api.stageNext(parsed.value, includeMissing);
+      setApplied(true);
+      setPublished(true);
+      push("green", `Stage ${result.stage + 1} applied`, result.steps.map(plainStep).join(", "));
+      await refreshAfterStage(parsed.value);
+    } catch (error) {
+      push("red", "Something went wrong", (error as Error).message);
+      void resync().catch(() => undefined);
+    } finally {
+      setBusy(false);
+      setConfirm(null);
+    }
+  };
+
+  const stageBack = async () => {
+    if (!parsed.value) return;
+    setBusy(true);
+    try {
+      const result = await api.stageBack(parsed.value, includeMissing);
+      push("amber", result.stage < 0 ? "Rollout undone" : `Back to stage ${result.stage + 1}`, result.steps.map(plainStep).join(", "));
+      await refreshAfterStage(parsed.value);
+    } catch (error) {
+      push("red", "Something went wrong", (error as Error).message);
+      void resync().catch(() => undefined);
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const undo = async () => {
     setBusy(true);
     try {
@@ -373,6 +439,8 @@ export default function App() {
     );
   }
 
+  const nextStage = (rollout?.current ?? -1) + 1;
+  const stagePreview = rollout?.stages[nextStage];
   const planned = Boolean(plan?.limit);
   const steps: { label: string; state: StepState }[] = [
     { label: "Check change", state: hasChange && !checking ? "done" : "active" },
@@ -385,11 +453,11 @@ export default function App() {
     <div className="min-h-screen w-full">
       <SurfaceBackdrop />
       <TopBar
-        flag={state?.flag ?? "home_banner"}
         canUndo={applied}
         busy={busy}
         onUndo={undo}
         onSimulate={simulateEdit}
+        onHome={onHome}
         demo={new URLSearchParams(window.location.search).has("demo") || window.location.pathname.replace(/\/$/, "") === "/demo"}
       />
       <main className="w-full px-6 py-6">
@@ -463,23 +531,40 @@ export default function App() {
               rehearsing={rehearsing}
               onRehearse={rehearse}
             />
+            {!(liveBroken && !editing) && (rolloutLoading || rollout) && (
+              <RolloutCard
+                rollout={rollout}
+                loading={rolloutLoading}
+                busy={busy}
+                hasShares={hasShares}
+                pending={applied && !published}
+                onNext={() => setConfirm("stage")}
+                onBack={stageBack}
+              />
+            )}
             <ActivityCard entries={entries} />
           </aside>
         </div>
       </main>
       <ConfirmDialog
         open={confirm !== null}
-        title={confirm === "publish" ? "Publish your change?" : "Apply the fix?"}
+        title={confirm === "stage" ? `Roll out stage ${nextStage + 1}?` : confirm === "publish" ? "Publish your change?" : "Apply the fix?"}
         lines={
-          confirm === "publish"
+          confirm === "stage" && stagePreview
+            ? [
+                `${stagePreview.gets_change.join(", ")} get your change.`,
+                stagePreview.kept.length ? `${stagePreview.kept.join(", ")} keep the previous value.` : "No version is held back.",
+                "It is checked again against every app version when you confirm.",
+              ]
+            : confirm === "publish"
             ? ["Everyone on a newer version gets your change.", "Older versions keep the live value."]
             : [`Versions below ${plan?.limit ?? ""} keep the live value.`, "Your change is not published yet."]
         }
-        details={plan?.diff ?? []}
+        details={confirm === "stage" && stagePreview ? [`segment ${rollout?.segment ?? ""}: app_version < ${stagePreview.boundary}`] : plan?.diff ?? []}
         busy={busy}
-        confirmLabel={confirm === "publish" ? "Publish" : "Apply the fix"}
+        confirmLabel={confirm === "stage" ? "Roll out" : confirm === "publish" ? "Publish" : "Apply the fix"}
         busyLabel="Working"
-        onConfirm={confirm === "publish" ? confirmPublish : confirmApply}
+        onConfirm={confirm === "stage" ? confirmStage : confirm === "publish" ? confirmPublish : confirmApply}
         onCancel={() => setConfirm(null)}
       />
     </div>
