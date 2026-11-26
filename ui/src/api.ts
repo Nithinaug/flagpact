@@ -57,6 +57,17 @@ export type Rehearsal = {
   rows: { version: string; expects: "old" | "new"; ok: boolean; fields: string[] }[];
 };
 
+export type Watch = {
+  ok: boolean;
+  value: Record<string, unknown>;
+  broken: string[];
+  cells: Cell[];
+  at_risk: number;
+  restore: boolean;
+  previous: Record<string, unknown> | null;
+  checked_at: number;
+};
+
 export const MISSING = "none";
 
 export const LABELS: Record<Verdict, string> = {
@@ -85,6 +96,9 @@ export const api = {
     call<{ steps: string[]; cells: Cell[] }>("POST", "/api/apply", { value, include_missing: includeMissing }),
   rehearse: (value: unknown, includeMissing: boolean) =>
     call<Rehearsal>("POST", "/api/rehearse", { value, include_missing: includeMissing }),
+  watch: () => call<Watch>("GET", "/api/watch"),
+  restore: () => call<{ value: Record<string, unknown> }>("POST", "/api/restore", {}),
+  outsideEdit: () => call<{ value: Record<string, unknown> }>("POST", "/api/outside-edit", {}),
   publish: (value: unknown) => call<{ steps: string[] }>("POST", "/api/publish", { value }),
   render: (value?: unknown) =>
     call<{ before: Pane[]; after: Pane[] | null }>("POST", "/api/render", value === undefined ? {} : { value }),

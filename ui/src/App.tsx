@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { api, MISSING, type Cell, type Pane, type Plan, type Rehearsal, type State } from "./api";
+import { api, MISSING, type Cell, type Pane, type Plan, type Rehearsal, type State, type Watch } from "./api";
 import { ActivityCard, type Entry } from "./components/ActivityCard";
 import { ChangeEditor } from "./components/ChangeEditor";
 import { ConfirmDialog } from "./components/ConfirmDialog";
 import { FixCard } from "./components/FixCard";
+import { LiveAlert } from "./components/LiveAlert";
 import { ImpactTable, type Filter } from "./components/ImpactTable";
 import { Stepper, type StepState } from "./components/Stepper";
 import { SummaryCard } from "./components/SummaryCard";
@@ -44,8 +45,9 @@ export default function App() {
   const [filter, setFilter] = useState<Filter>("ALL");
   const [lastMs, setLastMs] = useState<number | null>(null);
   const [checkedAt, setCheckedAt] = useState("");
-  const [syncedAt, setSyncedAt] = useState(Date.now());
-  const [now, setNow] = useState(Date.now());
+  const [watch, setWatch] = useState<Watch | null>(null);
+  const watching = useRef(false);
+  const prevOk = useRef<boolean | null>(null);
   const token = useRef(0);
   const entryId = useRef(0);
   const firstToggle = useRef(true);
@@ -58,7 +60,6 @@ export default function App() {
   const refresh = useCallback(async () => {
     const next = await api.state();
     setState(next);
-    setSyncedAt(Date.now());
     return next;
   }, []);
 
@@ -90,9 +91,42 @@ export default function App() {
   }, [resync]);
 
   useEffect(() => {
-    const timer = window.setInterval(() => setNow(Date.now()), 1000);
-    return () => window.clearInterval(timer);
+    let alive = true;
+    const tick = async () => {
+      if (watching.current) return;
+      watching.current = true;
+      try {
+        const result = await api.watch();
+        if (!alive) return;
+        setWatch(result);
+      } catch {
+        return;
+      } finally {
+        watching.current = false;
+      }
+    };
+    void tick();
+    const id = window.setInterval(tick, 3000);
+    return () => {
+      alive = false;
+      window.clearInterval(id);
+    };
   }, []);
+
+  useEffect(() => {
+    if (!watch) return;
+    const was = prevOk.current;
+    prevOk.current = watch.ok;
+    if (was === true && !watch.ok) {
+      push("red", "Watch caught a change outside flagpact", `Live value now breaks ${watch.broken.join(" and ")}`);
+      void resync();
+    } else if (was === false && watch.ok) {
+      push("green", "Live value is safe again");
+      void resync();
+    } else if (was === null && !watch.ok) {
+      push("red", "Live value breaks an app version", watch.broken.join(" and "));
+    }
+  }, [watch, push, resync]);
 
   useEffect(() => {
     refresh()
@@ -118,7 +152,10 @@ export default function App() {
     setRehearsal(null);
   }, [draft, includeMissing, applied]);
   const unchanged = state !== null && parsed.value !== undefined && pretty(parsed.value) === pretty(state.value);
-  const hasChange = (parsed.value !== undefined && !unchanged) || applied;
+  const editing = parsed.value !== undefined && !unchanged;
+  const liveBroken = watch !== null && !watch.ok && !applied;
+  const hasChange = editing || applied || liveBroken;
+  const showCompare = liveBroken && !editing && Boolean(watch?.previous);
 
   useEffect(() => {
     if (!state || applied) return;
@@ -184,10 +221,11 @@ export default function App() {
   const rows: Cell[] = useMemo(() => {
     if (!state) return [];
     const idle = (version: string): Cell => ({ version, state: "idle", reason: "waiting for a pending change", value: {} });
-    const list = state.versions.map((version) => cells.find((c) => c.version === version) ?? idle(version));
-    if (state.missing) list.push(cells.find((c) => c.version === MISSING) ?? idle(MISSING));
+    const source = liveBroken && !editing && watch ? watch.cells : cells;
+    const list = state.versions.map((version) => source.find((c) => c.version === version) ?? idle(version));
+    if (state.missing) list.push(source.find((c) => c.version === MISSING) ?? idle(MISSING));
     return list;
-  }, [state, cells]);
+  }, [state, cells, liveBroken, editing, watch]);
 
   const real = rows.filter((r) => r.version !== MISSING);
   const brokenVersions = real.filter((r) => r.state === "red").map((r) => r.version);
@@ -217,6 +255,30 @@ export default function App() {
       push("red", "Something went wrong", (error as Error).message);
     } finally {
       setRehearsing(false);
+    }
+  };
+
+  const restoreLive = async () => {
+    setBusy(true);
+    try {
+      await api.restore();
+      push("green", "Restored the previous value", "Put back from before the outside edit");
+      await resync();
+      setWatch(await api.watch());
+    } catch (error) {
+      push("red", "Something went wrong", (error as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const simulateEdit = async () => {
+    try {
+      await api.outsideEdit();
+      push("amber", "Edited home_banner directly in Flagsmith", "Demo of an edit made in the dashboard");
+      setWatch(await api.watch());
+    } catch (error) {
+      push("red", "Something went wrong", (error as Error).message);
     }
   };
 
@@ -302,10 +364,11 @@ export default function App() {
       <SurfaceBackdrop />
       <TopBar
         flag={state?.flag ?? "home_banner"}
-        syncedAgo={Math.max(0, Math.round((now - syncedAt) / 1000))}
         canUndo={applied}
         busy={busy}
         onUndo={undo}
+        onSimulate={simulateEdit}
+        demo={new URLSearchParams(window.location.search).has("demo")}
       />
       <main className="w-full px-6 py-6">
         <div className="flex flex-wrap items-center justify-between gap-4 pb-6">
@@ -314,6 +377,9 @@ export default function App() {
         </div>
         <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_420px]">
           <div className="min-w-0 space-y-6">
+            {liveBroken && !editing && watch ? (
+              <LiveAlert watch={watch} hasShares={hasShares} busy={busy} onRestore={restoreLive} />
+            ) : (
             <SummaryCard
               cells={rows}
               hasChange={hasChange}
@@ -324,13 +390,17 @@ export default function App() {
               atRisk={hasShares && plan && !applied ? plan.at_risk : null}
               done={published ? "published" : applied ? "applied" : null}
             />
+            )}
             <ChangeEditor
-              live={state?.value ?? {}}
-              draft={draft}
-              parsed={parsed.value}
+              live={showCompare && watch?.previous ? watch.previous : state?.value ?? {}}
+              draft={showCompare && watch ? pretty(watch.value) : draft}
+              parsed={showCompare && watch ? watch.value : parsed.value}
               error={parsed.error}
-              locked={applied || !state}
-              collapsed={applied || published}
+              locked={applied || !state || showCompare}
+              collapsed={(applied || published) && !showCompare}
+              compare={showCompare}
+              leftLabel={showCompare ? "Before the edit" : undefined}
+              rightLabel={showCompare ? "Live in Flagsmith now" : undefined}
               onChange={setDraft}
               onBreak={() => setDraft(pretty(BREAKING))}
               onReset={() => state && setDraft(pretty(state.value))}

@@ -11,6 +11,9 @@ type Props = {
   error: string | undefined;
   locked: boolean;
   collapsed: boolean;
+  compare?: boolean;
+  leftLabel?: string;
+  rightLabel?: string;
   onChange: (text: string) => void;
   onBreak: () => void;
   onReset: () => void;
@@ -26,7 +29,7 @@ function Gutter({ count, marks }: { count: number; marks: Map<number, string> })
   );
 }
 
-export function ChangeEditor({ live, draft, parsed, error, locked, collapsed, onChange, onBreak, onReset }: Props) {
+export function ChangeEditor({ live, draft, parsed, error, locked, collapsed, compare = false, leftLabel = "Live in Flagsmith", rightLabel = "New value to publish", onChange, onBreak, onReset }: Props) {
   const liveLines = useMemo(() => pretty(live).split("\n"), [live]);
   const draftLines = useMemo(() => draft.split("\n"), [draft]);
   const diff = useMemo(() => diffLines(liveLines, draftLines), [liveLines, draftLines]);
@@ -35,7 +38,9 @@ export function ChangeEditor({ live, draft, parsed, error, locked, collapsed, on
   const [expanded, setExpanded] = useState(false);
 
   const leftMarks = new Map([...diff.removed].map((i) => [i, "text-status-red"]));
-  const rightMarks = new Map([...diff.added].map((i) => [i, "text-status-green"]));
+  const addedText = compare ? "text-status-red" : "text-status-green";
+  const addedFill = compare ? "bg-status-red/10" : "bg-status-green/10";
+  const rightMarks = new Map([...diff.added].map((i) => [i, addedText]));
 
   if (collapsed && !expanded) {
     return (
@@ -53,12 +58,12 @@ export function ChangeEditor({ live, draft, parsed, error, locked, collapsed, on
     <section className="panel overflow-hidden">
       <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-4">
         <div className="flex items-baseline gap-3">
-          <h2 className="font-display text-lg font-medium">Your change</h2>
+          <h2 className="font-display text-lg font-medium">{compare ? "What changed" : "Your change"}</h2>
           <span className="code text-ink-muted">
             -{counts.removed} fields · +{counts.added} fields
           </span>
         </div>
-        <div className="flex gap-2">
+        <div className={`flex gap-2 ${compare ? "hidden" : ""}`}>
           <button className="btn flex items-center gap-2" disabled={locked} onClick={onBreak}>
             <SparkIcon size={14} /> Try a breaking change
           </button>
@@ -70,7 +75,7 @@ export function ChangeEditor({ live, draft, parsed, error, locked, collapsed, on
       <div className="grid border-t border-border-subtle md:grid-cols-2">
         <div className="border-b border-border-subtle md:border-b-0 md:border-r">
           <div className="kicker-caps flex justify-between bg-subtle/40 px-5 py-2">
-            <span>Live in Flagsmith</span>
+            <span>{leftLabel}</span>
           </div>
           <div className="flex px-3 py-4">
             <Gutter count={rows} marks={leftMarks} />
@@ -86,8 +91,8 @@ export function ChangeEditor({ live, draft, parsed, error, locked, collapsed, on
         </div>
         <div>
           <div className="kicker-caps flex items-center justify-between bg-subtle/40 px-5 py-2">
-            <span>New value to publish</span>
-            {error ? (
+            <span>{rightLabel}</span>
+            {compare ? null : error ? (
               <span className="normal-case tracking-normal text-status-red">{error}</span>
             ) : (
               <span className="flex items-center gap-1 normal-case tracking-normal text-status-green"><CheckIcon size={12} /> Valid JSON</span>
@@ -98,7 +103,7 @@ export function ChangeEditor({ live, draft, parsed, error, locked, collapsed, on
             <div className="relative min-w-0 flex-1" style={{ height: rows * LINE }}>
               <div aria-hidden="true" className="code absolute inset-0">
                 {Array.from({ length: rows }, (_, i) => (
-                  <div key={i} className={diff.added.has(i) ? "bg-status-green/10" : ""} style={{ height: LINE }} />
+                  <div key={i} className={diff.added.has(i) ? addedFill : ""} style={{ height: LINE }} />
                 ))}
               </div>
               <textarea
@@ -111,7 +116,7 @@ export function ChangeEditor({ live, draft, parsed, error, locked, collapsed, on
                 className="code absolute inset-0 resize-none overflow-hidden bg-transparent pl-6 text-ink-primary outline-none"
                 style={{ height: rows * LINE }}
               />
-              <div aria-hidden="true" className="code pointer-events-none absolute left-1 top-0 text-status-green">
+              <div aria-hidden="true" className={`code pointer-events-none absolute left-1 top-0 ${addedText}`}>
                 {Array.from({ length: rows }, (_, i) => (
                   <div key={i} style={{ height: LINE }}>{diff.added.has(i) ? "+" : ""}</div>
                 ))}
