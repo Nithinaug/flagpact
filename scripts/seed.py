@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from flagpact.admin import AdminClient, AdminError
 
-START = {"title": "Sale on now", "heading": "Sale on now", "cta": {"text": "Shop"}}
+START = {"title": "Sale on now", "heading": "Sale on now", "cta": {"text": "Shop", "label": "Shop"}}
 FLAG = "home_banner"
 
 

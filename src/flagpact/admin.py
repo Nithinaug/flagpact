@@ -35,8 +35,9 @@ def http_request(base: str, keys: dict[str, str]) -> Request:
 
 
 class AdminClient:
-    def __init__(self, request: Request, project_id: str, client_key: str) -> None:
+    def __init__(self, request: Request, project_id: str, client_key: str, dashboard_url: str = "") -> None:
         self._call = request
+        self.dashboard_url = dashboard_url
         self.project_id = project_id
         self.client_key = client_key
 
@@ -50,7 +51,8 @@ class AdminClient:
             "client": os.environ["FLAGSMITH_ENV_CLIENT_KEY"],
             "server": os.environ["FLAGSMITH_ENV_SERVER_KEY"],
         }
-        return cls(http_request(base, keys), os.environ["FLAGSMITH_PROJECT_ID"], keys["client"])
+        dashboard = base.removesuffix("/api/v1") + f"/project/{os.environ['FLAGSMITH_PROJECT_ID']}/segments"
+        return cls(http_request(base, keys), os.environ["FLAGSMITH_PROJECT_ID"], keys["client"], dashboard)
 
     def _ok(self, method: str, path: str, body: Any = None, kind: str = "master", expect: tuple[int, ...] = (200, 201, 204)) -> Any:
         status, payload = self._call(method, path, body, kind)
@@ -84,12 +86,14 @@ class AdminClient:
         payload = self._ok("GET", f"/projects/{self.project_id}/segments/?q={name}")
         return next((s for s in self._items(payload) if s["name"] == name), None)
 
-    def segment_body(self, name: str, limit: str) -> dict[str, Any]:
-        condition = {"operator": "LESS_THAN", "property": "app_version", "value": f"{limit}:semver"}
+    def segment_body(self, name: str, limit: str, include_missing: bool = False) -> dict[str, Any]:
+        conditions = [{"operator": "LESS_THAN", "property": "app_version", "value": f"{limit}:semver"}]
+        if include_missing:
+            conditions.append({"operator": "IS_NOT_SET", "property": "app_version", "value": ""})
         return {
             "name": name,
             "project": int(self.project_id),
-            "rules": [{"type": "ALL", "rules": [{"type": "ANY", "rules": [], "conditions": [condition]}], "conditions": []}],
+            "rules": [{"type": "ALL", "rules": [{"type": "ANY", "rules": [], "conditions": conditions}], "conditions": []}],
         }
 
     def feature_segments(self, env_id: int, feature_id: int) -> list[dict[str, Any]]:

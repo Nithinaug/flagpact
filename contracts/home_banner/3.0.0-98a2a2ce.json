@@ -4,7 +4,7 @@
   "recorded_from": "demo/v3/test_banner.py",
   "reads": [
     {
-      "path": "cta.text",
+      "path": "cta.label",
       "has_default": false,
       "type": "string",
       "observed_values": [
@@ -18,6 +18,12 @@
       "observed_values": [
         "Sale on now"
       ]
+    },
+    {
+      "path": "subheading",
+      "has_default": true,
+      "type": "missing",
+      "observed_values": []
     }
   ]
 }

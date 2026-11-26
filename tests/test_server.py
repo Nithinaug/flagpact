@@ -12,7 +12,7 @@ from flagpact.service import Service
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 DOCUMENT = json.loads((ROOT / "demo" / "environment.json").read_text())
-NEW = {"heading": "Sale on now", "cta": {"text": "Shop"}}
+NEW = {"heading": "Sale on now", "subheading": "Up to 40% off", "cta": {"label": "Shop the sale"}}
 
 
 class StubAdmin:
@@ -48,12 +48,12 @@ def test_state_lists_flag_and_versions(base):
 def test_check_returns_matrix(base):
     status, body = call(base, "POST", "/api/check", {"value": NEW})
     assert status == 200
-    assert [c["state"] for c in body["cells"]] == ["red", "red", "green"]
+    assert [c["state"] for c in body["cells"]] == ["red", "red", "green", "amber"]
 
 
 def test_check_without_replay_is_static(base):
     status, body = call(base, "POST", "/api/check", {"value": NEW, "replay": False})
-    assert [c["state"] for c in body["cells"]] == ["red", "red", "amber"]
+    assert [c["state"] for c in body["cells"]] == ["red", "red", "amber", "amber"]
 
 
 def test_plan_returns_diff(base):
@@ -79,14 +79,36 @@ def test_unknown_route_and_missing_ui(base):
     assert call(base, "GET", "/api/nope")[0] == 404
 
 
-def test_panes_preview_shows_old_versions_crashing(base):
+def test_plan_simulates_the_fix_before_writing(base):
+    status, body = call(base, "POST", "/api/plan", {"value": NEW})
+    assert [c["state"] for c in body["after"]] == ["green", "green", "green", "amber"]
+    assert body["at_risk"] == 61 and body["protected"] == 96
+
+
+def test_plan_can_protect_builds_without_the_trait(base):
+    status, body = call(base, "POST", "/api/plan", {"value": NEW, "include_missing": True})
+    assert [c["state"] for c in body["after"]] == ["green", "green", "green", "green"]
+    assert body["protected"] == 100
+
+
+def test_state_carries_shares_and_latest(base):
+    status, body = call(base, "GET", "/api/state")
+    assert body["latest"] == "3.0.0" and body["meta"]["1.0.0"]["share"] == 22 and body["missing"]["share"] == 4
+
+
+def test_panes_show_before_and_after(base):
     status, body = call(base, "POST", "/api/render", {"value": NEW})
-    assert status == 200 and body["mode"] == "preview"
-    assert [p["ok"] for p in body["panes"]] == [False, False, True]
-    assert "title" in body["panes"][0]["output"]
-    assert body["panes"][2]["output"].startswith("[BANNER]")
+    assert status == 200
+    assert all(p["ok"] for p in body["before"])
+    assert [p["ok"] for p in body["after"]] == [False, False, True]
+    assert "title" in body["after"][0]["output"]
+    assert body["after"][2]["output"].startswith("[BANNER]")
 
 
-def test_panes_live_renders_every_version(base):
+def test_panes_without_a_value_are_live_only(base):
     status, body = call(base, "POST", "/api/render", {})
-    assert body["mode"] == "live" and all(p["ok"] for p in body["panes"])
+    assert body["after"] is None and all(p["ok"] for p in body["before"])
+
+
+def test_publish_before_apply_is_conflict(base):
+    assert call(base, "POST", "/api/publish", {"value": NEW})[0] == 409

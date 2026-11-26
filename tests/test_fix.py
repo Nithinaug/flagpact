@@ -3,7 +3,7 @@ import json
 import pytest
 
 from flagpact.admin import AdminClient
-from flagpact.fix import PlanError, apply_plan, plan_fix, rollback
+from flagpact.fix import PlanError, apply_plan, plan_fix, publish, rollback
 from flagpact.matrix import Cell
 from flagpact.verdict import AMBER, GREEN, RED
 
@@ -93,21 +93,31 @@ def test_plan_refuses_when_nothing_breaks():
         plan_fix("f", OLD, NEW, cells(GREEN, GREEN))
 
 
-def test_apply_changes_default_last():
+def test_apply_writes_the_rule_but_not_the_default():
     fake = FakeFlagsmith()
     applied = apply_plan(admin(fake), plan_fix("home_banner", OLD, NEW, cells(RED, RED, GREEN)))
     writes = [c for c in fake.log if c[0] in ("POST", "PUT", "PATCH")]
-    assert writes[-1][0] == "PATCH" and writes[-1][1].startswith("/environments/")
     assert [c[1] for c in writes[:3]] == ["/projects/1/segments/", "/features/feature-segments/", "/features/featurestates/"]
-    assert json.loads(fake.default["feature_state_value"]) == NEW
+    assert not any(c[0] == "PATCH" and c[1].startswith("/environments/") for c in writes)
+    assert json.loads(fake.default["feature_state_value"]) == OLD
     assert json.loads(fake.states[0]["feature_state_value"]["string_value"]) == OLD
-    assert applied.created_segment and applied.steps[-1] == "default changed"
+    assert applied.created_segment and applied.published is False
 
 
-def test_rollback_restores_default_and_removes_segment():
+def test_publish_changes_the_default_last():
     fake = FakeFlagsmith()
     ad = admin(fake)
     applied = apply_plan(ad, plan_fix("home_banner", OLD, NEW, cells(RED, RED, GREEN)))
+    assert publish(ad, applied, NEW) == ["default changed"]
+    assert json.loads(fake.default["feature_state_value"]) == NEW
+    assert fake.log[-1][0] == "PATCH" and applied.published
+
+
+def test_rollback_after_publish_restores_default_and_removes_segment():
+    fake = FakeFlagsmith()
+    ad = admin(fake)
+    applied = apply_plan(ad, plan_fix("home_banner", OLD, NEW, cells(RED, RED, GREEN)))
+    publish(ad, applied, NEW)
     steps = rollback(ad, applied)
     assert json.loads(fake.default["feature_state_value"]) == OLD
     assert steps == ["default restored", "segment and override removed"]
@@ -115,6 +125,22 @@ def test_rollback_restores_default_and_removes_segment():
         ("DELETE", f"/features/feature-segments/{applied.feature_segment_id}/"),
         ("DELETE", f"/projects/1/segments/{applied.segment_id}/"),
     ]
+
+
+def test_rollback_before_publish_only_removes_the_rule():
+    fake = FakeFlagsmith()
+    ad = admin(fake)
+    applied = apply_plan(ad, plan_fix("home_banner", OLD, NEW, cells(RED, RED, GREEN)))
+    assert rollback(ad, applied) == ["segment and override removed"]
+    assert json.loads(fake.default["feature_state_value"]) == OLD
+
+
+def test_missing_trait_widens_the_rule():
+    plan = plan_fix("home_banner", OLD, NEW, cells(RED, RED, GREEN), include_missing=True)
+    assert "app_version is not set" in plan.diff()[0]
+    body = AdminClient(FakeFlagsmith(), "1", "client").segment_body("n", "3.0.0", True)
+    conditions = body["rules"][0]["rules"][0]["conditions"]
+    assert [c["operator"] for c in conditions] == ["LESS_THAN", "IS_NOT_SET"]
 
 
 def test_remote_url_is_refused(monkeypatch):

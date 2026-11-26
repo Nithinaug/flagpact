@@ -16,9 +16,10 @@ MAX_BODY = 64 * 1024
 def make_handler(service: Service):
     routes = {
         ("POST", "/api/check"): lambda body: service.check(body["value"], body.get("replay", True)),
-        ("POST", "/api/plan"): lambda body: service.plan(body["value"]),
-        ("POST", "/api/apply"): lambda body: service.apply(body["value"]),
+        ("POST", "/api/plan"): lambda body: service.plan(body["value"], bool(body.get("include_missing"))),
+        ("POST", "/api/apply"): lambda body: service.apply(body["value"], bool(body.get("include_missing"))),
         ("POST", "/api/render"): lambda body: service.panes(body.get("value")),
+        ("POST", "/api/publish"): lambda body: service.publish(body["value"]),
         ("POST", "/api/rollback"): lambda body: service.rollback(),
         ("GET", "/api/state"): lambda body: service.state(),
     }

@@ -8,7 +8,7 @@ from flagpact.verdict import AMBER, GREEN, RED, static_check
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 DOCUMENT = json.loads((ROOT / "demo" / "environment.json").read_text())
-NEW = {"heading": "Sale on now", "cta": {"text": "Shop"}}
+NEW = {"heading": "Sale on now", "subheading": "Up to 40% off", "cta": {"label": "Shop the sale"}}
 VERSIONS = [AppVersion(f"{n}.0.0", str(ROOT / "demo" / f"v{n}")) for n in (1, 2, 3)]
 
 
@@ -28,8 +28,8 @@ def test_static_red_when_required_path_removed():
 
 
 def test_static_optional_path_missing_is_not_red():
-    value = {"title": "x"}
-    assert static_check(contract_for("2.0.0"), value)[0] == AMBER
+    value = {"heading": "h", "cta": {"label": "l"}}
+    assert static_check(contract_for("3.0.0"), value)[0] == AMBER
 
 
 def test_static_type_change_is_red():

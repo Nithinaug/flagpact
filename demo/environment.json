@@ -22,7 +22,7 @@
       "django_id": 1,
       "featurestate_uuid": "00000000-0000-0000-0000-000000000001",
       "enabled": true,
-      "feature_state_value": "{\"title\": \"Sale on now\", \"heading\": \"Sale on now\", \"cta\": {\"text\": \"Shop\"}}",
+      "feature_state_value": "{\"title\": \"Sale on now\", \"heading\": \"Sale on now\", \"cta\": {\"text\": \"Shop\", \"label\": \"Shop\"}}",
       "multivariate_feature_state_values": [],
       "feature": {
         "id": 1,
