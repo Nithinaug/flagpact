@@ -87,7 +87,12 @@ def main() -> None:
     service = Service(AdminClient.from_env(), sys.argv[2] if len(sys.argv) > 2 else "flagpact.json")
     server = ThreadingHTTPServer(("127.0.0.1", int(os.environ.get("FLAGPACT_PORT", "8765"))), make_handler(service))
     print("flagpact server started")
-    server.serve_forever()
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print("flagpact stopped")
+    finally:
+        server.server_close()
 
 
 if __name__ == "__main__":

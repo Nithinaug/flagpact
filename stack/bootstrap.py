@@ -25,7 +25,8 @@ def read_env(path):
 
 
 ENV = read_env(os.path.join(HERE, ".env"))
-BASE = "http://127.0.0.1:%s" % ENV.get("FLAGSMITH_PORT", "8000")
+PORT = os.environ.get("FLAGSMITH_PORT") or ENV.get("FLAGSMITH_PORT", "8000")
+BASE = "http://127.0.0.1:%s" % PORT
 API = BASE + "/api/v1"
 
 
