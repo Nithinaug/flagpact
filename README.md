@@ -1,5 +1,13 @@
 # flagpact
 
+<p>
+  <a href="https://github.com/Nithinaug/flagpact/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Nithinaug/flagpact/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue"></a>
+  <a href="https://github.com/Nithinaug/flagpact/releases"><img alt="Release" src="https://img.shields.io/github/v/release/Nithinaug/flagpact"></a>
+  <img alt="Python 3.10 or newer" src="https://img.shields.io/badge/python-3.10%2B-3776AB">
+  <img alt="Flagsmith 2.294.0" src="https://img.shields.io/badge/Flagsmith-2.294.0-8B5CF6">
+</p>
+
 Check a Flagsmith config change against every app version before you publish it.
 
 A Flagsmith remote-config value changes, and the apps that read it get the new value at once, with no redeploy. That is the point of remote config. It also means an old build still in people's hands, one that expects the old shape, can crash the moment you save. flagpact tells you which app versions would break before the change goes live, and fixes it by keeping those versions on the previous value.
@@ -12,9 +20,18 @@ Built for the Flagsmith "Toggle Wars" hackathon, Track 03: Build on Open Source 
 - **Checks a pending value against every version.** Edit the new value in the console, or pass it to `flagpact check`. flagpact resolves which value each version would get through Flagsmith's segments, then replays each version's own tests against it.
 - **Shows what each version would display.** The live app previews show the real banner for each version, or a crash.
 - **Fixes the break.** It creates a Flagsmith segment on the `app_version` trait that keeps older versions on the previous value, then you publish the change for everyone else.
+
+<p align="center">
+  <img src="docs/images/how-it-works.svg" alt="How flagpact works: resolve each version's value, replay its tests, and if any version breaks, generate a protective segment, then publish" width="900">
+</p>
+
+Also included:
+
 - **Rehearses on a clone.** Before anything touches your environment, it clones the environment through Flagsmith's API, applies and publishes the fix there, probes each version, and deletes the clone.
 - **Watches for edits made outside flagpact.** If someone changes the value in the Flagsmith dashboard and it breaks a version, flagpact shows what changed and offers "Protect older versions" or "Restore previous value".
+- **Rolls out in stages.** Instead of one publish, it can give the new value to the newest app version first, then the next one down, re-checking every version before each stage. You can step back one stage at a time.
 - **Runs in CI.** `flagpact check` and a GitHub Action fail the build when a pending value would break a version.
+- **Imports a public GitHub repository.** It reads the code without running it, finds the Flagsmith config reads and app versions, and drafts a `flagpact.json`.
 
 ## Quick start
 
@@ -47,6 +64,10 @@ To reset the demo value at any time:
 3. Optional: "Rehearse on a clone" proves the fix on a real copy of the environment.
 4. "Apply the fix" creates the protective rule. "Publish your change" then changes the default for everyone else.
 5. Undo removes the rule and restores the default.
+
+For a staged rollout, use the "Roll out in stages" card instead of "Apply the fix". It lists one stage per app version that can read the new value, newest first, with the share of users on the change after each stage. "Roll out stage 1" writes the protective rule and publishes. Each later stage moves the rule down one version. "Back to stage N" moves it up again, and going back from stage 1 undoes the rollout. A stage that would break a version is refused.
+
+To start from your own project, use the "Start from your own project" card, or the command line below.
 
 ## Command line and GitHub Action
 
@@ -86,6 +107,21 @@ The job fails when a version would break and writes a table of results to the jo
 - **SDK offline mode:** each version's tests replay against that document, with no network.
 - **Transient identities:** probes send traits without storing anything in Flagsmith.
 - **Environment clone and the admin API:** used for the rehearsal and for writing the rule and the default.
+
+## Import your project
+
+```bash
+flagpact import /path/to/your/app
+flagpact import https://github.com/owner/repo --out flagpact.json
+```
+
+Import scans the source and prints which flags the app reads, which JSON fields it reads (required, or read with a default), and which app versions it found. It then prints a draft `flagpact.json`. `--out` writes the draft to a new file and refuses to overwrite one. `--json` prints the full scan.
+
+- It reads code and never runs it. Python files are parsed, not imported. For JavaScript, TypeScript, Go, Java, Kotlin, Swift, Ruby, PHP and C# it lists the flags read through `getValue`-style calls but does not read the fields.
+- Test files are left out, because they are not app code.
+- A GitHub import accepts only a public `https://github.com/owner/repo` URL. It makes a shallow clone into a temporary folder with hooks, submodules and credentials switched off, scans it and deletes it. Private repositories are not supported.
+- Version folders in the draft are relative to the scanned folder, so save the draft there.
+- Import does not record contracts. Run each version's tests with the recorder as described below.
 
 ## Connect your own app
 
@@ -128,6 +164,8 @@ Then add the version to `flagpact.json`:
 ## Limits
 
 - The wrapper and the test replay are Python only.
+- Import finds only direct reads such as `cfg["title"]` and `cfg.get("title", "")`, plus simple aliases. It cannot see fields read through helper functions, loops or dynamic keys. Treat the draft as a starting point.
+- A staged rollout counts a version that is "Not checked" as able to take the change, the same as the one-step fix. Stages only cover versions that are not broken.
 - A contract only holds what the tests actually read. A field no test reads is invisible to flagpact.
 - It prevents breaks only for changes that go through the console or `flagpact check`. Open-source Flagsmith has no hook that runs before a dashboard edit is saved, and no change requests. Watch mode detects such an edit within a few seconds, after the fact.
 - Builds that send no `app_version` trait cannot be checked. The fix can hold them on the previous value, but flagpact cannot tell what they read.
