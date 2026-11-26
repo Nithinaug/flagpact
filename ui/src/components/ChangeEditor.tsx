@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { diffLines, fieldCounts, pretty } from "../lib/diff";
 import { CheckIcon, SparkIcon, UndoIcon } from "./icons";
 
@@ -10,6 +10,7 @@ type Props = {
   parsed: Record<string, unknown> | undefined;
   error: string | undefined;
   locked: boolean;
+  collapsed: boolean;
   onChange: (text: string) => void;
   onBreak: () => void;
   onReset: () => void;
@@ -25,15 +26,28 @@ function Gutter({ count, marks }: { count: number; marks: Map<number, string> })
   );
 }
 
-export function ChangeEditor({ live, draft, parsed, error, locked, onChange, onBreak, onReset }: Props) {
+export function ChangeEditor({ live, draft, parsed, error, locked, collapsed, onChange, onBreak, onReset }: Props) {
   const liveLines = useMemo(() => pretty(live).split("\n"), [live]);
   const draftLines = useMemo(() => draft.split("\n"), [draft]);
   const diff = useMemo(() => diffLines(liveLines, draftLines), [liveLines, draftLines]);
   const counts = parsed ? fieldCounts(live, parsed) : { removed: 0, added: 0 };
   const rows = Math.max(liveLines.length, draftLines.length, 7);
+  const [expanded, setExpanded] = useState(false);
 
   const leftMarks = new Map([...diff.removed].map((i) => [i, "text-status-red"]));
   const rightMarks = new Map([...diff.added].map((i) => [i, "text-status-green"]));
+
+  if (collapsed && !expanded) {
+    return (
+      <section className="panel flex items-center justify-between gap-3 px-5 py-4">
+        <div className="flex items-baseline gap-3">
+          <h2 className="font-display text-lg font-medium">Your change</h2>
+          <span className="text-sm text-ink-muted">Now matches what is live</span>
+        </div>
+        <button className="btn" onClick={() => setExpanded(true)}>Show</button>
+      </section>
+    );
+  }
 
   return (
     <section className="panel overflow-hidden">

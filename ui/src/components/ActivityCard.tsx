@@ -16,21 +16,20 @@ export function ActivityCard({ entries }: { entries: Entry[] }) {
         <h2 className="font-display text-lg font-medium">Activity</h2>
         <span className="text-xs text-ink-muted">This session</span>
       </div>
-      <ul role="log" aria-live="polite" className="mt-4 space-y-4">
-        {entries.map((entry) => (
+      <ul role="log" aria-live="polite" className="mt-4 space-y-3">
+        {entries.slice(0, 5).map((entry) => (
           <motion.li
             key={entry.id}
             layout
             initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="flex gap-3"
+            className="flex items-center gap-3"
+            title={entry.sub}
           >
-            <i className={`mt-1.5 inline-block size-2.5 shrink-0 rounded-full ${DOT[entry.tone]}`} />
-            <div className="min-w-0">
-              <div className="text-sm">{entry.title}</div>
-              <div className="text-xs text-ink-muted">{entry.sub ? `${entry.sub} · ` : ""}{entry.time}</div>
-            </div>
+            <i className={`inline-block size-2.5 shrink-0 rounded-full ${DOT[entry.tone]}`} />
+            <span className="min-w-0 flex-1 truncate text-sm">{entry.title}</span>
+            <span className="shrink-0 text-xs text-ink-muted">{entry.time}</span>
           </motion.li>
         ))}
       </ul>

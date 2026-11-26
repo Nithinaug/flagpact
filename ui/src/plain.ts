@@ -48,3 +48,16 @@ export function plainCrash(output: string): string {
   if (missing) return `Crashes: it needs "${missing[1]}" but that is gone`;
   return `Crashes: ${output}`;
 }
+
+export function shortReason(reason: string): string {
+  const missing = reason.match(/required path '([^']+)' is missing/);
+  if (missing) return `Needs ${missing[1]}`;
+  const changed = reason.match(/path '([^']+)' is (\w+), contract has (.+)/);
+  if (changed) return `${changed[1]} changed type`;
+  if (reason === "replay failed") return "Tests fail";
+  if (reason === "replay passed") return "Tests pass";
+  if (reason.includes("replay not run")) return "Not tested yet";
+  if (reason.startsWith("no contract recorded")) return "No contract";
+  if (reason === "waiting for a pending change") return "Waiting";
+  return reason;
+}

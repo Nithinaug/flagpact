@@ -330,6 +330,7 @@ export default function App() {
               parsed={parsed.value}
               error={parsed.error}
               locked={applied || !state}
+              collapsed={applied || published}
               onChange={setDraft}
               onBreak={() => setDraft(pretty(BREAKING))}
               onReset={() => state && setDraft(pretty(state.value))}

@@ -36,15 +36,15 @@ export function FixCard({ plan, meta, missing, includeMissing, onToggleMissing, 
         <span className="kicker-caps text-status-green">Suggested fix</span>
       </div>
 
-      {!hasFix ? (
+      {!hasFix && !applied && !published ? (
         <p className="mt-3 text-sm leading-relaxed text-ink-muted">{plan?.error ?? "No fix needed until a change breaks an app version."}</p>
       ) : (
         <>
           <h2 className="mt-3 font-display text-xl font-medium">Keep older versions on the live value</h2>
-          <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-            flagpact adds a Flagsmith segment override so only builds that understand the new shape receive it.
-          </p>
 
+          {hasFix && (applied || published) && (
+            <details className="mt-3 text-sm">
+              <summary className="cursor-pointer text-ink-muted">Show the rule</summary>
           <div className="mt-4 overflow-hidden rounded-lg border border-border-subtle">
             <div className="px-4 py-3">
               <div className="kicker-caps">If</div>
@@ -83,6 +83,50 @@ export function FixCard({ plan, meta, missing, includeMissing, onToggleMissing, 
               {plan?.protected !== undefined && hasShares && <span>{Math.round(plan.protected)}% protected</span>}
             </span>
           </div>
+            </details>
+          )}
+          {hasFix && !applied && !published && (
+            <>
+          <div className="mt-4 overflow-hidden rounded-lg border border-border-subtle">
+            <div className="px-4 py-3">
+              <div className="kicker-caps">If</div>
+              <div className="mt-2 flex items-center gap-2">
+                <code className="rounded bg-accent-alt/10 px-2 py-0.5 font-mono text-xs text-status-green">app_version</code>
+                <span className="text-ink-muted">&lt;</span>
+                <code className="rounded bg-subtle px-2 py-0.5 font-mono text-xs">{plan?.limit}</code>
+              </div>
+              <div className="mt-3 flex justify-between text-sm">
+                <span>↑ Serve the live value</span>
+                <span className="text-ink-muted">{brokenVersions.join(", ")}{hasShares ? ` · ${olderShare}%` : ""}</span>
+              </div>
+            </div>
+            {missing && (
+              <label className="flex cursor-pointer items-start gap-3 border-t border-border-subtle px-4 py-3">
+                <input type="checkbox" className="mt-1 size-4 accent-[var(--status-green)]" checked={includeMissing} disabled={applied} onChange={onToggleMissing} />
+                <span className="text-sm">
+                  Also serve the live value when <code className="font-mono text-xs text-status-green">app_version</code> is missing
+                  <span className="block text-xs text-ink-muted">Covers the {missing.share}% we couldn't check. Recommended.</span>
+                </span>
+              </label>
+            )}
+            <div className="border-t border-border-subtle px-4 py-3">
+              <div className="kicker-caps">Everyone else</div>
+              <div className="mt-2 flex justify-between text-sm">
+                <span>↑ Serve your change</span>
+                <span className="text-ink-muted">{plan?.limit}+{hasShares ? ` · ${restShare}%` : ""}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-4 flex items-center justify-between text-sm">
+            <span className="text-ink-muted">After the fix</span>
+            <span className="flex items-center gap-3">
+              <span className={remaining === 0 ? "text-status-green" : "text-status-red"}>● {remaining} break</span>
+              {plan?.protected !== undefined && hasShares && <span>{Math.round(plan.protected)}% protected</span>}
+            </span>
+          </div>
+            </>
+          )}
 
           {!applied && !published && (
             <div className="mt-4">

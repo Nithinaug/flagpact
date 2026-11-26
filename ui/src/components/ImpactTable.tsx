@@ -1,7 +1,7 @@
 import { LayoutGroup, motion } from "motion/react";
 import { LABELS, MISSING, type Cell, type Meta, type Pane, type Read, type Verdict } from "../api";
 import { compactUsers, pathPresent } from "../lib/diff";
-import { plainReason } from "../plain";
+import { shortReason } from "../plain";
 import { ResultBadge, ShareBar } from "./Bits";
 import { ArrowIcon, CheckIcon, XIcon } from "./icons";
 import { MiniBanner } from "./MiniBanner";
@@ -118,8 +118,6 @@ export function ImpactTable(props: Props) {
                       ) : (
                         <span className="chip text-base">{row.version}</span>
                       )}
-                      {!isMissing && <span className="text-sm text-ink-muted">{meta[row.version]?.platforms}</span>}
-                      {!isMissing && row.version === latest && <span className="rounded bg-status-green/15 px-1.5 text-[10px] text-status-green">Latest</span>}
                     </div>
                     {share !== null && info && (
                       <div className="mt-3 flex items-center gap-3 text-sm text-ink-muted">
@@ -130,7 +128,7 @@ export function ImpactTable(props: Props) {
                   </div>
                   {isMissing ? (
                     <p className="col-span-2 pr-4 text-sm text-ink-muted">
-                      Older builds that don't send <code className="font-mono text-ink-primary">app_version</code>. We can't tell what they read, so they're not checked.
+                      Builds that don't send <code className="font-mono text-ink-primary">app_version</code>, so we can't tell what they read.
                     </p>
                   ) : (
                     <>
@@ -158,7 +156,7 @@ export function ImpactTable(props: Props) {
                         </button>
                       )
                     ) : (
-                      <span className="text-sm text-ink-muted">{plainReason(row.reason)}</span>
+                      <span className="text-sm text-ink-muted">{shortReason(row.reason)}</span>
                     )}
                   </div>
                 </motion.div>
