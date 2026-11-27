@@ -101,6 +101,12 @@ class Service:
     def _risk(self, cells: list[Cell]) -> float:
         return sum(self._share(c.version) for c in cells if c.state == RED)
 
+    def plan_id(self, document: dict[str, Any], value: dict[str, Any]) -> str:
+        stripped = without_fixes(document, self.flag)
+        stable = {k: v for k, v in stripped.items() if k != "updated_at"}
+        payload = json.dumps([self.flag, value, stable], sort_keys=True)
+        return hashlib.sha256(payload.encode()).hexdigest()[:16]
+
     def _users(self, version: str) -> int:
         if version == MISSING:
             return int((self.missing or {}).get("users") or 0)
@@ -184,6 +190,7 @@ class Service:
         before = build_matrix(document, self.flag, value, self.versions, self.contracts)
         patched = patch_default(document, self.flag, value)
         result: dict[str, Any] = {
+            "plan_id": self.plan_id(document, value),
             "cells": self._with_missing(before, patched, False),
             "at_risk": self._risk(before),
             "at_risk_users": sum(self._users(c.version) for c in before if c.state == RED),

@@ -63,6 +63,7 @@ def build_report(flag: str, plan: dict[str, Any]) -> dict[str, Any]:
                 item["share"] = info["share"]
                 item["users"] = info["users"]
     return {
+        "plan_id": plan.get("plan_id"),
         "at_risk": {"share": exposure["at_risk_share"], "users": exposure["at_risk_users"]} if exposure else None,
         "status": "fail" if counts["breaks"] else "pass",
         "flag": flag,
@@ -149,6 +150,7 @@ def main(argv: list[str] | None = None, admin: Any = None) -> int:
     check.add_argument("--config", default="flagpact.json")
     check.add_argument("--env-file", help="file with FLAGSMITH_API_URL and FLAGSMITH_ENV_SERVER_KEY")
     check.add_argument("--json", action="store_true", help="print a JSON report")
+    check.add_argument("--expect-plan", help="plan_id from an earlier check, exit 3 if Flagsmith or the value changed since")
     imp = commands.add_parser("import", help="scan a local folder or a public GitHub repository and draft a flagpact.json")
     imp.add_argument("source", help="a local folder, or a public https://github.com/owner/repo URL")
     imp.add_argument("--out", help="write the draft flagpact.json to this new file")
@@ -174,6 +176,13 @@ def main(argv: list[str] | None = None, admin: Any = None) -> int:
         return 2
 
     report = build_report(service.flag, plan)
+    if args.expect_plan and args.expect_plan != report["plan_id"]:
+        stale = {"status": "stale", "error": "the plan changed since it was approved, check again and ask again", "plan_id": report["plan_id"]}
+        if args.json:
+            print(json.dumps(stale))
+        else:
+            print(f"flagpact: {stale['error']}", file=sys.stderr)
+        return 3
     if args.json:
         print(json.dumps(report, indent=2))
     else:

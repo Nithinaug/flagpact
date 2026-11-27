@@ -55,6 +55,8 @@ print("breaks:", r["breaks"], "at_risk:", r["at_risk"])
 print("fix segment:", r["fix"]["segment"], "keep below", r["fix"]["keep_below"])
 PY
 [ "$code" = "1" ] || { echo "expected the check to find a break"; exit 1; }
+PLAN_ID="$(.venv/bin/python -c 'import json,sys; print(json.load(open(sys.argv[1]))["plan_id"])' "$WORK/report.json")"
+echo "plan_id: $PLAN_ID"
 
 step "4. apply the fix with the Flagsmith CLI"
 .venv/bin/python - "$WORK/report.json" "$WORK" <<'PY'
@@ -71,7 +73,20 @@ fs flag update "$FLAG" --segment "$SEG" --type string --value "$(cat "$WORK/keep
 
 test "$(fs flag get "$FLAG" --jq .segment_overrides)" = "1" || { echo "the fix was not applied, stopping before publish"; exit 1; }
 
-step "5. publish the new value"
+step "5. stale-plan guard, then publish the new value"
+set +e
+.venv/bin/python -m flagpact check --value "$WORK/new.json" --config flagpact.json --expect-plan "$PLAN_ID" --json > "$WORK/guard.json"
+guard=$?
+set -e
+echo "guard exit code: $guard (3 would mean stale)"
+[ "$guard" != "3" ] || { echo "the plan changed after approval, stopping before publish"; exit 1; }
+set +e
+.venv/bin/python -m flagpact check --value "$WORK/new.json" --config flagpact.json --expect-plan 0000000000000000 --json > "$WORK/stale.json"
+wrong=$?
+set -e
+head -c 200 "$WORK/stale.json"
+echo
+echo "wrong plan_id exit code: $wrong (expected 3)"
 fs flag update "$FLAG" --type string --value "$(cat "$WORK/new.json")"
 
 step "6. verify"

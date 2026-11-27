@@ -20,13 +20,14 @@ Stop and ask a person at the two marked gates. Never write to Flagsmith before g
 2. Write the proposed value to `new.json`.
 3. Check every app version. `flagpact check --value new.json --config flagpact.json --json`
    - exit 0: nothing breaks, go to step 6
-   - exit 1: read only `breaks`, `at_risk` and `fix` from the report, ignore the rest
+   - exit 1: read only `plan_id`, `breaks`, `at_risk` and `fix` from the report, ignore the rest. Keep the `plan_id`.
    - exit 2: the check could not run, report the `error` and stop
+   - exit 3: only with `--expect-plan`, the plan is stale, see gate 2
 4. **Gate 1.** Tell the person: which versions break, how many users (`at_risk.users`), and the fix (`fix.keep_below`). Wait for a yes.
 5. Apply the fix. Write `fix.rule` (one rule object, not a list) to `rules.json`, then:
    - `flagsmith segment create "<fix.segment>" --rules @rules.json`
    - `flagsmith flag update FLAG --segment "<fix.segment>" --type string --value '<fix.keep_value as JSON>' --enable --priority 0`
-6. **Gate 2.** Ask the person to confirm publishing. Then `flagsmith flag update FLAG --type string --value '<new.json as JSON>'`.
+6. **Gate 2.** First run `flagpact check --value new.json --config flagpact.json --expect-plan <plan_id> --json`. Exit 3 means Flagsmith or the value changed since the person approved, so stop, say so, and go back to step 3. If the environment is not the local demo, the person must type its name before you publish. Otherwise ask the person to confirm publishing. Then `flagsmith flag update FLAG --type string --value '<new.json as JSON>'`.
 7. Verify. Run step 3 again, it must exit 0. For the oldest version, `flagsmith evaluate FLAG --trait app_version=<oldest> --json` must still return the previous value.
 
 ## Roll back

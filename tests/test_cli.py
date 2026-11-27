@@ -92,3 +92,55 @@ def test_report_carries_the_fix_an_agent_can_apply(capsys):
     assert fix["rule"] == fix["rules"][0] and fix["rule"]["type"] == "ALL"
     assert condition == {"operator": "LESS_THAN", "property": "app_version", "value": "3.0.0:semver"}
     assert fix["keep_value"] == json.loads(DOCUMENT["feature_states"][0]["feature_state_value"])
+
+
+class DocAdmin:
+    def __init__(self, document):
+        self._document = document
+
+    def document(self):
+        return self._document
+
+
+def plan_id_for(document, value, capsys, extra=()):
+    code, out = run(["check", "--value", json.dumps(value), "--config", CONFIG, "--json", *extra], capsys, DocAdmin(document))
+    return code, json.loads(out.out)
+
+
+def test_plan_id_is_stable_and_depends_on_the_value(capsys):
+    _, first = plan_id_for(DOCUMENT, BREAKING, capsys)
+    _, again = plan_id_for(DOCUMENT, BREAKING, capsys)
+    _, other = plan_id_for(DOCUMENT, {**BREAKING, "heading": "Other"}, capsys)
+    assert len(first["plan_id"]) == 16 and first["plan_id"] == again["plan_id"]
+    assert other["plan_id"] != first["plan_id"]
+
+
+def test_plan_id_ignores_flagpacts_own_fix_but_not_other_edits(capsys):
+    import copy
+    from flagpact.resolver import with_fix
+
+    current = json.loads(DOCUMENT["feature_states"][0]["feature_state_value"])
+    fixed = with_fix(DOCUMENT, "home_banner", "flagpact/home_banner/3.0.0", "3.0.0", current, BREAKING, False)
+    fixed["updated_at"] = "2030-01-01T00:00:00+00:00"
+    fixed["feature_states"][0]["feature_state_value"] = DOCUMENT["feature_states"][0]["feature_state_value"]
+    _, before = plan_id_for(DOCUMENT, BREAKING, capsys)
+    _, after_fix = plan_id_for(fixed, BREAKING, capsys)
+    assert before["plan_id"] == after_fix["plan_id"]
+
+    edited = copy.deepcopy(DOCUMENT)
+    edited["feature_states"][0]["feature_state_value"] = json.dumps({"heading": "Someone else"})
+    _, after_edit = plan_id_for(edited, BREAKING, capsys)
+    assert after_edit["plan_id"] != before["plan_id"]
+
+    extra = copy.deepcopy(DOCUMENT)
+    extra["project"]["segments"].append({"id": 9, "name": "beta", "rules": [], "feature_states": []})
+    _, after_segment = plan_id_for(extra, BREAKING, capsys)
+    assert after_segment["plan_id"] != before["plan_id"]
+
+
+def test_expect_plan_passes_when_nothing_changed_and_exits_three_when_stale(capsys):
+    _, report = plan_id_for(DOCUMENT, BREAKING, capsys)
+    code, again = plan_id_for(DOCUMENT, BREAKING, capsys, ["--expect-plan", report["plan_id"]])
+    assert code == 1 and again["status"] == "fail"
+    code, stale = plan_id_for(DOCUMENT, BREAKING, capsys, ["--expect-plan", "0" * 16])
+    assert code == 3 and stale["status"] == "stale" and "changed" in stale["error"]
