@@ -1,0 +1,39 @@
+name: Live Flagsmith
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install flagpact
+        run: python -m pip install -e .
+      - name: Start self-hosted Flagsmith
+        run: |
+          bash stack/gen-env.sh
+          docker compose -f stack/docker-compose.yml --env-file stack/.env up -d
+          python3 stack/bootstrap.py
+      - name: Check flagpact against live Flagsmith
+        run: python scripts/parity.py .flagpact-keys.env | tee parity.txt
+      - name: Write the result to the job summary
+        if: always()
+        run: |
+          echo '### flagpact against live Flagsmith' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          cat parity.txt >> "$GITHUB_STEP_SUMMARY" || true
+      - name: Show Flagsmith logs on failure
+        if: failure()
+        run: docker compose -f stack/docker-compose.yml --env-file stack/.env logs --tail 80
+      - name: Stop Flagsmith
+        if: always()
+        run: docker compose -f stack/docker-compose.yml --env-file stack/.env down -v
