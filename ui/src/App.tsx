@@ -479,6 +479,7 @@ export default function App({ onHome }: { onHome?: () => void }) {
               removed={removed}
               brokenVersions={brokenVersions}
               atRisk={hasShares && plan && !applied ? plan.at_risk : null}
+              atRiskUsers={hasShares && plan && !applied ? plan.at_risk_users : null}
               done={published ? "published" : applied ? "applied" : null}
             />
             )}

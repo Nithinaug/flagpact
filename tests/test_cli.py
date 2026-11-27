@@ -67,3 +67,18 @@ def test_missing_credentials_in_json_mode_reports_an_error_status(capsys, monkey
     monkeypatch.delenv("FLAGSMITH_API_URL", raising=False)
     code, out = run(["check", "--value", "{}", "--config", CONFIG, "--json"], capsys, admin=None)
     assert code == 2 and json.loads(out.out)["status"] == "error"
+
+
+def test_report_shows_how_many_users_are_at_risk(capsys):
+    code, out = run(["check", "--value", json.dumps(BREAKING), "--config", CONFIG, "--json"], capsys)
+    report = json.loads(out.out)
+    assert report["at_risk"] == {"share": 61, "users": 114200}
+    assert [v.get("users") for v in report["versions"]] == [41200, 73000, 65500, 7400]
+    code, out = run(["check", "--value", json.dumps(BREAKING), "--config", CONFIG], capsys)
+    assert "At risk: 61% of sessions, about 114,200 users" in out.out
+
+
+def test_safe_change_reports_no_risk_line(capsys):
+    safe = DOCUMENT["feature_states"][0]["feature_state_value"]
+    code, out = run(["check", "--value", safe, "--config", CONFIG], capsys)
+    assert code == 0 and "At risk" not in out.out

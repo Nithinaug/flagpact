@@ -29,6 +29,7 @@ export type Meta = {
 export type Plan = {
   cells: Cell[];
   at_risk: number;
+  at_risk_users: number;
   error?: string;
   limit?: string;
   diff?: string[];

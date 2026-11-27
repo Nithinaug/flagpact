@@ -13,10 +13,15 @@ def render(report):
         lines.append("%d of %d app versions would break." % (report["breaks"], len(versions)))
     else:
         lines.append("No app version would break.")
-    lines += ["", "| App version | Result | Reason |", "| --- | --- | --- |"]
+    at_risk = report.get("at_risk")
+    if at_risk and report["breaks"]:
+        lines.append("")
+        lines.append("**At risk: %g%% of sessions, about {:,} users.**".format(at_risk["users"]) % at_risk["share"])
+    lines += ["", "| App version | Result | Users | Reason |", "| --- | --- | --- | --- |"]
     for item in report["versions"]:
         name = "no app_version" if item["version"] == "none" else item["version"]
-        lines.append("| %s | %s | %s |" % (name, WORDS[item["result"]], item["reason"]))
+        users = "{:,}".format(item["users"]) if item.get("users") else ""
+        lines.append("| %s | %s | %s | %s |" % (name, WORDS[item["result"]], users, item["reason"]))
     for note in report.get("notices", []):
         lines += ["", "Note: %s" % note]
     if report.get("fix"):

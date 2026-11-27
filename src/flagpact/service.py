@@ -100,6 +100,24 @@ class Service:
     def _risk(self, cells: list[Cell]) -> float:
         return sum(self._share(c.version) for c in cells if c.state == RED)
 
+    def _users(self, version: str) -> int:
+        if version == MISSING:
+            return int((self.missing or {}).get("users") or 0)
+        return int((self.meta.get(version) or {}).get("users") or 0)
+
+    def _exposure(self, cells: list[Cell]) -> dict[str, Any] | None:
+        if not any(m.get("share") is not None for m in self.meta.values()):
+            return None
+        broken = [c.version for c in cells if c.state == RED]
+        return {
+            "versions": {
+                v: {"share": self._share(v), "users": self._users(v)}
+                for v in [c.version for c in cells] + ([MISSING] if self.missing else [])
+            },
+            "at_risk_share": sum(self._share(v) for v in broken),
+            "at_risk_users": sum(self._users(v) for v in broken),
+        }
+
     def _recover(self) -> None:
         if self.applied is not None or not hasattr(self.admin, "feature_segments"):
             return
@@ -167,6 +185,8 @@ class Service:
         result: dict[str, Any] = {
             "cells": self._with_missing(before, patched, False),
             "at_risk": self._risk(before),
+            "at_risk_users": sum(self._users(c.version) for c in before if c.state == RED),
+            "exposure": self._exposure(before),
             "notices": flag_notices(document, self.flag),
         }
         current = self._default(document)

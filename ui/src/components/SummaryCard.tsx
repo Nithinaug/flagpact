@@ -11,10 +11,11 @@ type Props = {
   removed: string[];
   brokenVersions: string[];
   atRisk: number | null;
+  atRiskUsers: number | null;
   done: "applied" | "published" | null;
 };
 
-export function SummaryCard({ cells, hasChange, checking, total, removed, brokenVersions, atRisk, done }: Props) {
+export function SummaryCard({ cells, hasChange, checking, total, removed, brokenVersions, atRisk, atRiskUsers, done }: Props) {
   const count = (state: string) => cells.filter((c) => c.state === state).length;
   const broken = count("red");
   const safe = count("green");
@@ -79,7 +80,7 @@ export function SummaryCard({ cells, hasChange, checking, total, removed, broken
                 </span>
               ))}
               , which {brokenVersions.join(" and ")} still {brokenVersions.length > 1 ? "require" : "requires"}.
-              {atRisk ? ` ${atRisk}% of sessions would see a broken banner.` : ""}
+              {atRisk ? ` ${atRisk}% of sessions${atRiskUsers ? `, about ${atRiskUsers.toLocaleString()} users,` : ""} would see a broken banner.` : ""}
             </p>
           ) : (
             body && <p className="mt-1 text-sm leading-relaxed text-ink-muted">{body}</p>

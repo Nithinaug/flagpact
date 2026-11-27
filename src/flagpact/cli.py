@@ -48,7 +48,15 @@ def build_report(flag: str, plan: dict[str, Any]) -> dict[str, Any]:
     fix = None
     if plan.get("limit"):
         fix = {"keep_below": plan["limit"], "steps": plan["diff"]}
+    exposure = plan.get("exposure")
+    if exposure:
+        for item in versions:
+            info = exposure["versions"].get(item["version"])
+            if info:
+                item["share"] = info["share"]
+                item["users"] = info["users"]
     return {
+        "at_risk": {"share": exposure["at_risk_share"], "users": exposure["at_risk_users"]} if exposure else None,
         "status": "fail" if counts["breaks"] else "pass",
         "flag": flag,
         **counts,
@@ -68,6 +76,9 @@ def print_report(report: dict[str, Any]) -> None:
     for item in report["versions"]:
         name = "no app_version" if item["version"] == MISSING else item["version"]
         print(f"  {name:<15}{WORDS[item['result']]:<13}{item['reason']}")
+    at_risk = report.get("at_risk")
+    if at_risk and report["breaks"]:
+        print(f"At risk: {at_risk['share']:g}% of sessions, about {at_risk['users']:,} users")
     for line in report.get("notices", []):
         print(f"Note: {line}")
     if report["fix"]:

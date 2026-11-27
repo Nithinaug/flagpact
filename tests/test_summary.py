@@ -25,7 +25,7 @@ def report(breaks=2):
 def test_a_failing_report_lists_each_version_and_the_fix():
     text = summary.render(report(2))
     assert "2 of 2 app versions would break" in text
-    assert "| 1.0.0 | Breaks | replay failed |" in text
+    assert "| 1.0.0 | Breaks |  | replay failed |" in text
     assert "| no app_version | Not checked |" in text
     assert "Note: A percentage rollout applies." in text
     assert "keep versions below 3.0.0" in text
