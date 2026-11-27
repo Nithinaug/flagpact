@@ -2,6 +2,7 @@
 
 <p>
   <a href="https://github.com/Nithinaug/flagpact/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Nithinaug/flagpact/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/Nithinaug/flagpact/actions/workflows/live-flagsmith.yml"><img alt="Live Flagsmith" src="https://github.com/Nithinaug/flagpact/actions/workflows/live-flagsmith.yml/badge.svg"></a>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue"></a>
   <a href="https://github.com/Nithinaug/flagpact/releases"><img alt="Release" src="https://img.shields.io/github/v/release/Nithinaug/flagpact"></a>
   <img alt="Python 3.10 or newer" src="https://img.shields.io/badge/python-3.10%2B-3776AB">
@@ -13,6 +14,20 @@ Check a Flagsmith config change against every app version before you publish it.
 A Flagsmith remote-config value changes, and the apps that read it get the new value at once, with no redeploy. That is the point of remote config. It also means an old build still in people's hands, one that expects the old shape, can crash the moment you save. flagpact tells you which app versions would break before the change goes live, and fixes it by keeping those versions on the previous value.
 
 Built for the Flagsmith "Toggle Wars" hackathon, Track 03: Build on Open Source Flagsmith. It works with self-hosted Flagsmith and has been tried on 2.294.0.
+
+## See it work
+
+**1. Check a change.** Two of three app versions would break, with the users at risk and the rule that fixes it.
+
+<img alt="The console showing 2 of 3 app versions would break, 61% of sessions at risk, and the suggested fix app_version below 3.0.0" src="docs/images/console-check.png" width="100%">
+
+**2. Apply the fix.** Older versions stay on the live value, so nothing breaks and the change is ready to publish.
+
+<img alt="The console after the fix: 0 would break, 4 safe, with the impact for each app version" src="docs/images/console-fix.png" width="100%">
+
+**3. Watch for outside edits.** If someone edits the value in the Flagsmith dashboard and breaks a version, the alert says which versions and offers to protect them or restore the last safe value.
+
+<img alt="The watch alert: live value breaks 1.0.0 and 2.0.0 right now, with protect and restore buttons" src="docs/images/console-watch.png" width="100%">
 
 ## What it does
 
