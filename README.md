@@ -33,6 +33,15 @@ Also included:
 - **Runs in CI.** `flagpact check` and a GitHub Action fail the build when a pending value would break a version.
 - **Imports a public GitHub repository.** It reads the code without running it, finds the Flagsmith config reads and app versions, and drafts a `flagpact.json`.
 
+## Why not just a segment?
+
+Flagsmith can already keep old app versions on an old value. A segment on `app_version` with an override does it, and you can build one in the dashboard. What Flagsmith cannot tell you is which versions need it.
+
+- **It knows what each version expects.** Flagsmith has no way to know what a shipped app version reads from a config value. flagpact learns that from each version's own tests and replays them against the new value.
+- **You get the answer before you publish.** Which versions would break, and how many users are on them when you supply version shares.
+- **It builds the fix.** If something would break, flagpact creates the segment and the override first and changes the default after, so no old version ever sees the new value.
+- **It keeps watching.** After a publish, an outside edit that breaks a version is caught, and the last safe value can be restored.
+
 ## Quick start
 
 You need Docker, Python 3.10 or newer, and Node 22 (only to build the console).
@@ -169,6 +178,23 @@ Then add the version to `flagpact.json`:
 ```
 
 `share`, `users` and `platforms` are optional. The numbers in this repository are sample values for the demo, not real traffic. In real use they come from your own analytics, and the console hides them when they are absent.
+
+## Proof against live Flagsmith
+
+flagpact decides which versions break by calculating the value each app version would get. `scripts/parity.py` checks that calculation against a running Flagsmith, which is asked as a probe user on each version (nothing is stored).
+
+| Phase | Versions checked | flagpact equals live Flagsmith |
+| --- | --- | --- |
+| Starting value, no fix | 11 | 11 of 11 |
+| Breaking change with the generated fix applied and published | 11 | 11 of 11 |
+
+The versions are 0.9.0, 1.0.0, 1.9.9, 2.0.0, 2.5.0, 2.99.99, 3.0.0, 3.0.1, 3.1.0, 10.0.0 and a build with no `app_version`. In the second phase versions below 3.0.0 are served the old value and everything else the new one, in flagpact and in Flagsmith alike. The script then rolls the fix back and restores the demo value.
+
+```bash
+.venv/bin/python scripts/parity.py .flagpact-keys.env
+```
+
+This shows flagpact and Flagsmith agree on the value served. Whether each version can read that value is what the test replay checks. The run is against the local demo flag only.
 
 ## Limits
 
