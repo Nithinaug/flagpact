@@ -108,6 +108,14 @@ The job fails when a version would break and writes a table of results to the jo
 - **Transient identities:** probes send traits without storing anything in Flagsmith.
 - **Environment clone and the admin API:** used for the rehearsal and for writing the rule and the default.
 
+## Agent skill
+
+`skills/flagpact-safe-rollout/SKILL.md` is an Agent Skill that takes a coding agent through a whole config change with the Flagsmith CLI: read the live value, check every app version, stop for a person, create the protective segment, stop again, publish, verify and keep rollback ready. `flagpact check --json` returns the fix as data (`fix.segment`, `fix.rule`, `fix.keep_value`), so the agent only reads a few compact fields.
+
+To use it in Claude Code, link it into your project: `mkdir -p .claude/skills && ln -s ../../skills/flagpact-safe-rollout .claude/skills/flagpact-safe-rollout`.
+
+`bash scripts/skill_loop.sh` runs the same steps by hand against your local Flagsmith and restores the demo value at the end. It needs the Flagsmith CLI (`npm install -g @flagsmith/cli`).
+
 ## Import your project
 
 ```bash
@@ -119,6 +127,7 @@ Import scans the source and prints which flags the app reads, which JSON fields 
 
 - It reads code and never runs it. Python files are parsed, not imported. For JavaScript, TypeScript, Go, Java, Kotlin, Swift, Ruby, PHP and C# it lists the flags read through `getValue`-style calls but does not read the fields.
 - Test files are left out, because they are not app code.
+- **Release tags:** if the repository (or the local folder) has two or more release tags such as `v1.0.0` and `v2.0.0`, import reads each tag on its own and treats it as one app version, newest eight at most. It lists which fields each version requires, with no folder per version needed. `--checkout versions` writes every tag's files into `versions/<tag>/`, ready for the draft's directories. It reads git objects only and never runs a hook.
 - A GitHub import accepts only a public `https://github.com/owner/repo` URL. It makes a shallow clone into a temporary folder with hooks, submodules and credentials switched off, scans it and deletes it. Private repositories are not supported.
 - Version folders in the draft are relative to the scanned folder, so save the draft there.
 - Import does not record contracts. Run each version's tests with the recorder as described below.
