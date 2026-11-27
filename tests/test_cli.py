@@ -82,3 +82,13 @@ def test_safe_change_reports_no_risk_line(capsys):
     safe = DOCUMENT["feature_states"][0]["feature_state_value"]
     code, out = run(["check", "--value", safe, "--config", CONFIG], capsys)
     assert code == 0 and "At risk" not in out.out
+
+
+def test_report_carries_the_fix_an_agent_can_apply(capsys):
+    code, out = run(["check", "--value", json.dumps(BREAKING), "--config", CONFIG, "--json"], capsys)
+    fix = json.loads(out.out)["fix"]
+    assert fix["segment"] == "flagpact/home_banner/3.0.0"
+    condition = fix["rules"][0]["rules"][0]["conditions"][0]
+    assert fix["rule"] == fix["rules"][0] and fix["rule"]["type"] == "ALL"
+    assert condition == {"operator": "LESS_THAN", "property": "app_version", "value": "3.0.0:semver"}
+    assert fix["keep_value"] == json.loads(DOCUMENT["feature_states"][0]["feature_state_value"])

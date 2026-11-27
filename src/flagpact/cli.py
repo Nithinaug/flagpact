@@ -47,7 +47,14 @@ def build_report(flag: str, plan: dict[str, Any]) -> dict[str, Any]:
     counts = {name: sum(1 for v in versions if v["result"] == name) for name in WORDS}
     fix = None
     if plan.get("limit"):
-        fix = {"keep_below": plan["limit"], "steps": plan["diff"]}
+        fix = {
+            "keep_below": plan["limit"],
+            "segment": plan["segment"],
+            "rules": plan["rules"],
+            "rule": plan["rules"][0],
+            "keep_value": plan["keep_value"],
+            "steps": plan["diff"],
+        }
     exposure = plan.get("exposure")
     if exposure:
         for item in versions:
@@ -101,6 +108,8 @@ def print_import(result: dict[str, Any]) -> None:
             if read["default_in"]:
                 parts.append("default in " + ", ".join(read["default_in"]))
             print(f"  {read['path']:<20}{'; '.join(parts)}  ({read['places'][0]})")
+    if result.get("tags"):
+        print(f"Read {len(result['tags'])} release tags: {', '.join(result['tags'])}")
     for item in result["versions"]:
         mark = " (from a package file)" if item["guessed"] else ""
         print(f"App version {item['version']} in {item['directory']}{mark}")
@@ -112,7 +121,7 @@ def print_import(result: dict[str, Any]) -> None:
 
 def run_import(args: argparse.Namespace) -> int:
     try:
-        result = scan_source(args.source)
+        result = scan_source(args.source, checkout=args.checkout)
         if args.out and result["draft"] is not None:
             if os.path.exists(args.out):
                 raise ScanError(f"{args.out} already exists, choose another file")
@@ -143,6 +152,7 @@ def main(argv: list[str] | None = None, admin: Any = None) -> int:
     imp = commands.add_parser("import", help="scan a local folder or a public GitHub repository and draft a flagpact.json")
     imp.add_argument("source", help="a local folder, or a public https://github.com/owner/repo URL")
     imp.add_argument("--out", help="write the draft flagpact.json to this new file")
+    imp.add_argument("--checkout", help="write each release tag's files into this new folder, one subfolder per tag")
     imp.add_argument("--json", action="store_true", help="print the full scan as JSON")
     args = parser.parse_args(argv)
     if args.command == "import":

@@ -84,6 +84,7 @@ export type ScanResult = {
   draft: Record<string, unknown> | null;
   needs_review: string[];
   notes: string[];
+  tags?: string[];
 };
 
 export type State = {

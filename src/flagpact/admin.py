@@ -4,6 +4,8 @@ import urllib.error
 import urllib.request
 from typing import Any, Callable
 
+from .rules import segment_rules
+
 Request = Callable[[str, str, Any, str], tuple[int, Any]]
 
 
@@ -90,13 +92,10 @@ class AdminClient:
         return next((s for s in self._items(payload) if s["name"] == name), None)
 
     def segment_body(self, name: str, limit: str, include_missing: bool = False) -> dict[str, Any]:
-        conditions = [{"operator": "LESS_THAN", "property": "app_version", "value": f"{limit}:semver"}]
-        if include_missing:
-            conditions.append({"operator": "IS_NOT_SET", "property": "app_version", "value": ""})
         return {
             "name": name,
             "project": int(self.project_id),
-            "rules": [{"type": "ALL", "rules": [{"type": "ANY", "rules": [], "conditions": conditions}], "conditions": []}],
+            "rules": segment_rules(limit, include_missing),
         }
 
     def feature_segments(self, env_id: int, feature_id: int) -> list[dict[str, Any]]:

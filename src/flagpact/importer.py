@@ -419,7 +419,9 @@ def resolve_local(text: str) -> pathlib.Path:
     return resolved
 
 
-def scan_source(source: str, runner: Runner = subprocess.run, github_only: bool = False) -> dict[str, Any]:
+def scan_source(source: str, runner: Runner = subprocess.run, github_only: bool = False, checkout: str | None = None) -> dict[str, Any]:
+    from .tags import try_tags
+
     text = (source or "").strip()
     if not text or len(text) > 300 or "\x00" in text or "\n" in text:
         raise ScanError("enter a local folder or a public GitHub repository URL")
@@ -428,7 +430,10 @@ def scan_source(source: str, runner: Runner = subprocess.run, github_only: bool 
         url = parse_github_url(text)
         with tempfile.TemporaryDirectory(prefix="flagpact-import-") as tmp:
             clone_public(url, tmp, runner)
-            result = scan_directory(os.path.join(tmp, "repo"))
+            repo = os.path.join(tmp, "repo")
+            result = try_tags(repo, tmp, runner, fetch=True, checkout=checkout) or scan_directory(repo)
+        if checkout and "tags" not in result:
+            raise ScanError("this repository has fewer than two release tags, so there is nothing to check out")
         result["source"] = url.removesuffix(".git")
         result["kind"] = "github"
         return result
@@ -437,7 +442,10 @@ def scan_source(source: str, runner: Runner = subprocess.run, github_only: bool 
     if "://" in text or lowered.startswith(("git@", "ssh:", "file:", "ext:")) or "::" in text:
         raise ScanError("only a local folder or a public https://github.com URL is supported")
     root = resolve_local(text)
-    result = scan_directory(root)
+    with tempfile.TemporaryDirectory(prefix="flagpact-import-") as home:
+        result = try_tags(str(root), home, runner, checkout=checkout) or scan_directory(root)
+    if checkout and "tags" not in result:
+        raise ScanError("this folder has fewer than two release tags, so there is nothing to check out")
     result["source"] = root.name
     result["kind"] = "local"
     return result

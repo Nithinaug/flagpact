@@ -20,6 +20,7 @@ from .replay import render
 from .resolver import patch_default, resolve, with_fix, without_fixes
 from .risks import notices as flag_notices
 from .risks import partial
+from .rules import segment_rules
 from .verdict import AMBER, GREEN, RED
 
 MISSING = "none"
@@ -205,6 +206,8 @@ class Service:
             "limit": plan.limit,
             "diff": plan.diff(),
             "segment": plan.segment_name,
+            "rules": segment_rules(plan.limit, include_missing),
+            "keep_value": current,
             "include_missing": include_missing,
             "after": self._with_missing(after, fixed, include_missing),
             "protected": protected,
