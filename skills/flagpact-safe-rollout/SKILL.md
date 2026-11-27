@@ -15,6 +15,9 @@ Stop and ask a person at the two marked gates. Never write to Flagsmith before g
 - `flagpact.json` exists in the project. If not, run `flagpact import <repo-or-folder> --out flagpact.json` and ask the person to review it.
 - `FLAGSMITH_API_URL` and `FLAGSMITH_ENV_SERVER_KEY` are set for `flagpact` (read-only). Mind the difference: the Flagsmith CLI wants the host root (`http://127.0.0.1:8010`, it adds `/api/v1` itself), while `flagpact` wants the URL ending in `/api/v1`. Pass the CLI's with `--api-url` and keep the variable for `flagpact`.
 
+- Add `--yes` to every `flagsmith` command that writes (`segment create`, `flag update`, `flag delete`, `segment delete`), or the CLI waits for a prompt. Gate 1 and gate 2 are the confirmation, so only add it after the person has said yes.
+- At gate 1, also say how many users send no `app_version` (the report's `none` row) and that the segment does not cover them unless the fix includes them.
+
 ## Steps
 1. Read the live value. `flagsmith flag get FLAG --jq .` first to see the shape once. Keep it as `previous.json`, it is the rollback.
 2. Write the proposed value to `new.json`.
