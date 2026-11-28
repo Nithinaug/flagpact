@@ -1,0 +1,9089 @@
+{
+ "start_value": {
+  "title": "Sale on now",
+  "heading": "Sale on now",
+  "cta": {
+   "text": "Shop",
+   "label": "Shop"
+  }
+ },
+ "break_value": {
+  "heading": "Sale on now",
+  "subheading": "Up to 40% off",
+  "cta": {
+   "label": "Shop the sale"
+  }
+ },
+ "outside_value": {
+  "heading": "Sale on now",
+  "subheading": "Up to 40% off",
+  "cta": {
+   "label": "Shop the sale"
+  }
+ },
+ "limit": "3.0.0",
+ "segment": "flagpact/home_banner/3.0.0",
+ "state": {
+  "start|1": {
+   "flag": "home_banner",
+   "value": {
+    "title": "Sale on now",
+    "heading": "Sale on now",
+    "cta": {
+     "text": "Shop",
+     "label": "Shop"
+    }
+   },
+   "versions": [
+    "1.0.0",
+    "2.0.0",
+    "3.0.0"
+   ],
+   "meta": {
+    "1.0.0": {
+     "share": 22,
+     "users": 41200,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "2.0.0": {
+     "share": 39,
+     "users": 73000,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "3.0.0": {
+     "share": 35,
+     "users": 65500,
+     "platforms": "iOS \u00b7 Android"
+    }
+   },
+   "missing": {
+    "share": 4,
+    "users": 7400
+   },
+   "latest": "3.0.0",
+   "applied": false,
+   "published": false,
+   "dashboard": "",
+   "contracts": {
+    "1.0.0": [
+     {
+      "path": "heading",
+      "has_default": true,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "2.0.0": [
+     {
+      "path": "cta.text",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "3.0.0": [
+     {
+      "path": "cta.label",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "heading",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "subheading",
+      "has_default": true,
+      "type": "missing",
+      "observed_values": []
+     }
+    ]
+   },
+   "notices": []
+  },
+  "start|0": {
+   "flag": "home_banner",
+   "value": {
+    "title": "Sale on now",
+    "heading": "Sale on now",
+    "cta": {
+     "text": "Shop",
+     "label": "Shop"
+    }
+   },
+   "versions": [
+    "1.0.0",
+    "2.0.0",
+    "3.0.0"
+   ],
+   "meta": {
+    "1.0.0": {
+     "share": 22,
+     "users": 41200,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "2.0.0": {
+     "share": 39,
+     "users": 73000,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "3.0.0": {
+     "share": 35,
+     "users": 65500,
+     "platforms": "iOS \u00b7 Android"
+    }
+   },
+   "missing": {
+    "share": 4,
+    "users": 7400
+   },
+   "latest": "3.0.0",
+   "applied": false,
+   "published": false,
+   "dashboard": "",
+   "contracts": {
+    "1.0.0": [
+     {
+      "path": "heading",
+      "has_default": true,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "2.0.0": [
+     {
+      "path": "cta.text",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "3.0.0": [
+     {
+      "path": "cta.label",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "heading",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "subheading",
+      "has_default": true,
+      "type": "missing",
+      "observed_values": []
+     }
+    ]
+   },
+   "notices": []
+  },
+  "outside|1": {
+   "flag": "home_banner",
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "versions": [
+    "1.0.0",
+    "2.0.0",
+    "3.0.0"
+   ],
+   "meta": {
+    "1.0.0": {
+     "share": 22,
+     "users": 41200,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "2.0.0": {
+     "share": 39,
+     "users": 73000,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "3.0.0": {
+     "share": 35,
+     "users": 65500,
+     "platforms": "iOS \u00b7 Android"
+    }
+   },
+   "missing": {
+    "share": 4,
+    "users": 7400
+   },
+   "latest": "3.0.0",
+   "applied": false,
+   "published": false,
+   "dashboard": "",
+   "contracts": {
+    "1.0.0": [
+     {
+      "path": "heading",
+      "has_default": true,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "2.0.0": [
+     {
+      "path": "cta.text",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "3.0.0": [
+     {
+      "path": "cta.label",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "heading",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "subheading",
+      "has_default": true,
+      "type": "missing",
+      "observed_values": []
+     }
+    ]
+   },
+   "notices": []
+  },
+  "outside|0": {
+   "flag": "home_banner",
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "versions": [
+    "1.0.0",
+    "2.0.0",
+    "3.0.0"
+   ],
+   "meta": {
+    "1.0.0": {
+     "share": 22,
+     "users": 41200,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "2.0.0": {
+     "share": 39,
+     "users": 73000,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "3.0.0": {
+     "share": 35,
+     "users": 65500,
+     "platforms": "iOS \u00b7 Android"
+    }
+   },
+   "missing": {
+    "share": 4,
+    "users": 7400
+   },
+   "latest": "3.0.0",
+   "applied": false,
+   "published": false,
+   "dashboard": "",
+   "contracts": {
+    "1.0.0": [
+     {
+      "path": "heading",
+      "has_default": true,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "2.0.0": [
+     {
+      "path": "cta.text",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "3.0.0": [
+     {
+      "path": "cta.label",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "heading",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "subheading",
+      "has_default": true,
+      "type": "missing",
+      "observed_values": []
+     }
+    ]
+   },
+   "notices": []
+  },
+  "protected|1": {
+   "flag": "home_banner",
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "versions": [
+    "1.0.0",
+    "2.0.0",
+    "3.0.0"
+   ],
+   "meta": {
+    "1.0.0": {
+     "share": 22,
+     "users": 41200,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "2.0.0": {
+     "share": 39,
+     "users": 73000,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "3.0.0": {
+     "share": 35,
+     "users": 65500,
+     "platforms": "iOS \u00b7 Android"
+    }
+   },
+   "missing": {
+    "share": 4,
+    "users": 7400
+   },
+   "latest": "3.0.0",
+   "applied": true,
+   "published": true,
+   "dashboard": "",
+   "contracts": {
+    "1.0.0": [
+     {
+      "path": "heading",
+      "has_default": true,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "2.0.0": [
+     {
+      "path": "cta.text",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "3.0.0": [
+     {
+      "path": "cta.label",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "heading",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "subheading",
+      "has_default": true,
+      "type": "missing",
+      "observed_values": []
+     }
+    ]
+   },
+   "notices": []
+  },
+  "protected|0": {
+   "flag": "home_banner",
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "versions": [
+    "1.0.0",
+    "2.0.0",
+    "3.0.0"
+   ],
+   "meta": {
+    "1.0.0": {
+     "share": 22,
+     "users": 41200,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "2.0.0": {
+     "share": 39,
+     "users": 73000,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "3.0.0": {
+     "share": 35,
+     "users": 65500,
+     "platforms": "iOS \u00b7 Android"
+    }
+   },
+   "missing": {
+    "share": 4,
+    "users": 7400
+   },
+   "latest": "3.0.0",
+   "applied": true,
+   "published": true,
+   "dashboard": "",
+   "contracts": {
+    "1.0.0": [
+     {
+      "path": "heading",
+      "has_default": true,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "2.0.0": [
+     {
+      "path": "cta.text",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "3.0.0": [
+     {
+      "path": "cta.label",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "heading",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "subheading",
+      "has_default": true,
+      "type": "missing",
+      "observed_values": []
+     }
+    ]
+   },
+   "notices": []
+  },
+  "applied|1": {
+   "flag": "home_banner",
+   "value": {
+    "title": "Sale on now",
+    "heading": "Sale on now",
+    "cta": {
+     "text": "Shop",
+     "label": "Shop"
+    }
+   },
+   "versions": [
+    "1.0.0",
+    "2.0.0",
+    "3.0.0"
+   ],
+   "meta": {
+    "1.0.0": {
+     "share": 22,
+     "users": 41200,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "2.0.0": {
+     "share": 39,
+     "users": 73000,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "3.0.0": {
+     "share": 35,
+     "users": 65500,
+     "platforms": "iOS \u00b7 Android"
+    }
+   },
+   "missing": {
+    "share": 4,
+    "users": 7400
+   },
+   "latest": "3.0.0",
+   "applied": true,
+   "published": false,
+   "dashboard": "",
+   "contracts": {
+    "1.0.0": [
+     {
+      "path": "heading",
+      "has_default": true,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "2.0.0": [
+     {
+      "path": "cta.text",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "3.0.0": [
+     {
+      "path": "cta.label",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "heading",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "subheading",
+      "has_default": true,
+      "type": "missing",
+      "observed_values": []
+     }
+    ]
+   },
+   "notices": []
+  },
+  "published|1": {
+   "flag": "home_banner",
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "versions": [
+    "1.0.0",
+    "2.0.0",
+    "3.0.0"
+   ],
+   "meta": {
+    "1.0.0": {
+     "share": 22,
+     "users": 41200,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "2.0.0": {
+     "share": 39,
+     "users": 73000,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "3.0.0": {
+     "share": 35,
+     "users": 65500,
+     "platforms": "iOS \u00b7 Android"
+    }
+   },
+   "missing": {
+    "share": 4,
+    "users": 7400
+   },
+   "latest": "3.0.0",
+   "applied": true,
+   "published": true,
+   "dashboard": "",
+   "contracts": {
+    "1.0.0": [
+     {
+      "path": "heading",
+      "has_default": true,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "2.0.0": [
+     {
+      "path": "cta.text",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "3.0.0": [
+     {
+      "path": "cta.label",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "heading",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "subheading",
+      "has_default": true,
+      "type": "missing",
+      "observed_values": []
+     }
+    ]
+   },
+   "notices": []
+  },
+  "staged|1": {
+   "flag": "home_banner",
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "versions": [
+    "1.0.0",
+    "2.0.0",
+    "3.0.0"
+   ],
+   "meta": {
+    "1.0.0": {
+     "share": 22,
+     "users": 41200,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "2.0.0": {
+     "share": 39,
+     "users": 73000,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "3.0.0": {
+     "share": 35,
+     "users": 65500,
+     "platforms": "iOS \u00b7 Android"
+    }
+   },
+   "missing": {
+    "share": 4,
+    "users": 7400
+   },
+   "latest": "3.0.0",
+   "applied": true,
+   "published": true,
+   "dashboard": "",
+   "contracts": {
+    "1.0.0": [
+     {
+      "path": "heading",
+      "has_default": true,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "2.0.0": [
+     {
+      "path": "cta.text",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "3.0.0": [
+     {
+      "path": "cta.label",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "heading",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "subheading",
+      "has_default": true,
+      "type": "missing",
+      "observed_values": []
+     }
+    ]
+   },
+   "notices": []
+  },
+  "applied|0": {
+   "flag": "home_banner",
+   "value": {
+    "title": "Sale on now",
+    "heading": "Sale on now",
+    "cta": {
+     "text": "Shop",
+     "label": "Shop"
+    }
+   },
+   "versions": [
+    "1.0.0",
+    "2.0.0",
+    "3.0.0"
+   ],
+   "meta": {
+    "1.0.0": {
+     "share": 22,
+     "users": 41200,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "2.0.0": {
+     "share": 39,
+     "users": 73000,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "3.0.0": {
+     "share": 35,
+     "users": 65500,
+     "platforms": "iOS \u00b7 Android"
+    }
+   },
+   "missing": {
+    "share": 4,
+    "users": 7400
+   },
+   "latest": "3.0.0",
+   "applied": true,
+   "published": false,
+   "dashboard": "",
+   "contracts": {
+    "1.0.0": [
+     {
+      "path": "heading",
+      "has_default": true,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "2.0.0": [
+     {
+      "path": "cta.text",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "3.0.0": [
+     {
+      "path": "cta.label",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "heading",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "subheading",
+      "has_default": true,
+      "type": "missing",
+      "observed_values": []
+     }
+    ]
+   },
+   "notices": []
+  },
+  "published|0": {
+   "flag": "home_banner",
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "versions": [
+    "1.0.0",
+    "2.0.0",
+    "3.0.0"
+   ],
+   "meta": {
+    "1.0.0": {
+     "share": 22,
+     "users": 41200,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "2.0.0": {
+     "share": 39,
+     "users": 73000,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "3.0.0": {
+     "share": 35,
+     "users": 65500,
+     "platforms": "iOS \u00b7 Android"
+    }
+   },
+   "missing": {
+    "share": 4,
+    "users": 7400
+   },
+   "latest": "3.0.0",
+   "applied": true,
+   "published": true,
+   "dashboard": "",
+   "contracts": {
+    "1.0.0": [
+     {
+      "path": "heading",
+      "has_default": true,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "2.0.0": [
+     {
+      "path": "cta.text",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "3.0.0": [
+     {
+      "path": "cta.label",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "heading",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "subheading",
+      "has_default": true,
+      "type": "missing",
+      "observed_values": []
+     }
+    ]
+   },
+   "notices": []
+  },
+  "staged|0": {
+   "flag": "home_banner",
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "versions": [
+    "1.0.0",
+    "2.0.0",
+    "3.0.0"
+   ],
+   "meta": {
+    "1.0.0": {
+     "share": 22,
+     "users": 41200,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "2.0.0": {
+     "share": 39,
+     "users": 73000,
+     "platforms": "iOS \u00b7 Android"
+    },
+    "3.0.0": {
+     "share": 35,
+     "users": 65500,
+     "platforms": "iOS \u00b7 Android"
+    }
+   },
+   "missing": {
+    "share": 4,
+    "users": 7400
+   },
+   "latest": "3.0.0",
+   "applied": true,
+   "published": true,
+   "dashboard": "",
+   "contracts": {
+    "1.0.0": [
+     {
+      "path": "heading",
+      "has_default": true,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "2.0.0": [
+     {
+      "path": "cta.text",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "title",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     }
+    ],
+    "3.0.0": [
+     {
+      "path": "cta.label",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Shop"
+      ]
+     },
+     {
+      "path": "heading",
+      "has_default": false,
+      "type": "string",
+      "observed_values": [
+       "Sale on now"
+      ]
+     },
+     {
+      "path": "subheading",
+      "has_default": true,
+      "type": "missing",
+      "observed_values": []
+     }
+    ]
+   },
+   "notices": []
+  }
+ },
+ "watch": {
+  "start|1": {
+   "ok": true,
+   "value": {
+    "title": "Sale on now",
+    "heading": "Sale on now",
+    "cta": {
+     "text": "Shop",
+     "label": "Shop"
+    }
+   },
+   "broken": [],
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "restore": false,
+   "previous": null,
+   "checked_at": 1795854468.7426443
+  },
+  "start|0": {
+   "ok": true,
+   "value": {
+    "title": "Sale on now",
+    "heading": "Sale on now",
+    "cta": {
+     "text": "Shop",
+     "label": "Shop"
+    }
+   },
+   "broken": [],
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "restore": false,
+   "previous": null,
+   "checked_at": 1795854472.3131802
+  },
+  "outside|1": {
+   "ok": false,
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "broken": [
+    "1.0.0",
+    "2.0.0"
+   ],
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "at_risk": 61.0,
+   "restore": true,
+   "previous": {
+    "title": "Sale on now",
+    "heading": "Sale on now",
+    "cta": {
+     "text": "Shop",
+     "label": "Shop"
+    }
+   },
+   "checked_at": 1795854475.7621498
+  },
+  "outside|0": {
+   "ok": false,
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "broken": [
+    "1.0.0",
+    "2.0.0"
+   ],
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "at_risk": 61.0,
+   "restore": true,
+   "previous": {
+    "title": "Sale on now",
+    "heading": "Sale on now",
+    "cta": {
+     "text": "Shop",
+     "label": "Shop"
+    }
+   },
+   "checked_at": 1795854479.7939978
+  },
+  "protected|1": {
+   "ok": true,
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "broken": [],
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "restore": false,
+   "previous": null,
+   "checked_at": 1795854483.7272923
+  },
+  "protected|0": {
+   "ok": true,
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "broken": [],
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "restore": false,
+   "previous": null,
+   "checked_at": 1795854486.7362359
+  },
+  "applied|1": {
+   "ok": true,
+   "value": {
+    "title": "Sale on now",
+    "heading": "Sale on now",
+    "cta": {
+     "text": "Shop",
+     "label": "Shop"
+    }
+   },
+   "broken": [],
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "restore": false,
+   "previous": null,
+   "checked_at": 1795854489.8037171
+  },
+  "published|1": {
+   "ok": true,
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "broken": [],
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "restore": false,
+   "previous": null,
+   "checked_at": 1795854492.7923043
+  },
+  "staged|1": {
+   "ok": true,
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "broken": [],
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "restore": false,
+   "previous": null,
+   "checked_at": 1795854495.7799551
+  },
+  "applied|0": {
+   "ok": true,
+   "value": {
+    "title": "Sale on now",
+    "heading": "Sale on now",
+    "cta": {
+     "text": "Shop",
+     "label": "Shop"
+    }
+   },
+   "broken": [],
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "restore": false,
+   "previous": null,
+   "checked_at": 1795854498.8407593
+  },
+  "published|0": {
+   "ok": true,
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "broken": [],
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "restore": false,
+   "previous": null,
+   "checked_at": 1795854501.8236241
+  },
+  "staged|0": {
+   "ok": true,
+   "value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "broken": [],
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "restore": false,
+   "previous": null,
+   "checked_at": 1795854504.8447921
+  }
+ },
+ "check_live": {
+  "start|1": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "start|0": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "outside|1": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "red",
+      "reason": "required path 'title' is missing",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "red",
+      "reason": "required path 'cta.text' is missing",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "red",
+      "reason": "replay failed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "red",
+      "reason": "replay failed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "outside|0": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "red",
+      "reason": "required path 'title' is missing",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "red",
+      "reason": "required path 'cta.text' is missing",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "red",
+      "reason": "replay failed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "red",
+      "reason": "replay failed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "protected|1": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "protected|0": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "applied|1": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "published|1": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "staged|1": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "applied|0": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "published|0": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "staged|0": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   }
+  }
+ },
+ "check_break": {
+  "start|1": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "red",
+      "reason": "required path 'title' is missing",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "red",
+      "reason": "required path 'cta.text' is missing",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "red",
+      "reason": "replay failed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "red",
+      "reason": "replay failed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "start|0": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "red",
+      "reason": "required path 'title' is missing",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "red",
+      "reason": "required path 'cta.text' is missing",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "red",
+      "reason": "replay failed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "red",
+      "reason": "replay failed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "outside|1": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "red",
+      "reason": "required path 'title' is missing",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "red",
+      "reason": "required path 'cta.text' is missing",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "red",
+      "reason": "replay failed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "red",
+      "reason": "replay failed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "outside|0": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "red",
+      "reason": "required path 'title' is missing",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "red",
+      "reason": "required path 'cta.text' is missing",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "red",
+      "reason": "replay failed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "red",
+      "reason": "replay failed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "protected|1": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "protected|0": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "applied|1": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "published|1": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "staged|1": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "applied|0": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "published|0": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "staged|0": {
+   "quick": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "amber",
+      "reason": "no static break found, replay not run",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   },
+   "full": {
+    "cells": [
+     {
+      "version": "1.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "2.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "title": "Sale on now",
+       "heading": "Sale on now",
+       "cta": {
+        "text": "Shop",
+        "label": "Shop"
+       }
+      }
+     },
+     {
+      "version": "3.0.0",
+      "state": "green",
+      "reason": "replay passed",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     },
+     {
+      "version": "none",
+      "state": "amber",
+      "reason": "no recorded behaviour for builds without app_version",
+      "value": {
+       "heading": "Sale on now",
+       "subheading": "Up to 40% off",
+       "cta": {
+        "label": "Shop the sale"
+       }
+      }
+     }
+    ]
+   }
+  }
+ },
+ "plan_live": {
+  "start|1": {
+   "plan_id": "4f90d16e63b51d0c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "start|0": {
+   "plan_id": "4f90d16e63b51d0c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "outside|1": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "at_risk": 61.0,
+   "at_risk_users": 114200,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 61.0,
+    "at_risk_users": 114200
+   },
+   "notices": [],
+   "limit": "3.0.0",
+   "diff": [
+    "create or update segment 'flagpact/home_banner/3.0.0': app_version < 3.0.0 or app_version is not set",
+    "override for that segment keeps the previous value {\"heading\": \"Sale on now\", \"subheading\": \"Up to 40% off\", \"cta\": {\"label\": \"Shop the sale\"}}",
+    "give that override the highest priority",
+    "then change the environment default to {\"heading\": \"Sale on now\", \"subheading\": \"Up to 40% off\", \"cta\": {\"label\": \"Shop the sale\"}}"
+   ],
+   "segment": "flagpact/home_banner/3.0.0",
+   "rules": [
+    {
+     "type": "ALL",
+     "rules": [
+      {
+       "type": "ANY",
+       "rules": [],
+       "conditions": [
+        {
+         "operator": "LESS_THAN",
+         "property": "app_version",
+         "value": "3.0.0:semver"
+        },
+        {
+         "operator": "IS_NOT_SET",
+         "property": "app_version",
+         "value": ""
+        }
+       ]
+      }
+     ],
+     "conditions": []
+    }
+   ],
+   "keep_value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "include_missing": true,
+   "after": [
+    {
+     "version": "1.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "green",
+     "reason": "keeps the live value",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "protected": 39.0
+  },
+  "outside|0": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "at_risk": 61.0,
+   "at_risk_users": 114200,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 61.0,
+    "at_risk_users": 114200
+   },
+   "notices": [],
+   "limit": "3.0.0",
+   "diff": [
+    "create or update segment 'flagpact/home_banner/3.0.0': app_version < 3.0.0",
+    "override for that segment keeps the previous value {\"heading\": \"Sale on now\", \"subheading\": \"Up to 40% off\", \"cta\": {\"label\": \"Shop the sale\"}}",
+    "give that override the highest priority",
+    "then change the environment default to {\"heading\": \"Sale on now\", \"subheading\": \"Up to 40% off\", \"cta\": {\"label\": \"Shop the sale\"}}"
+   ],
+   "segment": "flagpact/home_banner/3.0.0",
+   "rules": [
+    {
+     "type": "ALL",
+     "rules": [
+      {
+       "type": "ANY",
+       "rules": [],
+       "conditions": [
+        {
+         "operator": "LESS_THAN",
+         "property": "app_version",
+         "value": "3.0.0:semver"
+        }
+       ]
+      }
+     ],
+     "conditions": []
+    }
+   ],
+   "keep_value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "include_missing": false,
+   "after": [
+    {
+     "version": "1.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "protected": 35.0
+  },
+  "protected|1": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "protected|0": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "applied|1": {
+   "plan_id": "4f90d16e63b51d0c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "published|1": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "staged|1": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "applied|0": {
+   "plan_id": "4f90d16e63b51d0c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "published|0": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "staged|0": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  }
+ },
+ "plan_break": {
+  "start|1": {
+   "plan_id": "a4a3d2aa22eb15eb",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "at_risk": 61.0,
+   "at_risk_users": 114200,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 61.0,
+    "at_risk_users": 114200
+   },
+   "notices": [],
+   "limit": "3.0.0",
+   "diff": [
+    "create or update segment 'flagpact/home_banner/3.0.0': app_version < 3.0.0 or app_version is not set",
+    "override for that segment keeps the previous value {\"title\": \"Sale on now\", \"heading\": \"Sale on now\", \"cta\": {\"text\": \"Shop\", \"label\": \"Shop\"}}",
+    "give that override the highest priority",
+    "then change the environment default to {\"heading\": \"Sale on now\", \"subheading\": \"Up to 40% off\", \"cta\": {\"label\": \"Shop the sale\"}}"
+   ],
+   "segment": "flagpact/home_banner/3.0.0",
+   "rules": [
+    {
+     "type": "ALL",
+     "rules": [
+      {
+       "type": "ANY",
+       "rules": [],
+       "conditions": [
+        {
+         "operator": "LESS_THAN",
+         "property": "app_version",
+         "value": "3.0.0:semver"
+        },
+        {
+         "operator": "IS_NOT_SET",
+         "property": "app_version",
+         "value": ""
+        }
+       ]
+      }
+     ],
+     "conditions": []
+    }
+   ],
+   "keep_value": {
+    "title": "Sale on now",
+    "heading": "Sale on now",
+    "cta": {
+     "text": "Shop",
+     "label": "Shop"
+    }
+   },
+   "include_missing": true,
+   "after": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "green",
+     "reason": "keeps the live value",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "protected": 100.0
+  },
+  "start|0": {
+   "plan_id": "a4a3d2aa22eb15eb",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "at_risk": 61.0,
+   "at_risk_users": 114200,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 61.0,
+    "at_risk_users": 114200
+   },
+   "notices": [],
+   "limit": "3.0.0",
+   "diff": [
+    "create or update segment 'flagpact/home_banner/3.0.0': app_version < 3.0.0",
+    "override for that segment keeps the previous value {\"title\": \"Sale on now\", \"heading\": \"Sale on now\", \"cta\": {\"text\": \"Shop\", \"label\": \"Shop\"}}",
+    "give that override the highest priority",
+    "then change the environment default to {\"heading\": \"Sale on now\", \"subheading\": \"Up to 40% off\", \"cta\": {\"label\": \"Shop the sale\"}}"
+   ],
+   "segment": "flagpact/home_banner/3.0.0",
+   "rules": [
+    {
+     "type": "ALL",
+     "rules": [
+      {
+       "type": "ANY",
+       "rules": [],
+       "conditions": [
+        {
+         "operator": "LESS_THAN",
+         "property": "app_version",
+         "value": "3.0.0:semver"
+        }
+       ]
+      }
+     ],
+     "conditions": []
+    }
+   ],
+   "keep_value": {
+    "title": "Sale on now",
+    "heading": "Sale on now",
+    "cta": {
+     "text": "Shop",
+     "label": "Shop"
+    }
+   },
+   "include_missing": false,
+   "after": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "protected": 96.0
+  },
+  "outside|1": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "at_risk": 61.0,
+   "at_risk_users": 114200,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 61.0,
+    "at_risk_users": 114200
+   },
+   "notices": [],
+   "limit": "3.0.0",
+   "diff": [
+    "create or update segment 'flagpact/home_banner/3.0.0': app_version < 3.0.0 or app_version is not set",
+    "override for that segment keeps the previous value {\"heading\": \"Sale on now\", \"subheading\": \"Up to 40% off\", \"cta\": {\"label\": \"Shop the sale\"}}",
+    "give that override the highest priority",
+    "then change the environment default to {\"heading\": \"Sale on now\", \"subheading\": \"Up to 40% off\", \"cta\": {\"label\": \"Shop the sale\"}}"
+   ],
+   "segment": "flagpact/home_banner/3.0.0",
+   "rules": [
+    {
+     "type": "ALL",
+     "rules": [
+      {
+       "type": "ANY",
+       "rules": [],
+       "conditions": [
+        {
+         "operator": "LESS_THAN",
+         "property": "app_version",
+         "value": "3.0.0:semver"
+        },
+        {
+         "operator": "IS_NOT_SET",
+         "property": "app_version",
+         "value": ""
+        }
+       ]
+      }
+     ],
+     "conditions": []
+    }
+   ],
+   "keep_value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "include_missing": true,
+   "after": [
+    {
+     "version": "1.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "green",
+     "reason": "keeps the live value",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "protected": 39.0
+  },
+  "outside|0": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "at_risk": 61.0,
+   "at_risk_users": 114200,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 61.0,
+    "at_risk_users": 114200
+   },
+   "notices": [],
+   "limit": "3.0.0",
+   "diff": [
+    "create or update segment 'flagpact/home_banner/3.0.0': app_version < 3.0.0",
+    "override for that segment keeps the previous value {\"heading\": \"Sale on now\", \"subheading\": \"Up to 40% off\", \"cta\": {\"label\": \"Shop the sale\"}}",
+    "give that override the highest priority",
+    "then change the environment default to {\"heading\": \"Sale on now\", \"subheading\": \"Up to 40% off\", \"cta\": {\"label\": \"Shop the sale\"}}"
+   ],
+   "segment": "flagpact/home_banner/3.0.0",
+   "rules": [
+    {
+     "type": "ALL",
+     "rules": [
+      {
+       "type": "ANY",
+       "rules": [],
+       "conditions": [
+        {
+         "operator": "LESS_THAN",
+         "property": "app_version",
+         "value": "3.0.0:semver"
+        }
+       ]
+      }
+     ],
+     "conditions": []
+    }
+   ],
+   "keep_value": {
+    "heading": "Sale on now",
+    "subheading": "Up to 40% off",
+    "cta": {
+     "label": "Shop the sale"
+    }
+   },
+   "include_missing": false,
+   "after": [
+    {
+     "version": "1.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "red",
+     "reason": "replay failed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "protected": 35.0
+  },
+  "protected|1": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "protected|0": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "applied|1": {
+   "plan_id": "a4a3d2aa22eb15eb",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "published|1": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "staged|1": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "applied|0": {
+   "plan_id": "a4a3d2aa22eb15eb",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "published|0": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  },
+  "staged|0": {
+   "plan_id": "b0fd6f80c38fdf5c",
+   "cells": [
+    {
+     "version": "1.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "2.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "title": "Sale on now",
+      "heading": "Sale on now",
+      "cta": {
+       "text": "Shop",
+       "label": "Shop"
+      }
+     }
+    },
+    {
+     "version": "3.0.0",
+     "state": "green",
+     "reason": "replay passed",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    },
+    {
+     "version": "none",
+     "state": "amber",
+     "reason": "no recorded behaviour for builds without app_version",
+     "value": {
+      "heading": "Sale on now",
+      "subheading": "Up to 40% off",
+      "cta": {
+       "label": "Shop the sale"
+      }
+     }
+    }
+   ],
+   "at_risk": 0,
+   "at_risk_users": 0,
+   "exposure": {
+    "versions": {
+     "1.0.0": {
+      "share": 22.0,
+      "users": 41200
+     },
+     "2.0.0": {
+      "share": 39.0,
+      "users": 73000
+     },
+     "3.0.0": {
+      "share": 35.0,
+      "users": 65500
+     },
+     "none": {
+      "share": 4.0,
+      "users": 7400
+     }
+    },
+    "at_risk_share": 0,
+    "at_risk_users": 0
+   },
+   "notices": [],
+   "error": "nothing is broken, no fix needed"
+  }
+ },
+ "render_live": {
+  "start|1": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now |  [Shop]"
+    }
+   ],
+   "after": null
+  },
+  "start|0": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now |  [Shop]"
+    }
+   ],
+   "after": null
+  },
+  "outside|1": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "2.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": null
+  },
+  "outside|0": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "2.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": null
+  },
+  "protected|1": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": null
+  },
+  "protected|0": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": null
+  },
+  "applied|1": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now |  [Shop]"
+    }
+   ],
+   "after": null
+  },
+  "published|1": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": null
+  },
+  "staged|1": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": null
+  },
+  "applied|0": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now |  [Shop]"
+    }
+   ],
+   "after": null
+  },
+  "published|0": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": null
+  },
+  "staged|0": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": null
+  }
+ },
+ "render_break": {
+  "start|1": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now |  [Shop]"
+    }
+   ],
+   "after": [
+    {
+     "version": "1.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "2.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ]
+  },
+  "start|0": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now |  [Shop]"
+    }
+   ],
+   "after": [
+    {
+     "version": "1.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "2.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ]
+  },
+  "outside|1": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "2.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": [
+    {
+     "version": "1.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "2.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ]
+  },
+  "outside|0": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "2.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": [
+    {
+     "version": "1.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "2.0.0",
+     "ok": false,
+     "output": "KeyError: \"home_banner: missing 'title'\""
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ]
+  },
+  "protected|1": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ]
+  },
+  "protected|0": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ]
+  },
+  "applied|1": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now |  [Shop]"
+    }
+   ],
+   "after": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ]
+  },
+  "published|1": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ]
+  },
+  "staged|1": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ]
+  },
+  "applied|0": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now |  [Shop]"
+    }
+   ],
+   "after": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ]
+  },
+  "published|0": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ]
+  },
+  "staged|0": {
+   "before": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ],
+   "after": [
+    {
+     "version": "1.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Sale on now"
+    },
+    {
+     "version": "2.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now [Shop]"
+    },
+    {
+     "version": "3.0.0",
+     "ok": true,
+     "output": "[BANNER] Sale on now | Up to 40% off [Shop the sale]"
+    }
+   ]
+  }
+ },
+ "stages": {
+  "start|1": {
+   "stages": [
+    {
+     "index": 0,
+     "boundary": "3.0.0",
+     "gets_change": [
+      "3.0.0"
+     ],
+     "kept": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "share_new": 35.0,
+     "cells": [
+      {
+       "version": "1.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "title": "Sale on now",
+        "heading": "Sale on now",
+        "cta": {
+         "text": "Shop",
+         "label": "Shop"
+        }
+       }
+      },
+      {
+       "version": "2.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "title": "Sale on now",
+        "heading": "Sale on now",
+        "cta": {
+         "text": "Shop",
+         "label": "Shop"
+        }
+       }
+      },
+      {
+       "version": "3.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "none",
+       "state": "green",
+       "reason": "keeps the live value",
+       "value": {
+        "title": "Sale on now",
+        "heading": "Sale on now",
+        "cta": {
+         "text": "Shop",
+         "label": "Shop"
+        }
+       }
+      }
+     ],
+     "ok": true,
+     "blocked": [],
+     "holds_missing": true
+    }
+   ],
+   "current": -1,
+   "segment": "flagpact/home_banner/3.0.0",
+   "held": [
+    "1.0.0",
+    "2.0.0"
+   ],
+   "published": false
+  },
+  "start|0": {
+   "stages": [
+    {
+     "index": 0,
+     "boundary": "3.0.0",
+     "gets_change": [
+      "3.0.0"
+     ],
+     "kept": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "share_new": 39.0,
+     "cells": [
+      {
+       "version": "1.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "title": "Sale on now",
+        "heading": "Sale on now",
+        "cta": {
+         "text": "Shop",
+         "label": "Shop"
+        }
+       }
+      },
+      {
+       "version": "2.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "title": "Sale on now",
+        "heading": "Sale on now",
+        "cta": {
+         "text": "Shop",
+         "label": "Shop"
+        }
+       }
+      },
+      {
+       "version": "3.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "none",
+       "state": "amber",
+       "reason": "no recorded behaviour for builds without app_version",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      }
+     ],
+     "ok": true,
+     "blocked": [],
+     "holds_missing": false
+    }
+   ],
+   "current": -1,
+   "segment": "flagpact/home_banner/3.0.0",
+   "held": [
+    "1.0.0",
+    "2.0.0"
+   ],
+   "published": false
+  },
+  "outside|1": {
+   "stages": [
+    {
+     "index": 0,
+     "boundary": "3.0.0",
+     "gets_change": [
+      "3.0.0"
+     ],
+     "kept": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "share_new": 35.0,
+     "cells": [
+      {
+       "version": "1.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "2.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "3.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "none",
+       "state": "green",
+       "reason": "keeps the live value",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      }
+     ],
+     "ok": false,
+     "blocked": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "holds_missing": true
+    }
+   ],
+   "current": -1,
+   "segment": "flagpact/home_banner/3.0.0",
+   "held": [
+    "1.0.0",
+    "2.0.0"
+   ],
+   "published": false
+  },
+  "outside|0": {
+   "stages": [
+    {
+     "index": 0,
+     "boundary": "3.0.0",
+     "gets_change": [
+      "3.0.0"
+     ],
+     "kept": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "share_new": 39.0,
+     "cells": [
+      {
+       "version": "1.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "2.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "3.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "none",
+       "state": "amber",
+       "reason": "no recorded behaviour for builds without app_version",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      }
+     ],
+     "ok": false,
+     "blocked": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "holds_missing": false
+    }
+   ],
+   "current": -1,
+   "segment": "flagpact/home_banner/3.0.0",
+   "held": [
+    "1.0.0",
+    "2.0.0"
+   ],
+   "published": false
+  },
+  "protected|1": {
+   "stages": [
+    {
+     "index": 0,
+     "boundary": "3.0.0",
+     "gets_change": [
+      "3.0.0"
+     ],
+     "kept": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "share_new": 35.0,
+     "cells": [
+      {
+       "version": "1.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "2.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "3.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "none",
+       "state": "green",
+       "reason": "keeps the live value",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      }
+     ],
+     "ok": false,
+     "blocked": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "holds_missing": true
+    }
+   ],
+   "current": -1,
+   "segment": "flagpact/home_banner/3.0.0",
+   "held": [
+    "1.0.0",
+    "2.0.0"
+   ],
+   "published": false
+  },
+  "protected|0": {
+   "stages": [
+    {
+     "index": 0,
+     "boundary": "3.0.0",
+     "gets_change": [
+      "3.0.0"
+     ],
+     "kept": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "share_new": 39.0,
+     "cells": [
+      {
+       "version": "1.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "2.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "3.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "none",
+       "state": "amber",
+       "reason": "no recorded behaviour for builds without app_version",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      }
+     ],
+     "ok": false,
+     "blocked": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "holds_missing": false
+    }
+   ],
+   "current": -1,
+   "segment": "flagpact/home_banner/3.0.0",
+   "held": [
+    "1.0.0",
+    "2.0.0"
+   ],
+   "published": false
+  },
+  "applied|1": {
+   "stages": [
+    {
+     "index": 0,
+     "boundary": "3.0.0",
+     "gets_change": [
+      "3.0.0"
+     ],
+     "kept": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "share_new": 35.0,
+     "cells": [
+      {
+       "version": "1.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "title": "Sale on now",
+        "heading": "Sale on now",
+        "cta": {
+         "text": "Shop",
+         "label": "Shop"
+        }
+       }
+      },
+      {
+       "version": "2.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "title": "Sale on now",
+        "heading": "Sale on now",
+        "cta": {
+         "text": "Shop",
+         "label": "Shop"
+        }
+       }
+      },
+      {
+       "version": "3.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "none",
+       "state": "green",
+       "reason": "keeps the live value",
+       "value": {
+        "title": "Sale on now",
+        "heading": "Sale on now",
+        "cta": {
+         "text": "Shop",
+         "label": "Shop"
+        }
+       }
+      }
+     ],
+     "ok": true,
+     "blocked": [],
+     "holds_missing": true
+    }
+   ],
+   "current": -1,
+   "segment": "flagpact/home_banner/3.0.0",
+   "held": [
+    "1.0.0",
+    "2.0.0"
+   ],
+   "published": false
+  },
+  "published|1": {
+   "stages": [
+    {
+     "index": 0,
+     "boundary": "3.0.0",
+     "gets_change": [
+      "3.0.0"
+     ],
+     "kept": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "share_new": 35.0,
+     "cells": [
+      {
+       "version": "1.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "2.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "3.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "none",
+       "state": "green",
+       "reason": "keeps the live value",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      }
+     ],
+     "ok": false,
+     "blocked": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "holds_missing": true
+    }
+   ],
+   "current": -1,
+   "segment": "flagpact/home_banner/3.0.0",
+   "held": [
+    "1.0.0",
+    "2.0.0"
+   ],
+   "published": false
+  },
+  "staged|1": {
+   "stages": [
+    {
+     "index": 0,
+     "boundary": "3.0.0",
+     "gets_change": [
+      "3.0.0"
+     ],
+     "kept": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "share_new": 35.0,
+     "cells": [
+      {
+       "version": "1.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "2.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "3.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "none",
+       "state": "green",
+       "reason": "keeps the live value",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      }
+     ],
+     "ok": false,
+     "blocked": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "holds_missing": true
+    }
+   ],
+   "current": -1,
+   "segment": "flagpact/home_banner/3.0.0",
+   "held": [
+    "1.0.0",
+    "2.0.0"
+   ],
+   "published": false
+  },
+  "applied|0": {
+   "stages": [
+    {
+     "index": 0,
+     "boundary": "3.0.0",
+     "gets_change": [
+      "3.0.0"
+     ],
+     "kept": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "share_new": 39.0,
+     "cells": [
+      {
+       "version": "1.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "title": "Sale on now",
+        "heading": "Sale on now",
+        "cta": {
+         "text": "Shop",
+         "label": "Shop"
+        }
+       }
+      },
+      {
+       "version": "2.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "title": "Sale on now",
+        "heading": "Sale on now",
+        "cta": {
+         "text": "Shop",
+         "label": "Shop"
+        }
+       }
+      },
+      {
+       "version": "3.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "none",
+       "state": "amber",
+       "reason": "no recorded behaviour for builds without app_version",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      }
+     ],
+     "ok": true,
+     "blocked": [],
+     "holds_missing": false
+    }
+   ],
+   "current": -1,
+   "segment": "flagpact/home_banner/3.0.0",
+   "held": [
+    "1.0.0",
+    "2.0.0"
+   ],
+   "published": false
+  },
+  "published|0": {
+   "stages": [
+    {
+     "index": 0,
+     "boundary": "3.0.0",
+     "gets_change": [
+      "3.0.0"
+     ],
+     "kept": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "share_new": 39.0,
+     "cells": [
+      {
+       "version": "1.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "2.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "3.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "none",
+       "state": "amber",
+       "reason": "no recorded behaviour for builds without app_version",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      }
+     ],
+     "ok": false,
+     "blocked": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "holds_missing": false
+    }
+   ],
+   "current": -1,
+   "segment": "flagpact/home_banner/3.0.0",
+   "held": [
+    "1.0.0",
+    "2.0.0"
+   ],
+   "published": false
+  },
+  "staged|0": {
+   "stages": [
+    {
+     "index": 0,
+     "boundary": "3.0.0",
+     "gets_change": [
+      "3.0.0"
+     ],
+     "kept": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "share_new": 39.0,
+     "cells": [
+      {
+       "version": "1.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "2.0.0",
+       "state": "red",
+       "reason": "replay failed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "3.0.0",
+       "state": "green",
+       "reason": "replay passed",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      },
+      {
+       "version": "none",
+       "state": "amber",
+       "reason": "no recorded behaviour for builds without app_version",
+       "value": {
+        "heading": "Sale on now",
+        "subheading": "Up to 40% off",
+        "cta": {
+         "label": "Shop the sale"
+        }
+       }
+      }
+     ],
+     "ok": false,
+     "blocked": [
+      "1.0.0",
+      "2.0.0"
+     ],
+     "holds_missing": false
+    }
+   ],
+   "current": -1,
+   "segment": "flagpact/home_banner/3.0.0",
+   "held": [
+    "1.0.0",
+    "2.0.0"
+   ],
+   "published": false
+  }
+ },
+ "apply_cells": {
+  "x|1": [
+   {
+    "version": "1.0.0",
+    "state": "green",
+    "reason": "replay passed",
+    "value": {
+     "title": "Sale on now",
+     "heading": "Sale on now",
+     "cta": {
+      "text": "Shop",
+      "label": "Shop"
+     }
+    }
+   },
+   {
+    "version": "2.0.0",
+    "state": "green",
+    "reason": "replay passed",
+    "value": {
+     "title": "Sale on now",
+     "heading": "Sale on now",
+     "cta": {
+      "text": "Shop",
+      "label": "Shop"
+     }
+    }
+   },
+   {
+    "version": "3.0.0",
+    "state": "green",
+    "reason": "replay passed",
+    "value": {
+     "heading": "Sale on now",
+     "subheading": "Up to 40% off",
+     "cta": {
+      "label": "Shop the sale"
+     }
+    }
+   },
+   {
+    "version": "none",
+    "state": "amber",
+    "reason": "no recorded behaviour for builds without app_version",
+    "value": {
+     "title": "Sale on now",
+     "heading": "Sale on now",
+     "cta": {
+      "text": "Shop",
+      "label": "Shop"
+     }
+    }
+   }
+  ],
+  "x|0": [
+   {
+    "version": "1.0.0",
+    "state": "green",
+    "reason": "replay passed",
+    "value": {
+     "title": "Sale on now",
+     "heading": "Sale on now",
+     "cta": {
+      "text": "Shop",
+      "label": "Shop"
+     }
+    }
+   },
+   {
+    "version": "2.0.0",
+    "state": "green",
+    "reason": "replay passed",
+    "value": {
+     "title": "Sale on now",
+     "heading": "Sale on now",
+     "cta": {
+      "text": "Shop",
+      "label": "Shop"
+     }
+    }
+   },
+   {
+    "version": "3.0.0",
+    "state": "green",
+    "reason": "replay passed",
+    "value": {
+     "heading": "Sale on now",
+     "subheading": "Up to 40% off",
+     "cta": {
+      "label": "Shop the sale"
+     }
+    }
+   },
+   {
+    "version": "none",
+    "state": "amber",
+    "reason": "no recorded behaviour for builds without app_version",
+    "value": {
+     "heading": "Sale on now",
+     "subheading": "Up to 40% off",
+     "cta": {
+      "label": "Shop the sale"
+     }
+    }
+   }
+  ]
+ },
+ "steps": {},
+ "import_sample": {
+  "files_scanned": 2,
+  "languages": {
+   "python": 2,
+   "other": 0
+  },
+  "flags": [
+   {
+    "flag": "welcome_message",
+    "sites": [
+     {
+      "file": "app.py",
+      "line": 7,
+      "call": "config"
+     }
+    ],
+    "reads": [
+     {
+      "path": "text",
+      "required": true,
+      "required_in": [
+       "1.0.0"
+      ],
+      "default_in": [],
+      "places": [
+       "app.py:8"
+      ]
+     },
+     {
+      "path": "subtitle",
+      "required": false,
+      "required_in": [],
+      "default_in": [
+       "2.0.0"
+      ],
+      "places": [
+       "app.py:8"
+      ]
+     },
+     {
+      "path": "headline",
+      "required": true,
+      "required_in": [
+       "2.0.0"
+      ],
+      "default_in": [],
+      "places": [
+       "app.py:9"
+      ]
+     },
+     {
+      "path": "cta.label",
+      "required": true,
+      "required_in": [
+       "2.0.0"
+      ],
+      "default_in": [],
+      "places": [
+       "app.py:9"
+      ]
+     }
+    ],
+    "languages": [
+     "python"
+    ]
+   }
+  ],
+  "versions": [
+   {
+    "version": "1.0.0",
+    "file": "",
+    "line": 0,
+    "directory": "versions/v1.0.0",
+    "guessed": false,
+    "ref": "v1.0.0"
+   },
+   {
+    "version": "2.0.0",
+    "file": "",
+    "line": 0,
+    "directory": "versions/v2.0.0",
+    "guessed": false,
+    "ref": "v2.0.0"
+   }
+  ],
+  "draft": {
+   "flag": "welcome_message",
+   "trait": "app_version",
+   "contracts": "contracts",
+   "versions": [
+    {
+     "version": "1.0.0",
+     "directory": "versions/v1.0.0"
+    },
+    {
+     "version": "2.0.0",
+     "directory": "versions/v2.0.0"
+    }
+   ]
+  },
+  "needs_review": [
+   "Read 2 release tag(s): v1.0.0, v2.0.0. Each tag is one app version.",
+   "Run flagpact import with --checkout to write each tag's files into versions/, then record contracts by running each version's tests."
+  ],
+  "notes": [],
+  "tags": [
+   "v1.0.0",
+   "v2.0.0"
+  ],
+  "source": "https://github.com/Nithinaug/flagpact-sample-app",
+  "kind": "github"
+ }
+}

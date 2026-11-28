@@ -264,6 +264,8 @@ python -m pytest
 cd ui && npm install && npm run build
 ```
 
+The browser demo in `docs/demo` is a recorded replay of real flagpact output, with no backend. `scripts/make_static_fixtures.py` records it from the real engine, and `cd ui && npm run build:static` builds it.
+
 The console is built into `ui/dist`, which is git-ignored. Run the build once after cloning.
 
 ## License

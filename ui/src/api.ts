@@ -127,7 +127,13 @@ export const LABELS: Record<Verdict, string> = {
   idle: "Waiting",
 };
 
+export const STATIC = import.meta.env.MODE === "static";
+
 async function call<T>(method: string, path: string, body?: unknown): Promise<T> {
+  if (STATIC) {
+    const { replay } = await import("./staticBackend");
+    return (await replay(method, path, body)) as T;
+  }
   const response = await fetch(path, {
     method,
     headers: { "Content-Type": "application/json" },

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { api, MISSING, type Cell, type Pane, type Plan, type Rehearsal, type Rollout, type State, type Watch } from "./api";
+import { api, MISSING, STATIC, type Cell, type Pane, type Plan, type Rehearsal, type Rollout, type State, type Watch } from "./api";
 import { ActivityCard, type Entry } from "./components/ActivityCard";
 import { ChangeEditor } from "./components/ChangeEditor";
 import { ConfirmDialog } from "./components/ConfirmDialog";
@@ -458,7 +458,7 @@ export default function App({ onHome }: { onHome?: () => void }) {
         onUndo={undo}
         onSimulate={simulateEdit}
         onHome={onHome}
-        demo={new URLSearchParams(window.location.search).has("demo") || window.location.pathname.replace(/\/$/, "") === "/demo"}
+        demo={STATIC || new URLSearchParams(window.location.search).has("demo") || window.location.pathname.replace(/\/$/, "") === "/demo"}
       />
       <main className="w-full px-6 py-6">
         <div className="flex flex-wrap items-center justify-between gap-4 pb-6">
