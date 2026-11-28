@@ -10,7 +10,7 @@
   <img alt="Flagsmith 2.294.0" src="https://img.shields.io/badge/Flagsmith-2.294.0-8B5CF6">
 </p>
 
-**[Watch the 2 minute demo video](https://youtu.be/d66E73BLOH4)**
+**[Watch the 2 minute demo video](https://youtu.be/d66E73BLOH4)** · **[Try the console in your browser](https://nithinaug.github.io/flagpact/demo/)** (a recorded replay, nothing to install)
 
 [Install](#install) · [Quick start](#quick-start) · [Agent skill](#agent-skill) · [Proof against live Flagsmith](#proof-against-live-flagsmith) · [Limits](#limits)
 
