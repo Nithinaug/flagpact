@@ -13,7 +13,11 @@ Check a Flagsmith config change against every app version before you publish it.
 
 A Flagsmith remote-config value changes, and the apps that read it get the new value at once, with no redeploy. That is the point of remote config. It also means an old build still in people's hands, one that expects the old shape, can crash the moment you save. flagpact tells you which app versions would break before the change goes live, and fixes it by keeping those versions on the previous value.
 
-Built for the Flagsmith "Toggle Wars" hackathon, Track 03: Build on Open Source Flagsmith. It works with self-hosted Flagsmith and has been tried on 2.294.0.
+It answers one question: will this change break an app version that is already in people's hands, and if so, what keeps that version safe?
+
+Built for the Flagsmith "Toggle Wars" hackathon, Track 03 (Build on Open Source Flagsmith) and Track 04 (Flagsmith Agent Skills). It works with self-hosted Flagsmith and has been tried on 2.294.0.
+
+<img alt="The console: a change is typed in, two of three app versions would break, the fix keeps them on the old value, then the change is published" src="docs/images/demo.gif" width="100%">
 
 ## See it work
 
