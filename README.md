@@ -10,13 +10,17 @@
   <img alt="Flagsmith 2.294.0" src="https://img.shields.io/badge/Flagsmith-2.294.0-8B5CF6">
 </p>
 
+**[Watch the 2 minute demo video](https://youtu.be/d66E73BLOH4)**
+
+[Install](#install) · [Quick start](#quick-start) · [Agent skill](#agent-skill) · [Proof against live Flagsmith](#proof-against-live-flagsmith) · [Limits](#limits)
+
 Check a Flagsmith config change against every app version before you publish it.
 
 A Flagsmith remote-config value changes, and the apps that read it get the new value at once, with no redeploy. That is the point of remote config. It also means an old build still in people's hands, one that expects the old shape, can crash the moment you save. flagpact tells you which app versions would break before the change goes live, and fixes it by keeping those versions on the previous value.
 
 It answers one question: will this change break an app version that is already in people's hands, and if so, what keeps that version safe?
 
-Built for the Flagsmith "Toggle Wars" hackathon, Track 03 (Build on Open Source Flagsmith) and Track 04 (Flagsmith Agent Skills). It works with self-hosted Flagsmith and has been tried on 2.294.0.
+Built for the Flagsmith "Toggle Wars" hackathon, Track 03 (Build on Open Source Flagsmith) and Track 04 (Flagsmith Agent Skills). It works with self-hosted Flagsmith and has been tried on 2.294.0. The agent skill for Track 04 is in [`skills/flagpact-safe-rollout`](skills/flagpact-safe-rollout/SKILL.md).
 
 <img alt="The console: a change is typed in, two of three app versions would break, the fix keeps them on the old value, then the change is published" src="docs/images/demo.gif" width="100%">
 
@@ -51,7 +55,7 @@ Also included:
 - **Watches for edits made outside flagpact.** If someone changes the value in the Flagsmith dashboard and it breaks a version, flagpact shows what changed and offers "Protect older versions" or "Restore previous value".
 - **Rolls out in stages.** Instead of one publish, it can give the new value to the newest app version first, then the next one down, re-checking every version before each stage. You can step back one stage at a time.
 - **Runs in CI.** `flagpact check` and a GitHub Action fail the build when a pending value would break a version.
-- **Imports a public GitHub repository.** It reads the code without running it, finds the Flagsmith config reads and app versions, and drafts a `flagpact.json`.
+- **Imports a public GitHub repository.** It reads the code without running it, finds the Flagsmith config reads and app versions, and drafts a `flagpact.json`. Release tags such as `v1.0.0` and `v2.0.0` each become an app version.
 
 ## Why not just a segment?
 
@@ -121,6 +125,7 @@ flagpact check --value new-value.json --env-file .flagpact-keys.env
 | 0 | No app version would break |
 | 1 | At least one app version would break |
 | 2 | Configuration or API error |
+| 3 | Only with `--expect-plan`: the value or Flagsmith changed since the plan was approved, so check again |
 
 The check is read-only. It needs `FLAGSMITH_API_URL` and the environment's server-side key (`FLAGSMITH_ENV_SERVER_KEY`). It never needs a management key. The report never contains keys.
 
@@ -150,6 +155,17 @@ The job fails when a version would break and writes a table of results to the jo
 ## Agent skill
 
 `skills/flagpact-safe-rollout/SKILL.md` is an Agent Skill that takes a coding agent through a whole config change with the Flagsmith CLI: read the live value, check every app version, stop for a person, create the protective segment, stop again, publish, verify and keep rollback ready. `flagpact check --json` returns the fix as data (`fix.segment`, `fix.rule`, `fix.keep_value`), so the agent only reads a few compact fields.
+
+It stops for a person before it writes anything, and again before the default changes. Before that second step it runs `flagpact check --expect-plan`, which refuses to publish if Flagsmith or the value changed after the first approval. It uses these Flagsmith CLI commands: `flag get`, `segment create`, `flag update` (with `--segment` and `--priority`), `evaluate`, `flag delete` and `segment delete`.
+
+Tested with Claude Code on a self-hosted Flagsmith, one full run each, change then rollback:
+
+| Model | Tokens (input, output, cache write) | Cache reads | Model calls |
+| --- | --- | --- | --- |
+| claude-opus-5-5 | 52,433 (34, 5,280, 47,119) | 1,273,910 | 14 |
+| claude-sonnet-5-5 | 60,190 (60, 7,369, 52,761) | 2,366,284 | 25 |
+
+The Sonnet run also answered two extra evaluation questions, so a clean run is a little smaller.
 
 To use it in Claude Code, link it into your project: `mkdir -p .claude/skills && ln -s ../../skills/flagpact-safe-rollout .claude/skills/flagpact-safe-rollout`.
 
@@ -229,6 +245,7 @@ This shows flagpact and Flagsmith agree on the value served. Whether each versio
 ## Limits
 
 - The wrapper and the test replay are Python only.
+- One `flagpact.json` covers one flag. To protect several flags, use one file per flag.
 - Import finds only direct reads such as `cfg["title"]` and `cfg.get("title", "")`, plus simple aliases. It cannot see fields read through helper functions, loops or dynamic keys. Treat the draft as a starting point.
 - A staged rollout counts a version that is "Not checked" as able to take the change, the same as the one-step fix. Stages only cover versions that are not broken.
 - A contract only holds what the tests actually read. A field no test reads is invisible to flagpact.
