@@ -10,3 +10,5 @@ ui/dist/
 *.egg-info/
 .flagpact-state.json
 stack/.env
+src/flagpact/webui/
+build/

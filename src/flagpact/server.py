@@ -10,7 +10,8 @@ from .fix import PlanError
 from .importer import ScanError, scan_source
 from .service import Service
 
-DIST = pathlib.Path(__file__).resolve().parents[2] / "ui" / "dist"
+PACKAGED_UI = pathlib.Path(__file__).resolve().parent / "webui"
+DIST = PACKAGED_UI if PACKAGED_UI.is_dir() else pathlib.Path(__file__).resolve().parents[2] / "ui" / "dist"
 MAX_BODY = 64 * 1024
 
 

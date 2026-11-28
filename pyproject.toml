@@ -1,11 +1,28 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "flagpact"
-version = "0.1.0"
+version = "0.1.1"
 description = "Check a Flagsmith config change against every app version before you publish it"
+readme = "packaging/PYPI.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Nithinaug" }]
+keywords = ["flagsmith", "feature-flags", "remote-config", "app-versions", "testing", "release-safety"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Quality Assurance",
+  "Topic :: Software Development :: Testing",
+]
 requires-python = ">=3.10"
 dependencies = [
   "flagsmith==6.7.0",
@@ -17,8 +34,16 @@ dependencies = [
 flagpact = "flagpact.cli:main"
 flagpact-server = "flagpact.server:main"
 
+[project.urls]
+Homepage = "https://github.com/Nithinaug/flagpact"
+Repository = "https://github.com/Nithinaug/flagpact"
+Issues = "https://github.com/Nithinaug/flagpact/issues"
+
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+flagpact = ["webui/*", "webui/assets/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
