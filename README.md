@@ -4,6 +4,7 @@
   <a href="https://github.com/Nithinaug/flagpact/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Nithinaug/flagpact/actions/workflows/ci.yml/badge.svg"></a>
   <a href="https://github.com/Nithinaug/flagpact/actions/workflows/live-flagsmith.yml"><img alt="Live Flagsmith" src="https://github.com/Nithinaug/flagpact/actions/workflows/live-flagsmith.yml/badge.svg"></a>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue"></a>
+  <a href="https://pypi.org/project/flagpact/"><img alt="PyPI" src="https://img.shields.io/pypi/v/flagpact"></a>
   <a href="https://github.com/Nithinaug/flagpact/releases"><img alt="Release" src="https://img.shields.io/github/v/release/Nithinaug/flagpact"></a>
   <img alt="Python 3.10 or newer" src="https://img.shields.io/badge/python-3.10%2B-3776AB">
   <img alt="Flagsmith 2.294.0" src="https://img.shields.io/badge/Flagsmith-2.294.0-8B5CF6">
@@ -60,6 +61,14 @@ Flagsmith can already keep old app versions on an old value. A segment on `app_v
 - **You get the answer before you publish.** Which versions would break, and how many users are on them when you supply version shares.
 - **It builds the fix.** If something would break, flagpact creates the segment and the override first and changes the default after, so no old version ever sees the new value.
 - **It keeps watching.** After a publish, an outside edit that breaks a version is caught, and the last safe value can be restored.
+
+## Install
+
+```bash
+pip install flagpact
+```
+
+This gives you the `flagpact` command (`check` and `import`) and `flagpact-server`, the local console, which needs a Flagsmith on your own machine. For the one-command demo with its own Flagsmith, use the Quick start below.
 
 ## Quick start
 
