@@ -70,6 +70,8 @@ pip install flagpact
 
 This gives you the `flagpact` command (`check` and `import`) and `flagpact-server`, the local console, which needs a Flagsmith on your own machine. For the one-command demo with its own Flagsmith, use the Quick start below.
 
+To use it on your own app, run `flagpact import <your GitHub repository> --out flagpact.json` to draft the config, record each version's contracts, then `flagpact check` or start the console against your own Flagsmith. The console's import card only scans a repository and does not switch the console to it, and the demo stack and demo app versions are in this repository, not in the package.
+
 ## Quick start
 
 You need Docker, Python 3.10 or newer, and Node 22 (only to build the console).
