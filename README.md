@@ -117,7 +117,7 @@ As a GitHub Action, in the repository that holds your app and its tests:
 
 ```yaml
 - name: Check the pending config value
-  uses: Nithinaug/flagpact@v0.1.0
+  uses: Nithinaug/flagpact@v0.1.1
   with:
     value: config/home_banner.json
     api-url: ${{ vars.FLAGSMITH_API_URL }}
